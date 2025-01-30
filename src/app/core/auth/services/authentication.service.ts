@@ -12,6 +12,8 @@ import { LoginResponse } from '../../models/login-response';
 })
 export class AuthenticationService {
 
+  baseUrl = '/auth';
+
   constructor(
     private http: HttpClient,
   ) {

@@ -1,0 +1,24 @@
+<app-background>
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <h1
+      class="text-base mb-5 font-semibold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+    >
+      Choose the Organization you want to login
+    </h1>
+    <p-listbox
+      [options]="organizations"
+      [(ngModel)]="selectedOrganization"
+      optionLabel="name"
+      class="w-full md:w-56"
+    >
+      <ng-template let-organization #item>
+        <div class="flex items-center gap-2">
+          <img class="w-8 h-9" [src]="organization.description" alt="logo" />
+          <div>{{ organization.name }}</div>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </div>
+</app-background>

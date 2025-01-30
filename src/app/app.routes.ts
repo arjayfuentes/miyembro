@@ -26,6 +26,10 @@ export const appRoutes: Route[] = [
         path: 'auth/login',
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
     },
+    {
+      path: 'auth/choose-organization',
+      loadComponent: () => import('./core/auth/pages/choose-organization/choose-organization.component').then(mod => mod.ChooseOrganizationComponent),
+  },
     // {
     //     path: 'register',
     //     loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent)

@@ -3,6 +3,6 @@ import { MemberResponse } from "./member-response";
 export interface Session {
     accessToken: string;
     tokenType: string;
-    memberResponse: MemberResponse;
+    member: MemberResponse;
     permissions: string [];
 }

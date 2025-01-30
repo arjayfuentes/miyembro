@@ -8,7 +8,16 @@ export class SessionService {
 
   private session: Session | null = null; 
 
-  constructor() {}
+  private memberId: string | null = null;
+
+
+  getMemberId(): string | null {
+    return this.memberId;
+  }
+
+  setMemberId(memberId: string) {
+    this.memberId = memberId;
+  }
 
   clearSession(): void {
     this.session = null;

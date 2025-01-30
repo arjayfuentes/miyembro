@@ -4,9 +4,10 @@ import Aura from '@primeng/themes/aura';
 import Material from '@primeng/themes/material';
 
 import { appRoutes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { JwtTokenInterceptor } from './core/auth/interceptors/jwt-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
           }
         }
     }),
-    provideHttpClient()
+    provideHttpClient(),
+    provideHttpClient(withInterceptors([JwtTokenInterceptor]))
   ]
 };
