@@ -1,0 +1,22 @@
+
+#home-header {
+  height: 70px;
+}
+
+#home-body {
+  height: calc(100vh - 70px - 25px);
+  width: 100%;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+#home-footer {
+  height: 25px;
+}
+
+:host ::ng-deep {
+  .header-text {
+    font-weight: normal;
+    margin: 0 0 24px 0;
+  }
+}

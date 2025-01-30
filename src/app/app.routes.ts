@@ -1,3 +1,43 @@
 import { Route } from '@angular/router';
+import { AuthGuard } from './core/guards/auth-guard';
+import { OrganizationComponent } from './features/home/pages/organization/organization.component';
+import { ExploreComponent } from './features/home/explore/explore.component';
+import { MembersComponent } from './features/home/members/members.component';
+import { MyCalendarComponent } from './features/home/my-calendar/my-calendar.component';
 
-export const appRoutes: Route[] = [];
+export const appRoutes: Route[] = [
+    {
+      path: '',
+      redirectTo: 'home',
+       pathMatch: 'full'
+    },
+    {
+      path: 'home',
+      loadComponent: () => import('./features/home/pages/home/home.component').then(mod => mod.HomeComponent),
+      children: [
+        { path: 'explore', component: ExploreComponent },
+        { path: 'organization', component: OrganizationComponent },
+        { path: 'members', component: MembersComponent },
+        { path: 'my-calendar', component: MyCalendarComponent },
+      ],
+      canActivate: [AuthGuard],
+    },
+    {
+        path: 'auth/login',
+        loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
+    },
+    // {
+    //     path: 'register',
+    //     loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent)
+    // },
+    //  {
+    //     path: '',
+    //     redirectTo: 'home',
+    //     pathMatch: 'full'
+    //   },
+      {
+        path: '**',
+        loadComponent: () => import('./core/auth/pages/page-not-found/page-not-found.component')
+          .then(mod => mod.PageNotFoundComponent)
+      }
+];

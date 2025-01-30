@@ -1,0 +1,38 @@
+<div class="flex flex-col md:flex-row gap-8">
+  <div class="md:w-1/2">
+    <div class="card flex flex-col gap-4">
+      <div class="font-semibold text-xl">Vertical</div>
+      <div class="flex flex-col gap-2">
+        <label for="name1">Name</label>
+        <input pInputText id="name1" type="text" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="email">Email</label>
+        <input pInputText id="email" type="text" />
+      </div>
+    </div>
+    <div class="flex-1">
+      <p-iftalabel>
+        <input pInputText id="username" />
+        <label for="username">Username</label>
+      </p-iftalabel>
+    </div>
+    <div class="flex-1">
+      <label for="date" class="block font-semibold mb-2">Date</label>
+      <p-datepicker inputId="date" class="w-full" />
+    </div>
+    <div class="card flex flex-col gap-4">
+      <div class="font-semibold text-xl">Vertical Grid</div>
+      <div class="flex flex-wrap gap-6">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <label for="name2">Name</label>
+          <input pInputText id="name2" type="text" />
+        </div>
+        <div class="flex flex-col grow basis-0 gap-2">
+          <label for="email2">Email</label>
+          <input pInputText id="email2" type="text" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
