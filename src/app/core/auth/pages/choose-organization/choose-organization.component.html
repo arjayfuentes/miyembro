@@ -12,6 +12,7 @@
       [(ngModel)]="selectedOrganization"
       optionLabel="name"
       class="w-full md:w-56"
+      (onChange)="onSelectOrganization($event)"
     >
       <ng-template let-organization #item>
         <div class="flex items-center gap-2">

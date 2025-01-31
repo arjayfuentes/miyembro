@@ -5,4 +5,6 @@ export interface Session {
     tokenType: string;
     member: MemberResponse;
     permissions: string [];
+    selectedOrganizationId: string;
+    organizationIdsOfMember: string[];
 }

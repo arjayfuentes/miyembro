@@ -13,6 +13,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { SessionService } from 'src/app/core/auth/services/session.service';
+import { Session } from 'src/app/core/models/session';
 
 @Component({
   selector: 'app-header',
@@ -23,10 +25,15 @@ import { RouterModule } from '@angular/router';
 export class HeaderComponent implements OnInit{
 
     items: MenuItem[] | undefined;
+    session: Session | null = null;
 
-    constructor(private router: Router) {}
+    constructor(
+        private router: Router,
+        private sessionService: SessionService    
+    ) {}
 
     ngOnInit() {
+        this.session = this.sessionService.getSession();
         this.items = [
             {
                 label: 'Explore',

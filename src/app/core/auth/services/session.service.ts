@@ -8,17 +8,6 @@ export class SessionService {
 
   private session: Session | null = null; 
 
-  private memberId: string | null = null;
-
-
-  getMemberId(): string | null {
-    return this.memberId;
-  }
-
-  setMemberId(memberId: string) {
-    this.memberId = memberId;
-  }
-
   clearSession(): void {
     this.session = null;
   }
@@ -38,4 +27,6 @@ export class SessionService {
   hasPermission(permissionName: string): boolean {
     return this.session?.permissions?.includes(permissionName) || false;
   }
+
+  
 }

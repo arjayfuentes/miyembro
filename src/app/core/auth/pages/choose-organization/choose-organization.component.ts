@@ -7,14 +7,18 @@ import { FormsModule } from '@angular/forms';
 import { MembershipService } from '../../services/membership.service';
 import { SessionService } from '../../services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication.service';
+import { SelectOrganizationLoginRequest } from 'src/app/core/models/select-login-organization-request';
 
 @Component({
   selector: 'app-choose-organization',
-  imports: [BackgroundComponent, CardModule, ListboxModule, FormsModule ],
+  imports: [BackgroundComponent, CardModule, ListboxModule, FormsModule, CommonModule ],
   templateUrl: './choose-organization.component.html',
   styleUrl: './choose-organization.component.scss'
 })
 export class ChooseOrganizationComponent implements OnInit{
+[x: string]: any;
 
   organizations: OrganizationResponse [] = [];
   selectedOrganization: OrganizationResponse | undefined;
@@ -24,6 +28,7 @@ export class ChooseOrganizationComponent implements OnInit{
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private authenticationService: AuthenticationService,
     private membershipService: MembershipService,
     private router: Router,
     private sessionService: SessionService
@@ -53,6 +58,25 @@ export class ChooseOrganizationComponent implements OnInit{
     );
   }
 
+
+  onSelectOrganization(event: any) {
+    const memberId = this.sessionService.getSession()?.member.memberId;
+    const selectOrganizationLoginRequest: SelectOrganizationLoginRequest = {
+        organizationId: this.selectedOrganization?.organizationId ?? null,
+        memberId: memberId ?? null
+    }
+    this.authenticationService.selectLoginOrganization(selectOrganizationLoginRequest).subscribe(
+      (res) => {
+        this.sessionService.setSession(res.data);
+        this.router.navigate(['/home']);
+      },
+      (err: any) => {
+        console.log(err);
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+    console.log(event);
+  }
 
 
 }

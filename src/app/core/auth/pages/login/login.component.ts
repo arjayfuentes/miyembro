@@ -50,24 +50,35 @@ export class LoginComponent implements OnInit {
     this.loginErrorMessage = null;
     this.authenticationService.login(loginFormVal).subscribe(
       (res) => {
-        this.sessionService.setMemberId(res.data?.member.memberId);
-
         this.sessionService.setSession(res.data);
-        localStorage.setItem('memberId', res.data?.member.memberId);
-
-        localStorage.setItem('token', res.data.accessToken);
-
-        if (this.redirectURL) {
-          this.router.navigateByUrl(this.redirectURL);
+        console.log(this.sessionService.getSession());
+        const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length
+        if(numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
+          if (this.redirectURL) {
+            //this.router.navigateByUrl(this.redirectURL);
+          } else {
+            this.router.navigate(['/choose-organization']);
+          }
         } else {
-          this.router.navigate(['/auth/choose-organization']);
+          this.router.navigate(['/']);
         }
+       
       },
       (err: any) => {
         console.log(err);
         this.loginErrorMessage = err.error.message;
       }
     );
+  }
+
+  onClickRegister() {
+    this.router.navigate(['/register']);
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.onClickRegister();
+    }
   }
 
 }

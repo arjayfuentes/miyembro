@@ -23,17 +23,17 @@ export const appRoutes: Route[] = [
       canActivate: [AuthGuard],
     },
     {
-        path: 'auth/login',
+        path: 'login',
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
     },
     {
-      path: 'auth/choose-organization',
+      path: 'choose-organization',
       loadComponent: () => import('./core/auth/pages/choose-organization/choose-organization.component').then(mod => mod.ChooseOrganizationComponent),
-  },
-    // {
-    //     path: 'register',
-    //     loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent)
-    // },
+    },
+    {
+        path: 'register',
+        loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent)
+    },
     //  {
     //     path: '',
     //     redirectTo: 'home',

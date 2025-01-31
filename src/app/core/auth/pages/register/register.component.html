@@ -1,1 +1,229 @@
-<p>register works!</p>
+<app-background>
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <a
+      href="#"
+      class="flex items-center mb-6 text-3xl font-semibold text-gray-900 dark:text-white"
+    >
+      <img class="w-8 h-9" src="assets/app-logo-2.png" alt="logo" /> iyembro
+    </a>
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-4 md:space-y-4 sm:p-8">
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          Enter your details
+        </h1>
+        <form class="space-y-4 md:space-y-6" [formGroup]="registerForm">
+          <div class="max-h-[60vh] overflow-auto p-4">
+            <div>
+              <h2 class="text-lg font-medium text-purple-700">
+                Contact details
+              </h2>
+              <div class="flex space-x-4">
+                <div class="w-1/2">
+                  <label
+                    for="firstName"
+                    class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    pInputText
+                    id="firstName"
+                    formControlName="firstName"
+                    type="text"
+                    class="w-full"
+                  />
+                </div>
+                <div class="w-1/2">
+                  <label
+                    for="lastName"
+                    class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    pInputText
+                    id="lastName"
+                    formControlName="lastName"
+                    type="text"
+                    class="w-full"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  for="password"
+                  class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                  >Phone Number</label
+                >
+                <p-inputnumber
+                  formControlName="phoneNumber"
+                  mode="decimal"
+                  inputId="withoutgrouping"
+                  styleClass="phone-number-input block w-full"
+                  [useGrouping]="false"
+                />
+              </div>
+            </div>
+            <div>
+              <p-divider styleClass="mt-8" type="solid" />
+              <h2 class="text-lg font-medium text-purple-700">
+                Address details
+              </h2>
+              <div formGroupName="address">
+                <!-- Street and City on the Same Line -->
+                <div class="flex space-x-4">
+                  <div class="w-1/2">
+                    <label
+                      for="street"
+                      class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Street
+                    </label>
+                    <input
+                      pInputText
+                      id="street"
+                      formControlName="street"
+                      type="text"
+                      class="w-full"
+                    />
+                  </div>
+                  <div class="w-1/2">
+                    <label
+                      for="city"
+                      class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      City
+                    </label>
+                    <input
+                      pInputText
+                      id="city"
+                      formControlName="city"
+                      type="text"
+                      class="w-full"
+                    />
+                  </div>
+                </div>
+                <!-- Province/State and Region on the Same Line -->
+                <div class="flex space-x-4">
+                  <div class="w-1/2">
+                    <label
+                      for="provinceState"
+                      class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Province/State
+                    </label>
+                    <input
+                      pInputText
+                      id="provinceState"
+                      formControlName="provinceState"
+                      type="text"
+                      class="w-full"
+                    />
+                  </div>
+                  <div class="w-1/2">
+                    <label
+                      for="region"
+                      class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Region
+                    </label>
+                    <input
+                      pInputText
+                      id="region"
+                      formControlName="region"
+                      type="text"
+                      class="w-full"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="country"
+                    class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Country
+                  </label>
+                  <input
+                    pInputText
+                    id="country"
+                    formControlName="country"
+                    type="text"
+                    class="w-full"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <p-divider styleClass="mt-8" type="solid" />
+              <h2 class="text-lg font-medium text-purple-700">Login details</h2>
+              <div>
+                <label
+                  for="email"
+                  class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Email
+                </label>
+                <input
+                  pInputText
+                  id="email"
+                  formControlName="email"
+                  type="text"
+                  class="w-full"
+                />
+              </div>
+              <div>
+                <label
+                  for="password"
+                  class="block mb-2 mt-4 text-sm font-medium text-gray-900 dark:text-white"
+                  >Password</label
+                >
+                <p-password
+                  [feedback]="true"
+                  formControlName="password"
+                  styleClass="register-password block w-full"
+                >
+                  <ng-template #header>
+                    <div class="font-semibold text-xm mb-4">
+                      Pick a password
+                    </div>
+                  </ng-template>
+                  <ng-template #footer>
+                    <p-divider />
+                    <ul class="pl-2 ml-2 my-0 leading-normal">
+                      <li>At least one lowercase</li>
+                      <li>At least one uppercase</li>
+                      <li>At least one numeric</li>
+                      <li>Minimum 8 characters</li>
+                    </ul>
+                  </ng-template>
+                </p-password>
+              </div>
+            </div>
+          </div>
+          <p-button
+            label="Register"
+            (click)="onClickRegister()"
+            severity="help"
+            styleClass="w-full mt-4"
+          />
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Already have an account?
+            <a
+              (click)="onClickLogin()"
+              (keydown)="handleKeyDown($event)"
+              class="font-medium cursor-pointer text-primary-600 hover:underline dark:text-primary-500"
+              tabindex="0"
+              >Login!</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</app-background>
