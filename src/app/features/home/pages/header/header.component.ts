@@ -95,8 +95,7 @@ export class HeaderComponent implements OnInit{
     this.authenticationService.logout().subscribe(
         (res) => {
             this.sessionService.clearSession();
-            console.log(res);
-
+            localStorage.removeItem('authToken');
             this.router.navigate(['/login']);
         },
         (err: any) => {

@@ -11,7 +11,7 @@ export const appRoutes: Route[] = [
       path: '',
       redirectTo: 'home',
        pathMatch: 'full',
-       canActivate: [AuthGuard],
+      //  canActivate: [AuthGuard],
     },
     {
       path: 'home',
@@ -32,7 +32,7 @@ export const appRoutes: Route[] = [
     {
       path: 'choose-organization',
       loadComponent: () => import('./core/auth/pages/choose-organization/choose-organization.component').then(mod => mod.ChooseOrganizationComponent),
-      // canActivate: [UnAuthGuard],
+      canActivate: [UnAuthGuard],
 
     },
     {
@@ -50,6 +50,6 @@ export const appRoutes: Route[] = [
         path: '**',
         loadComponent: () => import('./core/auth/pages/page-not-found/page-not-found.component')
           .then(mod => mod.PageNotFoundComponent),
-          canActivate: [UnAuthGuard],
+          // canActivate: [UnAuthGuard],
       }
 ];

@@ -9,7 +9,7 @@ export interface Session {
     member: Member;
     role: Role;
     permissions: string [];
-    organization: OrganizationResponse;
-    organizationIdsOfMember: string[];
+    organization: OrganizationResponse | null;
+    organizationIdsOfMember: string[] | undefined;
     membership: Membership;
 }

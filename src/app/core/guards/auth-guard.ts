@@ -3,6 +3,7 @@ import { AuthenticationService } from '../auth/services/authentication.service';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { SessionService } from '../auth/services/session.service';
 import { catchError, map, Observable, of } from 'rxjs';
+import { inject } from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,20 @@ export class AuthGuard implements CanActivate {
     if (this.sessionService.isLoggedIn()) {
       return true;
     } else {
-      console.log('User is NOT logged in. Allowing access to login/register.');
-        // Debugging log when access is allowed
-      this.router.navigate(['/login']);
-      return false; 
+      const token: string | null = localStorage.getItem('authToken');
+      return this.authenticationService.getLoginSession(token).pipe(
+        map((session) => {
+          this.sessionService.setSession(session);
+          if(session) {
+            localStorage.setItem('authToken', session.accessToken);
+          }
+          return true;
+        }),
+        catchError(() => {
+          this.router.navigate(['/login']);
+          return of(false);
+        })
+      );
     }
   }
 }

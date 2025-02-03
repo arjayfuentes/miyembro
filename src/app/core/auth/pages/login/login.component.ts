@@ -51,16 +51,16 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(loginFormVal).subscribe(
       (res) => {
         this.sessionService.setSession(res);
-        console.log(this.sessionService.getSession());
+
         const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length
         if(numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
-          if (this.redirectURL) {
-            //this.router.navigateByUrl(this.redirectURL);
-          } else {
-            this.router.navigate(['/choose-organization']);
-          }
+          this.router.navigate(['/choose-organization']);
         } else {
-          this.router.navigate(['/']);
+          const session = this.sessionService.getSession();
+          if(session) {
+            localStorage.setItem('authToken', session.accessToken);
+          }
+          this.router.navigate(['/home']);
         }
        
       },

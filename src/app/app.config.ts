@@ -8,6 +8,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { JwtTokenInterceptor } from './core/auth/interceptors/jwt-token.interceptor';
+import { SessionService } from './core/auth/services/session.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         }
     }),
     provideHttpClient(),
-    provideHttpClient(withInterceptors([JwtTokenInterceptor]))
+    SessionService,
+    provideHttpClient(withInterceptors([JwtTokenInterceptor])),
   ]
 };

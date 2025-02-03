@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FooterComponent } from "../footer/footer.component";
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { SessionService } from 'src/app/core/auth/services/session.service';
 
 @Component({
   selector: 'app-home',
@@ -20,5 +21,9 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class HomeComponent {
+
+
+
+  
 
 }

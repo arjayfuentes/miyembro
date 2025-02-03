@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SelectOrganizationLoginRequest } from 'src/app/core/models/select-login-organization-request';
+import { Session } from 'src/app/core/models/session';
 
 @Component({
   selector: 'app-choose-organization',
@@ -24,6 +25,7 @@ export class ChooseOrganizationComponent implements OnInit{
   selectedOrganization: OrganizationResponse | undefined;
   private redirectURL: string | undefined ;
   loginErrorMessage: string | null = null;
+  session: Session | null = null;
 
 
   constructor(
@@ -36,20 +38,11 @@ export class ChooseOrganizationComponent implements OnInit{
     
   }
   ngOnInit(): void {
+    this.session = this.sessionService.getSession();
     const memberId = this.sessionService.getSession()?.member?.memberId;
     this.membershipService.getOrganizationByMemberId(memberId).subscribe(
       (res) => {
         this.organizations = res;
-        // if(this.organizations.length == 0) {
-        //   this.router.navigate(['/']);
-        // } else {
-        //   if (this.redirectURL) {
-        //     this.router.navigateByUrl(this.redirectURL);
-        //   } else {
-        //     this.router.navigate(['/']);
-        //   }
-        // }
-        
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
@@ -59,6 +52,7 @@ export class ChooseOrganizationComponent implements OnInit{
 
 
   onSelectOrganization(event: any) {
+    console.log(this.selectedOrganization);
     const memberId = this.sessionService.getSession()?.member.memberId;
     const selectOrganizationLoginRequest: SelectOrganizationLoginRequest = {
         organizationId: this.selectedOrganization?.organizationId ?? null,
@@ -68,7 +62,9 @@ export class ChooseOrganizationComponent implements OnInit{
       (res) => {
         this.sessionService.setSession(res);
         const session = this.sessionService.getSession();
-        console.log(session);
+        if(session) {
+          localStorage.setItem('authToken', session.accessToken);
+        }
         this.router.navigate(['/home']);
       },
       (err: any) => {

@@ -23,8 +23,8 @@ export class AuthenticationService {
     
   }
 
-  getLoginSession(): Observable<Session> {
-    return this.http.post(`${env.apiUrl}/auth/login`, {}) as Observable<Session>;
+  getLoginSession(token: string | null): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/getLoginSession`, token) as Observable<Session>;
   }
 
   login(loginRequest: LoginRequest): Observable<Session> {

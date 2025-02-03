@@ -21,7 +21,14 @@ export class SessionService {
   }
 
   isLoggedIn(): boolean {
-    return this.session != null;
+    const selectedOrganization = this.session?.organization;
+    const organizationsOfMember = this.session?.organizationIdsOfMember;
+    
+    const notRegistered: boolean = selectedOrganization === null && organizationsOfMember === null;
+    const onlyOneOrganization: boolean =  selectedOrganization !== null && (organizationsOfMember !== null && organizationsOfMember?.length == 1);
+    const twoOrMoreOrganization: boolean = selectedOrganization !== null && (organizationsOfMember !== undefined && organizationsOfMember.length >= 2);
+
+    return this.session !== null  && (notRegistered || onlyOneOrganization || twoOrMoreOrganization);
   }
 
   setSession(session: Session): void {

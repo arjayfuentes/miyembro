@@ -88,55 +88,66 @@
               }}
             </span>
           </div>
-          <div class="mt-2 flex items-center">
+          <div
+            class="mt-2 flex items-center"
+            *ngIf="session?.organization !== null"
+          >
             <span class="pi pi-phone mr-2"></span>
             <span class="text-sm text-muted-color">
               {{ session?.member?.phoneNumber }}
             </span>
           </div>
           <p-divider />
-          <span class="font-medium">Membership: </span>
-
-          <p-card styleClass="mt-2 p-card-flat">
-            <div class="flex flex-col items-center">
-              <div class="flex items-center">
-                <img
-                  class="w-8 h-9 mr-2"
-                  [src]="session?.organization?.description"
-                  alt="logo"
-                />
-                <span class="text-base font-medium text-muted-color">
-                  {{ session?.organization?.name }}
-                </span>
+          <div *ngIf="session?.organization === null" class="items-center">
+            <p-card>
+              <p class="font-normal flex items-center">
+                You are not a member of any organization
+              </p>
+            </p-card>
+          </div>
+          <div *ngIf="session?.organization !== null">
+            <span class="font-medium">Membership: </span>
+            <p-card styleClass="mt-2 p-card-flat">
+              <div class="flex flex-col items-center">
+                <div class="flex items-center">
+                  <img
+                    class="w-8 h-9 mr-2"
+                    [src]="session?.organization?.description"
+                    alt="logo"
+                  />
+                  <span class="text-base font-medium text-muted-color">
+                    {{ session?.organization?.name }}
+                  </span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-base mr-2">Member Since:</span>
+                  <span class="text-sm text-muted-color">
+                    {{ session?.membership?.startDate | date }}
+                  </span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-base mr-2">Ends on:</span>
+                  <span class="text-sm text-muted-color">
+                    {{ session?.membership?.endDate | date }}
+                  </span>
+                </div>
+                <div class="flex items-center">
+                  <span class="mr-2">Status:</span>
+                  <span class="text-sm text-muted-color">
+                    {{ session?.membership?.status }}
+                  </span>
+                </div>
+                <div class="flex items-center">
+                  <p-button
+                    label="More details"
+                    variant="text"
+                    severity="info"
+                    size="small"
+                  />
+                </div>
               </div>
-              <div class="flex items-center">
-                <span class="font-base mr-2">Member Since:</span>
-                <span class="text-sm text-muted-color">
-                  {{ session?.membership?.startDate | date }}
-                </span>
-              </div>
-              <div class="flex items-center">
-                <span class="font-base mr-2">Ends on:</span>
-                <span class="text-sm text-muted-color">
-                  {{ session?.membership?.endDate | date }}
-                </span>
-              </div>
-              <div class="flex items-center">
-                <span class="mr-2">Status:</span>
-                <span class="text-sm text-muted-color">
-                  {{ session?.membership?.status }}
-                </span>
-              </div>
-              <div class="flex items-center">
-                <p-button
-                  label="More details"
-                  variant="text"
-                  severity="info"
-                  size="small"
-                />
-              </div>
-            </div>
-          </p-card>
+            </p-card>
+          </div>
 
           <div class="space-y-4 md:space-y-6">
             <p-button
