@@ -1,6 +1,6 @@
 import { MemberAddress } from "./member-address";
 
-export interface MemberRequest {
+export interface Member {
     memberId: string;
     firstName: string;
     lastName: string;

@@ -36,7 +36,7 @@ export class ChooseOrganizationComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    const memberId = localStorage.getItem('memberId'); // Get token from localStorage
+    const memberId = this.sessionService.getSession()?.member?.memberId;
     this.membershipService.getOrganizationByMemberId(memberId).subscribe(
       (res) => {
         this.organizations = res;
@@ -52,7 +52,6 @@ export class ChooseOrganizationComponent implements OnInit{
         
       },
       (err: any) => {
-        console.log(err);
         this.loginErrorMessage = err.error.message;
       }
     );
@@ -67,11 +66,12 @@ export class ChooseOrganizationComponent implements OnInit{
     }
     this.authenticationService.selectLoginOrganization(selectOrganizationLoginRequest).subscribe(
       (res) => {
-        this.sessionService.setSession(res.data);
+        this.sessionService.setSession(res);
+        const session = this.sessionService.getSession();
+        console.log(session);
         this.router.navigate(['/home']);
       },
       (err: any) => {
-        console.log(err);
         this.loginErrorMessage = err.error.message;
       }
     );

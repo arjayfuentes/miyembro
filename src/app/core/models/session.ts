@@ -1,10 +1,15 @@
-import { MemberResponse } from "./member-response";
+import { Member } from "./member";
+import { Membership } from "./membership";
+import { OrganizationResponse } from "./organization-reponse";
+import { Role } from "./role";
 
 export interface Session {
     accessToken: string;
     tokenType: string;
-    member: MemberResponse;
+    member: Member;
+    role: Role;
     permissions: string [];
-    selectedOrganizationId: string;
+    organization: OrganizationResponse;
     organizationIdsOfMember: string[];
+    membership: Membership;
 }

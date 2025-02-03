@@ -7,6 +7,10 @@ import { Session } from '../../models/session';
 export class SessionService {
 
   private session: Session | null = null; 
+  
+  constructor() {
+    console.log('SessionService instance created'); 
+  }
 
   clearSession(): void {
     this.session = null;

@@ -15,7 +15,7 @@ constructor(
     
   }
 
-   getOrganizationByMemberId(memberId: string | null): Observable<OrganizationResponse[]> {
+   getOrganizationByMemberId(memberId: string | undefined): Observable<OrganizationResponse[]> {
        return this.http.get(`${env.apiUrl}/membership/getOrganizationByMemberId/${memberId}`, {}) as Observable<OrganizationResponse[]>;
      }
 }

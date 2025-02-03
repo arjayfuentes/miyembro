@@ -7,24 +7,29 @@ import { catchError, map, Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class UnAuthGuard implements CanActivate {
 
   constructor(
     private authenticationService: AuthenticationService, 
     private sessionService: SessionService,
     private router: Router,
   ) {}
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.sessionService.isLoggedIn()) {
-      return true;
-    } else {
-      console.log('User is NOT logged in. Allowing access to login/register.');
-        // Debugging log when access is allowed
-      this.router.navigate(['/login']);
-      return false; 
+    const session = this.sessionService.getSession()
+    const isLoggedIn = this.sessionService.isLoggedIn();
+    console.log('Is user logged in? ', isLoggedIn);  // Debugging log to check login status
+
+    if (isLoggedIn) {
+      console.log('Redirecting to home because user is logged in.');  // Debugging log when redirecting
+      this.router.navigate(['/home']);
+      return false;  // Prevent access to login and register if already logged in
     }
+
+    console.log('User is NOT logged in. Allowing access to login/register.');  // Debugging log when access is allowed
+    return true;  // Allow access to login or register pages
   }
 }

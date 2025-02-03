@@ -15,10 +15,15 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { SessionService } from 'src/app/core/auth/services/session.service';
 import { Session } from 'src/app/core/models/session';
+import { PopoverModule } from 'primeng/popover';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { ButtonGroupModule } from 'primeng/buttongroup';
+import { AuthenticationService } from 'src/app/core/auth/services/authentication.service';
 
 @Component({
   selector: 'app-header',
-  imports: [Menubar, BadgeModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule],
+  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -27,7 +32,14 @@ export class HeaderComponent implements OnInit{
     items: MenuItem[] | undefined;
     session: Session | null = null;
 
+    members = [
+        { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
+        { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
+        { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
+    ];
+
     constructor(
+        private authenticationService: AuthenticationService,
         private router: Router,
         private sessionService: SessionService    
     ) {}
@@ -77,5 +89,19 @@ export class HeaderComponent implements OnInit{
             //     ]
             // }
         ];
+    }
+
+    onClickLogout() {
+    this.authenticationService.logout().subscribe(
+        (res) => {
+            this.sessionService.clearSession();
+            console.log(res);
+
+            this.router.navigate(['/login']);
+        },
+        (err: any) => {
+            console.log(err);
+        }
+        );
     }
 }

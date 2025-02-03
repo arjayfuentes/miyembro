@@ -7,7 +7,7 @@ import { LoginRequest } from '../../models/login-request';
 import { LoginResponse } from '../../models/login-response';
 import { SelectOrganizationLoginRequest } from '../../models/select-login-organization-request';
 import { MemberRequest } from '../../models/member-request';
-import { MemberResponse } from '../../models/member-response';
+import { Member } from '../../models/member';
 
 
 @Injectable({
@@ -23,24 +23,24 @@ export class AuthenticationService {
     
   }
 
-  getLoginSession(): Observable<LoginResponse> {
-    return this.http.post(`${env.apiUrl}/auth/login`, {}) as Observable<LoginResponse>;
+  getLoginSession(): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/login`, {}) as Observable<Session>;
   }
 
-  login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.http.post(`${env.apiUrl}/auth/login`, loginRequest) as Observable<LoginResponse>;
+  login(loginRequest: LoginRequest): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/login`, loginRequest) as Observable<Session>;
   }
 
   logout(): Observable<Session> {
-    return this.http.post(`${env.apiUrl}/user/logout`, {}) as Observable<Session>;
+    return this.http.post(`${env.apiUrl}/auth/logout`, {}) as Observable<Session>;
   }
 
-  register(memberRequest: MemberRequest): Observable<MemberResponse> {
-    return this.http.post(`${env.apiUrl}/auth/register`, memberRequest) as Observable<MemberResponse>;
+  register(memberRequest: MemberRequest): Observable<Member> {
+    return this.http.post(`${env.apiUrl}/auth/register`, memberRequest) as Observable<Member>;
   }
 
 
-  selectLoginOrganization(selectOrganizationLoginRequest: SelectOrganizationLoginRequest): Observable<LoginResponse> {
-    return this.http.post(`${env.apiUrl}/auth/selectLoginOrganization`, selectOrganizationLoginRequest) as Observable<LoginResponse>;
+  selectLoginOrganization(selectOrganizationLoginRequest: SelectOrganizationLoginRequest): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/selectLoginOrganization`, selectOrganizationLoginRequest) as Observable<Session>;
   }
 }

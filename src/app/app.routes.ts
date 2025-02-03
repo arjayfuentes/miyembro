@@ -4,12 +4,14 @@ import { OrganizationComponent } from './features/home/pages/organization/organi
 import { ExploreComponent } from './features/home/explore/explore.component';
 import { MembersComponent } from './features/home/members/members.component';
 import { MyCalendarComponent } from './features/home/my-calendar/my-calendar.component';
+import { UnAuthGuard } from './core/guards/unauth-guard';
 
 export const appRoutes: Route[] = [
     {
       path: '',
       redirectTo: 'home',
-       pathMatch: 'full'
+       pathMatch: 'full',
+       canActivate: [AuthGuard],
     },
     {
       path: 'home',
@@ -25,14 +27,19 @@ export const appRoutes: Route[] = [
     {
         path: 'login',
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
+        canActivate: [UnAuthGuard],
     },
     {
       path: 'choose-organization',
       loadComponent: () => import('./core/auth/pages/choose-organization/choose-organization.component').then(mod => mod.ChooseOrganizationComponent),
+      // canActivate: [UnAuthGuard],
+
     },
     {
         path: 'register',
-        loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent)
+        loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent),
+        canActivate: [UnAuthGuard],
+
     },
     //  {
     //     path: '',
@@ -42,6 +49,7 @@ export const appRoutes: Route[] = [
       {
         path: '**',
         loadComponent: () => import('./core/auth/pages/page-not-found/page-not-found.component')
-          .then(mod => mod.PageNotFoundComponent)
+          .then(mod => mod.PageNotFoundComponent),
+          canActivate: [UnAuthGuard],
       }
 ];

@@ -12,3 +12,17 @@ module.exports = {
   },
   plugins: [],
 };
+
+
+
+// module.exports = {
+//   theme: {
+//     extend: {
+//       backgroundImage: {
+//         'metallic-blue': 'linear-gradient(to right, #4F86F7, #355ECA, #2A3A6A)',
+//       },
+//     },
+//   },
+//   variants: {},
+//   plugins: [],
+// }

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.loginErrorMessage = null;
     this.authenticationService.login(loginFormVal).subscribe(
       (res) => {
-        this.sessionService.setSession(res.data);
+        this.sessionService.setSession(res);
         console.log(this.sessionService.getSession());
         const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length
         if(numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
        
       },
       (err: any) => {
-        console.log(err);
         this.loginErrorMessage = err.error.message;
       }
     );
