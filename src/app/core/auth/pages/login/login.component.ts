@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('authToken', session.accessToken);
           }
           this.alertService.success('/login', 'Success', 'Succefully Login');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/explore']);
         }
        
       },

@@ -1,15 +1,15 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
-import { OrganizationComponent } from './features/home/pages/organization/organization.component';
-import { ExploreComponent } from './features/home/explore/explore.component';
+import { OrganizationComponent } from './features/home/pages/organization/pages/organization/organization.component';
 import { MembersComponent } from './features/home/members/members.component';
 import { MyCalendarComponent } from './features/home/my-calendar/my-calendar.component';
 import { UnAuthGuard } from './core/guards/unauth-guard';
+import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
 
 export const appRoutes: Route[] = [
     {
       path: '',
-      redirectTo: 'home',
+      redirectTo: 'home/explore',
        pathMatch: 'full',
       //  canActivate: [AuthGuard],
     },
@@ -17,7 +17,7 @@ export const appRoutes: Route[] = [
       path: 'home',
       loadComponent: () => import('./features/home/pages/home/home.component').then(mod => mod.HomeComponent),
       children: [
-        { path: 'explore', component: ExploreComponent },
+        { path: 'explore', component: ExplorePageComponent },
         { path: 'organization', component: OrganizationComponent },
         { path: 'members', component: MembersComponent },
         { path: 'my-calendar', component: MyCalendarComponent },

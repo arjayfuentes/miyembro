@@ -21,7 +21,7 @@ export class UnAuthGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const session = this.sessionService.getSession();
     if (this.sessionService.isLoggedIn()) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/explore']);
       return false;
     } else {
       const token: string | null = localStorage.getItem('authToken');

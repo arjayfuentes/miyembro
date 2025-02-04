@@ -24,7 +24,7 @@ export class AuthenticationService {
   }
 
   getLoginSession(token: string | null): Observable<Session> {
-    return this.http.post(`${env.apiUrl}/auth/getLoginSession`, token) as Observable<Session>;
+    return this.http.post(`${env.apiUrl}${this.baseUrl}/getLoginSession`, token) as Observable<Session>;
   }
 
   login(loginRequest: LoginRequest): Observable<Session> {
