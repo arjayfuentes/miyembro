@@ -11,6 +11,8 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { CommonModule } from '@angular/common';
 import { MembershipService } from '../../services/membership.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginErrorMessage: string | null = null;
   private redirectURL: string | null = null ;
+  private unsubscribe: Subject<any> = new Subject();
 
 
   ngOnInit(): void {
@@ -31,13 +34,27 @@ export class LoginComponent implements OnInit {
     // if (params[fieldRedirect]) {
     //   this.redirectURL = params[fieldRedirect];
     // }
+
+    this.loginForm
+      .valueChanges.pipe(takeUntil(this.unsubscribe))
+      .subscribe((val) => {
+        if (val && this.loginErrorMessage) {
+          this.loginErrorMessage = null;
+        }
+      });
   } 
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next(0);
+    this.unsubscribe.complete();
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private alertService: AlertService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -60,12 +77,14 @@ export class LoginComponent implements OnInit {
           if(session) {
             localStorage.setItem('authToken', session.accessToken);
           }
+          this.alertService.success('/login', 'Success', 'Succefully Login');
           this.router.navigate(['/home']);
         }
        
       },
       (err: any) => {
-        this.loginErrorMessage = err.error.message;
+        this.loginErrorMessage = err.error.messsage;
+        this.alertService.error('/login', 'Error', err.error.message);
       }
     );
   }

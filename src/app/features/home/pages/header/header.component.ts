@@ -20,6 +20,7 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import { AuthenticationService } from 'src/app/core/auth/services/authentication.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ import { AuthenticationService } from 'src/app/core/auth/services/authentication
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit{
+
 
     items: MenuItem[] | undefined;
     session: Session | null = null;
@@ -41,7 +43,8 @@ export class HeaderComponent implements OnInit{
     constructor(
         private authenticationService: AuthenticationService,
         private router: Router,
-        private sessionService: SessionService    
+        private sessionService: SessionService,
+        private alertService: AlertService
     ) {}
 
     ngOnInit() {
@@ -97,6 +100,7 @@ export class HeaderComponent implements OnInit{
             this.sessionService.clearSession();
             localStorage.removeItem('authToken');
             this.router.navigate(['/login']);
+            this.alertService.success('/logout', 'Success', 'Succefully logout');
         },
         (err: any) => {
             console.log(err);

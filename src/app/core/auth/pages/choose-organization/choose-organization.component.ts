@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SelectOrganizationLoginRequest } from 'src/app/core/models/select-login-organization-request';
 import { Session } from 'src/app/core/models/session';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-choose-organization',
@@ -33,7 +34,8 @@ export class ChooseOrganizationComponent implements OnInit{
     private authenticationService: AuthenticationService,
     private membershipService: MembershipService,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private alertService: AlertService
   ) {
     
   }
@@ -66,6 +68,7 @@ export class ChooseOrganizationComponent implements OnInit{
           localStorage.setItem('authToken', session.accessToken);
         }
         this.router.navigate(['/home']);
+        this.alertService.success('/login', 'Success', 'Succefully Login');
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;

@@ -11,13 +11,14 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { FloatLabelModule } from "primeng/floatlabel"
 import { InputTextModule } from 'primeng/inputtext';
 import { LoginComponent } from "./core/auth/pages/login/login.component";
+import { AlertComponent } from './shared/components/alert/alert.component';
 interface City {
   name: string;
   code: string;
 }
 
 @Component({
-  imports: [NxWelcomeComponent, LoginComponent, FormsModule, ReactiveFormsModule, RouterModule, ButtonModule, InputGroupModule, InputGroupAddonModule, FloatLabelModule, InputTextModule, InputNumberModule, SelectModule, LoginComponent],
+  imports: [NxWelcomeComponent, LoginComponent, AlertComponent, FormsModule, ReactiveFormsModule, RouterModule, ButtonModule, InputGroupModule, InputGroupAddonModule, FloatLabelModule, InputTextModule, InputNumberModule, SelectModule, LoginComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

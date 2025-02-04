@@ -9,6 +9,8 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { JwtTokenInterceptor } from './core/auth/interceptors/jwt-token.interceptor';
 import { SessionService } from './core/auth/services/session.service';
+import { MessageService } from 'primeng/api';
+import { AlertService } from './shared/services/alert.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +30,8 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(),
     SessionService,
+    MessageService,
+    AlertService,
     provideHttpClient(withInterceptors([JwtTokenInterceptor])),
   ]
 };

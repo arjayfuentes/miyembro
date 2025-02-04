@@ -45,6 +45,16 @@
               styleClass="sessions-password block w-full"
             />
           </div>
+          <div class="h-3 my-0 py-0">
+            <!-- Adjust the height class as needed -->
+            <p
+              class="text-red-500 font-medium text-xs"
+              *ngIf="loginErrorMessage"
+            >
+              {{ loginErrorMessage }}
+            </p>
+          </div>
+
           <div class="flex items-center justify-between">
             <div class="flex items-start"></div>
             <a
@@ -58,6 +68,7 @@
             (click)="onClickLogin()"
             severity="help"
             styleClass="w-full mt-4"
+            [disabled]="loginForm.invalid"
           />
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Don’t have an account yet?

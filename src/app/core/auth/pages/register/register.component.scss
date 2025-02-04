@@ -23,4 +23,11 @@
   // }
 
 
+
+  :host ::ng-deep {
+    .border-4.p-inputnumber-input	{
+      width: 100% !important
+    }
+  }
+
   
