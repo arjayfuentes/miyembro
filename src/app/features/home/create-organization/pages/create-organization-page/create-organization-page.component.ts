@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { OrganizationFormComponent } from "../../components/organization-form/organization-form.component";
@@ -7,6 +7,8 @@ import { OrganizationMembershipTypeFormComponent } from "../../components/organi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { emptyEditorValidator } from 'src/app/core/validators/empty-editor-validator';
+import { MembershipTypeService } from '../../services/membership-type.service';
+import { MembershipTypeValidity } from '../../models/membership-type-validity';
 
 @Component({
   selector: 'app-create-organization-page',
@@ -14,13 +16,17 @@ import { emptyEditorValidator } from 'src/app/core/validators/empty-editor-valid
   templateUrl: './create-organization-page.component.html',
   styleUrl: './create-organization-page.component.scss'
 })
-export class CreateOrganizationPageComponent {
+export class CreateOrganizationPageComponent implements OnInit{
   
   organizationForm: FormGroup;
   organizationAddressForm: FormGroup;
-  organizationMembershipTypes: FormGroup;
+  organizationMembershipTypesForm: FormGroup;
+  membershipTypeValidities: MembershipTypeValidity [] = [];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private membershipTypeService: MembershipTypeService
+  ) {
     this.organizationForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', [emptyEditorValidator(), Validators.required]],
@@ -35,8 +41,23 @@ export class CreateOrganizationPageComponent {
       postCode: [''],
       country: ['', Validators.required]
     });
-    this.organizationMembershipTypes = this.formBuilder.group({
+    this.organizationMembershipTypesForm = this.formBuilder.group({
       membershipTypes: ['', Validators.required]
     })
   }
+  ngOnInit(): void {
+    this.membershipTypeService.findAllMembershipTypeValidity().subscribe(
+      (res) => {
+        this.membershipTypeValidities = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+
+  
+
+
 }

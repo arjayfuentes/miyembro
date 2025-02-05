@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -26,34 +26,21 @@ import { SelectModule } from 'primeng/select';
   styleUrls: ['./organization-membership-type-form.component.scss'],
   imports: [InputNumberModule, ToastModule, TextareaModule, FormErrorsFilterPipe, SelectModule, RadioButtonModule, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent],
 })
-export class OrganizationMembershipTypeFormComponent implements OnInit {
+export class OrganizationMembershipTypeFormComponent {
   
-  membershipTypesForm: FormGroup;
-  membershipTypeValidities: MembershipTypeValidity [] = [];
-
+  organizationMembershipTypesForm: FormGroup;
+  @Input() membershipTypeValidities: MembershipTypeValidity [] = [];
+   
   constructor(
     private formBuilder: FormBuilder,
-    private membershipTypeService: MembershipTypeService
   ) {
-    this.membershipTypesForm = this.formBuilder.group({
+    this.organizationMembershipTypesForm = this.formBuilder.group({
       membershipTypes: this.formBuilder.array([this.createMembershipType(true)]) 
     });
   }
 
-
-  ngOnInit(): void {
-     this.membershipTypeService.findAllMembershipTypeValidity().subscribe(
-      (res) => {
-        this.membershipTypeValidities = res;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-  }
-
   get membershipTypes(): FormArray {
-    return this.membershipTypesForm.get('membershipTypes') as FormArray;
+    return this.organizationMembershipTypesForm.get('membershipTypes') as FormArray;
   }
 
   private createMembershipType(isDefault= false): FormGroup {
@@ -90,10 +77,10 @@ export class OrganizationMembershipTypeFormComponent implements OnInit {
   }
 
    get f(): { [key: string]: AbstractControl } {
-      return this.membershipTypesForm.controls;
+      return this.organizationMembershipTypesForm.controls;
     }
   
     get fgErrors(): { [key: string]: ValidationErrors } | null {
-      return this.membershipTypesForm.errors;
+      return this.organizationMembershipTypesForm.errors;
     }
 }
