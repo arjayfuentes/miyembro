@@ -26,8 +26,8 @@
             id="firstName"
             formControlName="firstName"
             type="text"
-            pTooltip="{{ f['firstName'].errors | formErrors : 'first name' }}"
             class="w-full"
+            pTooltip="{{ f['firstName'].errors | formErrors : 'first name' }}"
             tooltipStyleClass="error-tooltip"
             [tooltipDisabled]="
               !(f['firstName'].invalid && f['firstName'].touched)

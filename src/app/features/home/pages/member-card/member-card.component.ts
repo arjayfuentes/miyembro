@@ -1,0 +1,44 @@
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
+import { ButtonGroupModule } from 'primeng/buttongroup';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { Menubar } from 'primeng/menubar';
+import { Popover, PopoverModule } from 'primeng/popover';
+import { Ripple } from 'primeng/ripple';
+import { Member } from 'src/app/core/models/member';
+import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
+import { Session } from 'src/app/core/models/session';
+
+@Component({
+  selector: 'app-member-card',
+  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule],
+  templateUrl: './member-card.component.html',
+  styleUrl: './member-card.component.scss'
+})
+export class MemberCardComponent {
+
+  @ViewChild('op') popover!: Popover;
+
+
+  @Input() session: Session | null = null;
+  @Output() logout = new EventEmitter<void>();
+
+  onClickLogout() {
+    this.logout.emit(); // Emit event when logout is clicked
+    this.popover.hide(); // Close the popover after logout
+  }
+
+  togglePopover(event: Event) {
+    this.popover.toggle(event);
+  }
+}
+

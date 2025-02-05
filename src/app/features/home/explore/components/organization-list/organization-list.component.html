@@ -178,6 +178,26 @@
         styleClass="px-4 py-1"
         severity="help"
         (onClick)="joinOrganization()"
+        *ngIf="membership === null"
+        [raised]="true"
+      />
+      <p-button
+        class="flex-auto md:flex-initial whitespace-nowrap"
+        label="You are already a member"
+        size="small"
+        styleClass="px-4 py-1"
+        severity="success"
+        *ngIf="membership && membership?.membershipType !== null"
+        variant="text"
+      />
+      <p-button
+        class="flex-auto md:flex-initial whitespace-nowrap"
+        label="Request Pending"
+        size="small"
+        styleClass="px-4 py-1"
+        severity="secondary"
+        *ngIf="membership && membership?.membershipType === null"
+        variant="text"
       />
     </div>
   </p-dialog>

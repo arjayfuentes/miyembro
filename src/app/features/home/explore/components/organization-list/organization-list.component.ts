@@ -12,6 +12,8 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
 import { MembershipService } from 'src/app/core/auth/services/membership.service';
+import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
+import { Membership } from 'src/app/core/models/membership';
 
 @Component({
   selector: 'app-organization-list',
@@ -60,6 +62,7 @@ export class OrganizationListComponent implements OnInit{
   onClickOrganization(organization: OrganizationResponse) {
     this.visible = true;
     this.selectedOrganization = organization;
+    this.getMembershipByMemberIdAndOrganizationId(organization);
   }
 
   joinOrganization() {
@@ -74,6 +77,26 @@ export class OrganizationListComponent implements OnInit{
         console.log(res);
         this.visible = false;
         this.alertService.success('/home/explore', 'Success', 'Successfully requested to join the group');
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+  }
+
+  membership: Membership | null = null;
+
+  getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse) {
+    this.membership = null;
+    const session = this.sessionService.getSession();
+    const getMembershipRequest: GetMembershipRequest = {
+      organizationId: organization?.organizationId,
+      memberId: session?.member.memberId
+    };
+
+    this.membershipService.getMembershipByMemberIdAndOrganizationId(getMembershipRequest).subscribe(
+      (res) => {
+        this.membership = res;
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;

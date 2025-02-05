@@ -21,10 +21,11 @@ import { DividerModule } from 'primeng/divider';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import { AuthenticationService } from 'src/app/core/auth/services/authentication.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { MemberCardComponent } from "../member-card/member-card.component";
 
 @Component({
   selector: 'app-header',
-  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule],
+  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule, MemberCardComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -53,49 +54,26 @@ export class HeaderComponent implements OnInit{
             {
                 label: 'Explore',
                 icon: 'pi pi-search-plus',
-                route: '/home/explore'
+                route: '/home/explore',
+                command: () => this.removeCreateOrganization()
             },
             {
                 label: 'My Organization',
                 icon: 'pi pi-sitemap',
-                route: '/home/organization'
+                route: '/home/organization',
+                command: () => this.removeCreateOrganization()
             },
-            // {
-            //     label: 'Co-Members',
-            //     icon: 'pi pi-users',
-            //     route: '/home/members' , My organization (to edit), Explore (theres an option to create your own organization), Members (assign admin)
-            // },
-            // {
-            //     label: 'Calendar',
-            //     icon: 'pi pi-calendar-plus',
-            //     route: '/home/my-calendar'
-            // },
-            // {
-            //     label: 'Programmatic',
-            //     icon: 'pi pi-link',
-            //     command: () => {
-            //         this.router.navigate(['/installation']);
-            //     }
-            // },
-            // {
-            //     label: 'External',
-            //     icon: 'pi pi-home',
-            //     items: [
-            //         {
-            //             label: 'Angular',
-            //             url: 'https://angular.io/'
-            //         },
-            //         {
-            //             label: 'Vite.js',
-            //             url: 'https://vitejs.dev/'
-            //         }
-            //     ]
-            // }
+            {
+                label: 'Members',
+                icon: 'pi pi-user',
+                route: '/home/members',
+                command: () => this.removeCreateOrganization()
+            }
         ];
     }
 
     onClickLogout() {
-    this.authenticationService.logout().subscribe(
+        this.authenticationService.logout().subscribe(
         (res) => {
             this.sessionService.clearSession();
             localStorage.removeItem('authToken');
@@ -106,5 +84,24 @@ export class HeaderComponent implements OnInit{
             console.log(err);
         }
         );
+    }
+
+    goToCreateOrganization() {
+
+        const exists = this.items?.some(item => item.label === 'Create Organization');
+        
+        if (!exists) {
+            this.items = [...this.items || [], {
+                label: 'Create Organization',
+                icon: 'pi pi-user',
+                route: '/home/create-organization'
+            }];
+        }
+    
+        this.router.navigate(['/home/create-organization']);
+    }
+
+    removeCreateOrganization() {
+        this.items = this.items?.filter(item => item.label !== 'Create Organization') || [];
     }
 }

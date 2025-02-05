@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
 import { OrganizationComponent } from './features/home/pages/organization/pages/organization/organization.component';
-import { MembersComponent } from './features/home/members/members.component';
-import { MyCalendarComponent } from './features/home/my-calendar/my-calendar.component';
 import { UnAuthGuard } from './core/guards/unauth-guard';
 import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
+import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';
+import { CreateOrganizationPageComponent } from './features/home/create-organization/pages/create-organization-page/create-organization-page.component';
 
 export const appRoutes: Route[] = [
     {
@@ -19,8 +19,9 @@ export const appRoutes: Route[] = [
       children: [
         { path: 'explore', component: ExplorePageComponent },
         { path: 'organization', component: OrganizationComponent },
-        { path: 'members', component: MembersComponent },
-        { path: 'my-calendar', component: MyCalendarComponent },
+        { path: 'members', component: MemberPageComponent },
+        { path: 'create-organization', component: CreateOrganizationPageComponent },
+
       ],
       canActivate: [AuthGuard],
     },
