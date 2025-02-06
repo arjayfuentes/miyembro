@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(loginFormVal).subscribe(
       (res) => {
         this.sessionService.setSession(res);
+        console.log(this.sessionService.getSession());
 
         const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length
         if(numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {

@@ -1,0 +1,36 @@
+<p-table
+  *ngIf="table"
+  [value]="table.rows ?? []"
+  [tableStyle]="{ 'min-width': '60rem' }"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <span class="text-xl font-bold">{{ tableTitle }}</span>
+      <p-button icon="pi pi-refresh" rounded raised />
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th *ngFor="let col of table.columns">
+        {{ col.headerText }}
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-rowData>
+    <tr *ngIf="rowData">
+      <td *ngFor="let col of table.columns">
+        {{ col.dataField ? rowData[col.dataField] : 'N/A' }}
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #footer>
+    <div class="m-2">
+      <p>
+        In total there are {{ table?.rows?.length || 0 }} {{ tableTitle }}(s).
+      </p>
+    </div>
+  </ng-template>
+</p-table>

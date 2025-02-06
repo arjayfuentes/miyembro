@@ -81,9 +81,12 @@
       <ng-template #subtitle> </ng-template>
       <div class="mb-5">
         <p class="text-lg font-semibold mb-4">About Us</p>
-        <p class="">
-          {{ selectedOrganization?.description }}
-        </p>
+        <div class="w-full max-w-full overflow-hidden">
+          <div
+            class="break-words p-4"
+            [innerHTML]="selectedOrganization?.description"
+          ></div>
+        </div>
       </div>
       <div>
         <p class="text-lg font-semibold mb-4">The Team</p>

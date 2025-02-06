@@ -63,6 +63,8 @@ export class ChooseOrganizationComponent implements OnInit{
     this.authenticationService.selectLoginOrganization(selectOrganizationLoginRequest).subscribe(
       (res) => {
         this.sessionService.setSession(res);
+        console.log(this.sessionService.getSession());
+
         const session = this.sessionService.getSession();
         if(session) {
           localStorage.setItem('authToken', session.accessToken);

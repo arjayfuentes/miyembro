@@ -78,31 +78,34 @@
 
           <!-- Membership Validity -->
           <div class="w-full md:col-span-2">
-            <label class="text-gray-600 text-sm mb-2 block" for="validity">
+            <label
+              class="text-gray-600 text-sm mb-2 block"
+              for="membershipTypeValidity"
+            >
               Validity<span class="ml-2 text-red-500 font-semibold">*</span>
             </label>
             <p-select
-              formControlName="validity"
+              formControlName="membershipTypeValidity"
               [options]="membershipTypeValidities"
               optionLabel="name"
               placeholder="Select validity"
               class="w-full"
               [styleClass]="
-                membershipType.get('validity')?.invalid &&
-                membershipType.get('validity')?.touched
+                membershipType.get('membershipTypeValidity')?.invalid &&
+                membershipType.get('membershipTypeValidity')?.touched
                   ? 'border-4 border-red-500'
                   : ''
               "
               pTooltip="{{ 
-                membershipType.get('validity')?.errors?.['required'] 
+                membershipType.get('membershipTypeValidity')?.errors?.['required'] 
                   ? 'Validity is required' 
                   : null 
               }}"
               tooltipStyleClass="error-tooltip"
               [tooltipDisabled]="
                 !(
-                  membershipType.get('validity')?.invalid &&
-                  membershipType.get('validity')?.touched
+                  membershipType.get('membershipTypeValidity')?.invalid &&
+                  membershipType.get('membershipTypeValidity')?.touched
                 )
               "
             />
@@ -112,11 +115,11 @@
           <div
             class="w-full md:w-auto flex flex-col items-start justify-center md:col-span-1"
           >
-            <label class="text-gray-600 text-sm mb-2" for="isDefaultType">
+            <label class="text-gray-600 text-sm mb-2" for="isDefault">
               Default?<span class="ml-2 text-red-500 font-semibold">*</span>
             </label>
             <p-radiobutton
-              formControlName="isDefaultType"
+              formControlName="isDefault"
               binary="true"
               value="true"
               (change)="setDefaultType(i)"

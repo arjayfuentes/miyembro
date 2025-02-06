@@ -168,7 +168,13 @@
     </div>
     <div class="mt-4 justify-center">
       <p class="my-2 font-semibold">About Us</p>
-      <p>{{ selectedOrganization?.description }}</p>
+      <div class="w-full max-w-full overflow-hidden">
+        <div
+          class="p-4 [&_*]:break-words [&_*]:whitespace-pre-line [&_*]:text-black"
+        >
+          <div [innerHTML]="selectedOrganization?.description"></div>
+        </div>
+      </div>
     </div>
     <div class="mt-4 flex justify-center">
       <p-button

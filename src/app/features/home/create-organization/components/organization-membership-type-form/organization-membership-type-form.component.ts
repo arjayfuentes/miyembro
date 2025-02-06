@@ -28,15 +28,12 @@ import { SelectModule } from 'primeng/select';
 })
 export class OrganizationMembershipTypeFormComponent {
   
-  organizationMembershipTypesForm: FormGroup;
+  @Input() organizationMembershipTypesForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
   @Input() membershipTypeValidities: MembershipTypeValidity [] = [];
    
   constructor(
     private formBuilder: FormBuilder,
   ) {
-    this.organizationMembershipTypesForm = this.formBuilder.group({
-      membershipTypes: this.formBuilder.array([this.createMembershipType(true)]) 
-    });
   }
 
   get membershipTypes(): FormArray {
@@ -45,10 +42,12 @@ export class OrganizationMembershipTypeFormComponent {
 
   private createMembershipType(isDefault= false): FormGroup {
     return this.formBuilder.group({
+      membershipTypeId: [null],
+      organizationId: [null],
+      membershipTypeValidity: [null, Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      validity: [null, Validators.required],
-      isDefaultType: [isDefault]
+      isDefault: [isDefault]
     });
   }
 
@@ -58,12 +57,12 @@ export class OrganizationMembershipTypeFormComponent {
 
   removeMembershipType(index: number): void {
     if (this.membershipTypes.length > 1) {
-      const isDefault = this.membershipTypes.at(index).get('isDefaultType')?.value;
+      const isDefault = this.membershipTypes.at(index).get('isDefault')?.value;
       this.membershipTypes.removeAt(index);
 
       // If the removed membership was default, set another one as default
       if (isDefault) {
-        this.membershipTypes.at(0).get('isDefaultType')?.setValue(true);
+        this.membershipTypes.at(0).get('isDefault')?.setValue(true);
       }
     } else {
       alert('At least one membership type is required.');
@@ -72,7 +71,7 @@ export class OrganizationMembershipTypeFormComponent {
 
   setDefaultType(index: number): void {
     this.membershipTypes.controls.forEach((control, i) => {
-      control.get('isDefaultType')?.setValue(i === index);
+      control.get('isDefault')?.setValue(i === index);
     });
   }
 

@@ -1,0 +1,29 @@
+<div>
+  <div class="mt-2">
+    <p-fileupload
+      #fuBackground
+      mode="basic"
+      chooseLabel="Upload your logo"
+      chooseIcon="pi pi-upload"
+      name="logoImage"
+      accept="image/*"
+      maxFileSize="1000000"
+      [files]="selectedLogoImageFiles"
+      (onSelect)="onLogoImageFileSelect($event)"
+    ></p-fileupload>
+  </div>
+
+  <div class="mt-12">
+    <p-fileupload
+      #fuBackground
+      mode="basic"
+      chooseLabel="Upload your background image"
+      chooseIcon="pi pi-upload"
+      name="backgroundImage"
+      accept="image/*"
+      maxFileSize="1000000"
+      [files]="selectedBackgroundImageFiles"
+      (onSelect)="onBackgroundImageFileSelect($event)"
+    ></p-fileupload>
+  </div>
+</div>
