@@ -1,3 +1,16 @@
 <div class="m-4">
-  <app-table [table]="table" [tableTitle]="title"></app-table>
+  <app-table
+    [table]="table"
+    [tableTitle]="title"
+    [tableFooterCountTitle]="tableFooterCountTitle"
+    [paginator]="true"
+    [(totalRecords)]="totalRecords"
+    [(rowsPerPage)]="rowsPerPage"
+    [(first)]="first"
+    (pageChangeTable)="pageChangeTable($event)"
+    (sortChangeTable)="sortChangeTable($event)"
+    [loading]="loading"
+    [(sortField)]="sortField"
+    [(sortOrder)]="sortOrder"
+  ></app-table>
 </div>

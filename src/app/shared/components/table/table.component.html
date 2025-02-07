@@ -1,36 +1,74 @@
 <p-table
   *ngIf="table"
   [value]="table.rows ?? []"
-  [tableStyle]="{ 'min-width': '60rem' }"
+  [paginator]="paginator"
+  [rows]="rowsPerPage"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[5, 10, 20]"
+  [first]="first"
+  [(selection)]="selectedItems"
+  [showCurrentPageReport]="true"
+  (onPage)="pageChange($event)"
+  dataKey="memberId"
+  [scrollable]="true"
+  scrollHeight="65vh"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [lazy]="true"
+  [loading]="loading"
+  (onSort)="onSort($event)"
 >
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <span class="text-xl font-bold">{{ tableTitle }}</span>
+      <span class="text-lg font-bold">{{ tableTitle }}</span>
       <p-button icon="pi pi-refresh" rounded raised />
     </div>
   </ng-template>
 
   <ng-template #header>
     <tr>
-      <th *ngFor="let col of table.columns">
-        {{ col.headerText }}
+      <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+      <th *ngFor="let col of table.columns" [pSortableColumn]="col.dataField">
+        {{ col.headerText }} <p-sortIcon [field]="col.dataField" />
       </th>
+      <th style="width: 5rem"></th>
     </tr>
   </ng-template>
 
   <ng-template #body let-rowData>
     <tr *ngIf="rowData">
+      <td>
+        <p-tableCheckbox [value]="rowData" />
+      </td>
       <td *ngFor="let col of table.columns">
         {{ col.dataField ? rowData[col.dataField] : 'N/A' }}
+      </td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          (click)="selectItem(rowData)"
+          severity="secondary"
+          rounded
+        />
       </td>
     </tr>
   </ng-template>
 
   <ng-template #footer>
+    <div style="width: 4rem"></div>
+  </ng-template>
+  <ng-template #paginatorleft>
     <div class="m-2">
-      <p>
-        In total there are {{ table?.rows?.length || 0 }} {{ tableTitle }}(s).
-      </p>
+      <span>
+        In total there are {{ totalRecords || 0 }}
+        {{ tableFooterCountTitle }}(s).
+      </span>
+      <span class="ml-2">
+        Selected Items {{ selectedItems?.length || 0 }}
+        {{ tableFooterCountTitle }}(s).
+      </span>
     </div>
+  </ng-template>
+  <ng-template #paginatorright>
+    <p-button type="button" icon="pi pi-plus" text />
   </ng-template>
 </p-table>

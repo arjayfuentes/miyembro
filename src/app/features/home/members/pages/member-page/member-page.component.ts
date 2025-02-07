@@ -17,9 +17,17 @@ import { Session } from 'src/app/core/models/session';
 export class MemberPageComponent implements OnInit {
 
   table: Table<any> = { rows: [], columns: [] };
+  loading = false;
   members: Member [] = [];
-  title = 'Member';
+  title = 'Members';
+  tableFooterCountTitle = 'Member'
   session: Session | null = null;
+  totalRecords = 0;  // Total records count
+  rowsPerPage = 10;  // Default page size
+  first = 0; // 
+
+  sortField = "firstName";
+  sortOrder = 1;  
 
   constructor(
     private alertService: AlertService,
@@ -28,23 +36,43 @@ export class MemberPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.populateTable();
+    const pageNo = this.first;
+    this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
     this.session = this.sessionService.getSession();
   }
 
-  private populateTable() {
+  private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
+    this.loading = true;
     const session = this.sessionService.getSession();
     const organizationId = session?.organization?.organizationId;
-    this.memberService.getMembersByOrganization(organizationId).subscribe(
+    const order = sortOrder == 1 ? 'ASC': 'DESC';
+    sortField = "Member." + sortField;
+
+    this.memberService.getMembersByOrganizationPage(organizationId, pageNo, pageSize, sortField, order).subscribe(
       (res) => {
         console.log(res);
-        this.members = res;
+        this.members = res.content;
+        this.totalRecords = res.totalElements;
+        this.first = pageNo * res.pageable.pageSize;
         this.setTableData();
+        this.loading = false;
       },
       (err: any) => {
         console.log(err);
+        this.loading = false;
+
       }
     );
+  }
+
+  pageChangeTable(event: any) {
+    const pageNo = event.first / event.rowsPerPage;
+    this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+  }
+
+  sortChangeTable(event: any) {
+    const pageNo = event.first / event.rowsPerPage;
+    this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
   }
 
   private setTableData() {
