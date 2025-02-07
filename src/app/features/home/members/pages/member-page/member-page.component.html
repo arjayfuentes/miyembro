@@ -1,16 +1,16 @@
-<div class="m-4">
-  <app-table
-    [table]="table"
-    [tableTitle]="title"
-    [tableFooterCountTitle]="tableFooterCountTitle"
-    [paginator]="true"
-    [(totalRecords)]="totalRecords"
-    [(rowsPerPage)]="rowsPerPage"
-    [(first)]="first"
-    (pageChangeTable)="pageChangeTable($event)"
-    (sortChangeTable)="sortChangeTable($event)"
-    [loading]="loading"
-    [(sortField)]="sortField"
-    [(sortOrder)]="sortOrder"
-  ></app-table>
+<div class="card">
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0">Members</p-tab>
+      <p-tab value="1">Member Requests</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <app-member-list></app-member-list>
+      </p-tabpanel>
+      <p-tabpanel value="1">
+        <app-member-pending-request></app-member-pending-request>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
 </div>

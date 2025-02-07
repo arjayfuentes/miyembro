@@ -9,28 +9,21 @@
   [(selection)]="selectedItems"
   [showCurrentPageReport]="true"
   (onPage)="pageChange($event)"
-  dataKey="memberId"
+  dataKey="membershipId"
   [scrollable]="true"
-  scrollHeight="65vh"
+  scrollHeight="64vh"
   [tableStyle]="{ 'min-width': '50rem' }"
   [lazy]="true"
   [loading]="loading"
   (onSort)="onSort($event)"
 >
-  <ng-template #caption>
-    <div class="flex items-center justify-between">
-      <span class="text-lg font-bold">{{ tableTitle }}</span>
-      <p-button icon="pi pi-refresh" rounded raised />
-    </div>
-  </ng-template>
-
   <ng-template #header>
     <tr>
       <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
       <th *ngFor="let col of table.columns" [pSortableColumn]="col.dataField">
         {{ col.headerText }} <p-sortIcon [field]="col.dataField" />
       </th>
-      <th style="width: 5rem"></th>
+      <!-- <th style="width: 5rem"></th> -->
     </tr>
   </ng-template>
 
@@ -40,15 +33,35 @@
         <p-tableCheckbox [value]="rowData" />
       </td>
       <td *ngFor="let col of table.columns">
-        {{ col.dataField ? rowData[col.dataField] : 'N/A' }}
-      </td>
-      <td>
-        <p-button
-          icon="pi pi-pencil"
-          (click)="selectItem(rowData)"
-          severity="secondary"
-          rounded
-        />
+        <ng-container
+          *ngIf="col.dataField && col.dataType === 'date' && col.dateFormat"
+        >
+          {{
+            rowData[col.dataField]
+              ? (rowData[col.dataField] | date : col.dateFormat)
+              : 'N/A'
+          }}
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            !(col.dataType === 'date' && col.dateFormat) &&
+            !(col.dataType === 'button')
+          "
+        >
+          {{
+            col.dataField ? getNestedProperty(rowData, col.dataField) : 'N/A'
+          }}
+        </ng-container>
+
+        <ng-container *ngIf="col.dataType === 'button'">
+          <p-button
+            [icon]="col.buttonIcon"
+            (click)="selectItem(rowData)"
+            severity="secondary"
+            [label]="col.buttonLabel"
+          />
+        </ng-container>
       </td>
     </tr>
   </ng-template>

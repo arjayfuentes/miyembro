@@ -8,5 +8,7 @@ export interface Column {
     colHeaderTemplateRefName?: string; // template reference name for custom columns
     durationFormat?: string; // selected format for duration field
     dateFormat?: string; // format for date field
+    buttonIcon?: string;
+    buttonLabel?: string;
   }
   

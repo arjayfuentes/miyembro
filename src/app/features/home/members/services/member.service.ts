@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment as env } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { Member } from 'src/app/core/models/member';
+import { Membership } from 'src/app/core/models/membership';
 import { Page } from 'src/app/shared/model/page';
 
 @Injectable({
@@ -32,5 +33,28 @@ export class MemberService {
       .set('sortField', sortField.toString())
       .set('sortOrder', sortOrder.toString());
       return this.http.get<any>(url, { params }) as Observable<Page<Member>>;
+  }
+
+
+  getMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<Membership>> {
+    const url = `${env.apiUrl}${this.baseUrl}/organization/${organizationId}/memberships`;
+
+    const params = new HttpParams()
+      .set('pageNo', pageNo.toString())
+      .set('pageSize', pageSize.toString())
+      .set('sortField', sortField.toString())
+      .set('sortOrder', sortOrder.toString());
+      return this.http.get<any>(url, { params }) as Observable<Page<Membership>>;
+  }
+
+  getPendingMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<Membership>> {
+    const url = `${env.apiUrl}${this.baseUrl}/organization/${organizationId}/memberships/pending`;
+
+    const params = new HttpParams()
+      .set('pageNo', pageNo.toString())
+      .set('pageSize', pageSize.toString())
+      .set('sortField', sortField.toString())
+      .set('sortOrder', sortOrder.toString());
+      return this.http.get<any>(url, { params }) as Observable<Page<Membership>>;
   }
 }
