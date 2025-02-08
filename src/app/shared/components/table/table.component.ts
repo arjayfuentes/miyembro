@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, Output, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Table } from '../../model/table';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent {
+export class TableComponent implements AfterContentInit{
 
   @Input() table: Table<any> = { rows: [], columns: [] };
   @Input() tableTitle: string | null = null;
@@ -34,6 +34,8 @@ export class TableComponent {
   @Output() sortOrderChange = new EventEmitter<number>();
   @Output() sortChangeTable = new EventEmitter<any>(); 
 
+  @ContentChildren(TemplateRef) tempList!: QueryList<TemplateRef<any>>;
+  templateList!: TemplateRef<any>[];
 
   selectedItems: any [] = [];
 
@@ -52,6 +54,10 @@ export class TableComponent {
       "sortField": this.sortField,
       "sortOrder": this.sortOrder
     });
+  }
+
+  ngAfterContentInit(): void {
+    this.templateList = this.tempList.toArray();
   }
 
 
@@ -79,6 +85,14 @@ export class TableComponent {
   getNestedProperty(obj: any, path: string): any {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   }
+
+
+  getTemplate(colTemplateRefName: string ): TemplateRef<any> {
+    return this.templateList.find(
+      (t) => (t as any)._declarationTContainer.localNames[0] === colTemplateRefName
+    )!;
+  }
+  
 
 
   

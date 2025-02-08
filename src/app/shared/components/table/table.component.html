@@ -11,19 +11,21 @@
   (onPage)="pageChange($event)"
   dataKey="membershipId"
   [scrollable]="true"
-  scrollHeight="64vh"
   [tableStyle]="{ 'min-width': '50rem' }"
   [lazy]="true"
-  [loading]="loading"
+  [loading]="false"
   (onSort)="onSort($event)"
 >
   <ng-template #header>
     <tr>
       <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-      <th *ngFor="let col of table.columns" [pSortableColumn]="col.dataField">
-        {{ col.headerText }} <p-sortIcon [field]="col.dataField" />
+      <th
+        *ngFor="let col of table.columns"
+        [pSortableColumn]="col.dataField ?? ''"
+      >
+        {{ col.headerText }}
+        <p-sortIcon [field]="col.dataField ?? ''" />
       </th>
-      <!-- <th style="width: 5rem"></th> -->
     </tr>
   </ng-template>
 
@@ -32,35 +34,24 @@
       <td>
         <p-tableCheckbox [value]="rowData" />
       </td>
-      <td *ngFor="let col of table.columns">
-        <ng-container
-          *ngIf="col.dataField && col.dataType === 'date' && col.dateFormat"
-        >
-          {{
-            rowData[col.dataField]
-              ? (rowData[col.dataField] | date : col.dateFormat)
-              : 'N/A'
-          }}
-        </ng-container>
-
-        <ng-container
-          *ngIf="
-            !(col.dataType === 'date' && col.dateFormat) &&
-            !(col.dataType === 'button')
-          "
-        >
-          {{
-            col.dataField ? getNestedProperty(rowData, col.dataField) : 'N/A'
-          }}
-        </ng-container>
-
-        <ng-container *ngIf="col.dataType === 'button'">
-          <p-button
-            [icon]="col.buttonIcon"
-            (click)="selectItem(rowData)"
-            severity="secondary"
-            [label]="col.buttonLabel"
-          />
+      <td
+        *ngFor="let col of table?.columns"
+        [style.text-align]="col.textAlign ? col.textAlign : 'left'"
+      >
+        <ng-container [ngSwitch]="col.dataType">
+          <ng-container *ngSwitchCase="'templateRef'">
+            <ng-container
+              *ngTemplateOutlet="
+                getTemplate(col.colTemplateRefName ?? 'defaultTemplate');
+                context: { $implicit: rowData }
+              "
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{
+              col.dataField ? getNestedProperty(rowData, col.dataField) : 'N/A'
+            }}
+          </ng-container>
         </ng-container>
       </td>
     </tr>

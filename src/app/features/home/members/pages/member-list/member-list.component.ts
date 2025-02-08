@@ -9,10 +9,11 @@ import { TableComponent } from "../../../../../shared/components/table/table.com
 import { Session } from 'src/app/core/models/session';
 import { Membership } from 'src/app/core/models/membership';
 import { TabsModule } from 'primeng/tabs';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-member-list',
-  imports: [CommonModule, TableComponent, MemberListComponent],
+  imports: [CommonModule, TableComponent, MemberListComponent, CardModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.scss'
 })
@@ -80,16 +81,22 @@ export class MemberListComponent {
       columns: [
         {
           dataField: 'member.firstName',
-          dataType: 'string',
-          colTemplateRefName: 'userFullnameColumn',
-          headerText: 'First Name',
+          dataType: 'templateRef',
+          colTemplateRefName: 'nameColumn',
+          headerText: 'Name',
         },
-        {
-          dataField: 'member.lastName',
-          dataType: 'string',
-          colTemplateRefName: 'userFullnameColumn',
-          headerText: 'Last Name',
-        },
+        // {
+        //   dataField: 'member.firstName',
+        //   dataType: 'string',
+        //   colTemplateRefName: 'userFullnameColumn',
+        //   headerText: 'First Name',
+        // },
+        // {
+        //   dataField: 'member.lastName',
+        //   dataType: 'string',
+        //   colTemplateRefName: 'userFullnameColumn',
+        //   headerText: 'Last Name',
+        // },
         {
           dataField: 'member.email',
           dataType: 'string',
@@ -110,18 +117,16 @@ export class MemberListComponent {
         },
         {
           dataField: 'startDate',
-          dataType: 'date',
-          colTemplateRefName: 'userFullnameColumn',
+          dataType: 'templateRef',
+          colTemplateRefName: 'startDateColumn',
           headerText: 'Membership Start Date',
-          dateFormat: 'MMMM d, yyyy'
         },
         {
           dataField: 'endDate',
-          dataType: 'date',
-          colTemplateRefName: 'userFullnameColumn',
+          dataType: 'templateRef',
+          colTemplateRefName: 'endDateColumn',
           headerText: 'Membership End Date',
-          dateFormat: 'MMMM d, yyyy'
-        }
+        },
       ],
       rows: this.memberships,
       sortField: 'member.firstName',

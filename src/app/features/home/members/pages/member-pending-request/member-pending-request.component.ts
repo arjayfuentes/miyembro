@@ -9,10 +9,12 @@ import { TableComponent } from "../../../../../shared/components/table/table.com
 import { Session } from 'src/app/core/models/session';
 import { Membership } from 'src/app/core/models/membership';
 import { TabsModule } from 'primeng/tabs';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-member-pending-request',
-  imports: [CommonModule, TableComponent],
+  imports: [CommonModule, TableComponent, ButtonModule, CardModule],
   templateUrl: './member-pending-request.component.html',
   styleUrl: './member-pending-request.component.scss'
 })
@@ -81,16 +83,22 @@ export class MemberPendingRequestComponent {
         columns: [
           {
             dataField: 'member.firstName',
-            dataType: 'string',
-            colTemplateRefName: 'userFullnameColumn',
-            headerText: 'First Name',
+            dataType: 'templateRef',
+            colTemplateRefName: 'nameColumn',
+            headerText: 'Name',
           },
-          {
-            dataField: 'member.lastName',
-            dataType: 'string',
-            colTemplateRefName: 'userFullnameColumn',
-            headerText: 'Last Name',
-          },
+          // {
+          //   dataField: 'member.firstName',
+          //   dataType: 'string',
+          //   colTemplateRefName: 'userFullnameColumn',
+          //   headerText: 'First Name',
+          // },
+          // {
+          //   dataField: 'member.lastName',
+          //   dataType: 'string',
+          //   colTemplateRefName: 'userFullnameColumn',
+          //   headerText: 'Last Name',
+          // },
           {
             dataField: 'member.email',
             dataType: 'string',
@@ -104,17 +112,24 @@ export class MemberPendingRequestComponent {
             headerText: 'Mobile Number',
           },
           {
-            dataField: '',
-            dataType: 'button',
-            colTemplateRefName: 'userFullnameColumn',
-            headerText: '',
-            buttonIcon: 'pi pi-check',
-            buttonLabel: 'Approve'
+            dataField: 'approveDeny',
+            dataType: 'templateRef',
+            colTemplateRefName: 'approveDenyColumn',
+            headerText: 'Approve or Deny'
           },
         ],
         rows: this.memberships,
         sortField: 'member.firstName',
       };
+    }
+
+
+    approveJoinRequest(row: any) {
+      console.log(row);
+    }
+
+    denyJoinRequest(row: any) {
+      console.log(row);
     }
 
 }

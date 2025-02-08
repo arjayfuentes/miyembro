@@ -1,16 +1,28 @@
 <div class="m-4">
-  <app-table
-    [table]="table"
-    [tableTitle]="title"
-    [tableFooterCountTitle]="tableFooterCountTitle"
-    [paginator]="true"
-    [(totalRecords)]="totalRecords"
-    [(rowsPerPage)]="rowsPerPage"
-    [(first)]="first"
-    (pageChangeTable)="pageChangeTable($event)"
-    (sortChangeTable)="sortChangeTable($event)"
-    [loading]="loading"
-    [(sortField)]="sortField"
-    [(sortOrder)]="sortOrder"
-  ></app-table>
+  <p-card>
+    <app-table
+      [table]="table"
+      [tableTitle]="title"
+      [tableFooterCountTitle]="tableFooterCountTitle"
+      [paginator]="true"
+      [(totalRecords)]="totalRecords"
+      [(rowsPerPage)]="rowsPerPage"
+      [(first)]="first"
+      (pageChangeTable)="pageChangeTable($event)"
+      (sortChangeTable)="sortChangeTable($event)"
+      [loading]="loading"
+      [(sortField)]="sortField"
+      [(sortOrder)]="sortOrder"
+    >
+      <ng-template #nameColumn let-row>
+        {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+      </ng-template>
+      <ng-template #startDateColumn let-row>
+        {{ row['startDate'] | date : 'MMMM d, y' }}
+      </ng-template>
+      <ng-template #endDateColumn let-row>
+        {{ row['endDate'] | date : 'MMMM d, y' }}
+      </ng-template>
+    </app-table>
+  </p-card>
 </div>
