@@ -6,6 +6,7 @@ export interface Member {
     lastName: string;
     email: string;
     phoneNumber: string;
+    profilePicUrl: string;
     memberAddress: MemberAddress;
 }
 

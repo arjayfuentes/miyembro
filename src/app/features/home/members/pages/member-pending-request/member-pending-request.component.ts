@@ -11,10 +11,12 @@ import { Membership } from 'src/app/core/models/membership';
 import { TabsModule } from 'primeng/tabs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-member-pending-request',
-  imports: [CommonModule, TableComponent, ButtonModule, CardModule],
+  imports: [CommonModule, TableComponent, ButtonModule, CardModule, AvatarModule, AvatarGroupModule],
   templateUrl: './member-pending-request.component.html',
   styleUrl: './member-pending-request.component.scss'
 })
@@ -110,6 +112,12 @@ export class MemberPendingRequestComponent {
             dataType: 'string',
             colTemplateRefName: 'userFullnameColumn',
             headerText: 'Mobile Number',
+          },
+          {
+            dataField: 'member.memberAddress.city',
+            dataType: 'templateRef',
+            colTemplateRefName: 'addressColumn',
+            headerText: 'Address',
           },
           {
             dataField: 'approveDeny',

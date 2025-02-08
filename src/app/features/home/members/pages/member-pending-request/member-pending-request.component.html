@@ -16,7 +16,22 @@
     >
       <!-- template for review button -->
       <ng-template #nameColumn let-row>
-        {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+        <div style="display: flex; align-items: center">
+          <p-avatar
+            [image]="row['member']['profilePicUrl']"
+            class="mr-2"
+            size="large"
+            shape="circle"
+          />
+          {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+        </div>
+      </ng-template>
+      <ng-template #addressColumn let-row>
+        {{
+          row['member']['memberAddress']['city'] +
+            ' ' +
+            row['member']['memberAddress']['country']
+        }}
       </ng-template>
       <ng-template #approveDenyColumn let-row>
         <p-button

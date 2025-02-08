@@ -10,10 +10,12 @@ import { Session } from 'src/app/core/models/session';
 import { Membership } from 'src/app/core/models/membership';
 import { TabsModule } from 'primeng/tabs';
 import { CardModule } from 'primeng/card';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-member-list',
-  imports: [CommonModule, TableComponent, MemberListComponent, CardModule],
+  imports: [CommonModule, TableComponent, MemberListComponent, CardModule, AvatarModule, AvatarGroupModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.scss'
 })
@@ -25,7 +27,7 @@ export class MemberListComponent {
   tableFooterCountTitle = 'Member'
   session: Session | null = null;
   totalRecords = 0;  // Total records count
-  rowsPerPage = 5;  // Default page size
+  rowsPerPage = 10;  // Default page size
   first = 0; // 
 
   sortField = "member.firstName";
@@ -85,6 +87,7 @@ export class MemberListComponent {
           colTemplateRefName: 'nameColumn',
           headerText: 'Name',
         },
+       
         // {
         //   dataField: 'member.firstName',
         //   dataType: 'string',
@@ -108,6 +111,12 @@ export class MemberListComponent {
           dataType: 'string',
           colTemplateRefName: 'userFullnameColumn',
           headerText: 'Mobile Number',
+        },
+        {
+          dataField: 'member.memberAddress.city',
+          dataType: 'templateRef',
+          colTemplateRefName: 'addressColumn',
+          headerText: 'Address',
         },
         {
           dataField: 'status',
