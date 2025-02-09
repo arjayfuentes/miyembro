@@ -125,6 +125,11 @@ export class MemberListComponent {
           headerText: 'Membership Status',
         },
         {
+          dataField: 'role.name',
+          dataType: 'string',
+          headerText: 'Role',
+        },
+        {
           dataField: 'startDate',
           dataType: 'templateRef',
           colTemplateRefName: 'startDateColumn',
