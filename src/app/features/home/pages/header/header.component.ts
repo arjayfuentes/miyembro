@@ -23,11 +23,38 @@ import { AuthenticationService } from 'src/app/core/auth/services/authentication
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MemberCardComponent } from "../member-card/member-card.component";
 
+import {
+    SocialLoginModule,
+    SocialAuthServiceConfig,
+    SocialAuthService,
+    GoogleLoginProvider,
+  } from "@abacritt/angularx-social-login";
+
 @Component({
   selector: 'app-header',
   imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule, MemberCardComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  providers: [
+      SocialAuthService,
+      {
+        provide: 'SocialAuthServiceConfig',
+        useValue: {
+          autoLogin: false,
+          providers: [
+            {
+              id: GoogleLoginProvider.PROVIDER_ID,
+              provider: new GoogleLoginProvider('654581949282-dmvkqbivaa8rmvem7ipjbas30p5akkrm.apps.googleusercontent.com', {
+                scopes: 'openid profile email',
+              }),
+            },
+          ],
+          onError: (err) => {
+            console.error(err);
+          },
+        } as SocialAuthServiceConfig,
+      }
+    ],
 })
 export class HeaderComponent implements OnInit{
 
@@ -45,7 +72,9 @@ export class HeaderComponent implements OnInit{
         private authenticationService: AuthenticationService,
         private router: Router,
         private sessionService: SessionService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private socialAuthService: SocialAuthService
+        
     ) {}
 
     ngOnInit() {
@@ -75,6 +104,7 @@ export class HeaderComponent implements OnInit{
     onClickLogout() {
         this.authenticationService.logout().subscribe(
         (res) => {
+            this.socialAuthService.signOut();
             this.sessionService.clearSession();
             localStorage.removeItem('authToken');
             this.router.navigate(['/login']);

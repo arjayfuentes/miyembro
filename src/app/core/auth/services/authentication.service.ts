@@ -8,6 +8,7 @@ import { LoginResponse } from '../../models/login-response';
 import { SelectOrganizationLoginRequest } from '../../models/select-login-organization-request';
 import { MemberRequest } from '../../models/member-request';
 import { Member } from '../../models/member';
+import { GoogleLoginRequest } from '../../models/google-login-request';
 
 
 @Injectable({
@@ -29,6 +30,10 @@ export class AuthenticationService {
 
   login(loginRequest: LoginRequest): Observable<Session> {
     return this.http.post(`${env.apiUrl}/auth/login`, loginRequest) as Observable<Session>;
+  }
+
+  loginWithGoogle(googleToken: GoogleLoginRequest): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/login/withGoogle`, googleToken) as Observable<Session>;
   }
 
   logout(): Observable<Session> {

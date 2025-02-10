@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.3.0",
     "@angular/animations": "~19.1.0",
     "@angular/common": "~19.1.0",
     "@angular/compiler": "~19.1.0",
@@ -18,10 +19,14 @@
     "@angular/platform-browser-dynamic": "~19.1.0",
     "@angular/router": "~19.1.0",
     "@primeng/themes": "^19.0.5",
+    "@react-oauth/google": "^0.12.1",
+    "angular-oauth2-oidc": "^19.0.0",
+    "gapi-script": "^1.2.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.5",
     "quill": "^2.0.3",
     "rxjs": "~7.8.0",
+    "save": "^2.9.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -43,6 +48,8 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@typescript-eslint/utils": "^8.19.0",

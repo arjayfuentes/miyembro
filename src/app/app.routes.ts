@@ -5,6 +5,7 @@ import { UnAuthGuard } from './core/guards/unauth-guard';
 import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
 import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';
 import { CreateOrganizationPageComponent } from './features/home/create-organization/pages/create-organization-page/create-organization-page.component';
+import { GoogleLoginComponent } from './core/auth/pages/google-login/google-login.component';
 
 export const appRoutes: Route[] = [
     {
@@ -30,6 +31,11 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
         canActivate: [UnAuthGuard],
     },
+    {
+      path: 'login/callback',
+      component: GoogleLoginComponent,
+      canActivate: [UnAuthGuard],
+  },
     {
       path: 'choose-organization',
       loadComponent: () => import('./core/auth/pages/choose-organization/choose-organization.component').then(mod => mod.ChooseOrganizationComponent),

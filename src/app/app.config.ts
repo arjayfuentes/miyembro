@@ -11,12 +11,14 @@ import { JwtTokenInterceptor } from './core/auth/interceptors/jwt-token.intercep
 import { SessionService } from './core/auth/services/session.service';
 import { MessageService } from 'primeng/api';
 import { AlertService } from './shared/services/alert.service';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(appRoutes),
     provideAnimationsAsync(),
+    provideOAuthClient(),
     providePrimeNG({
         theme: {
             preset: Aura , options: {

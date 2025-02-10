@@ -65,12 +65,24 @@
           </div>
           <p-button
             label="Login"
-            (click)="onClickLogin()"
+            (click)="onClickTraditionalLogin()"
             severity="help"
             styleClass="w-full mt-4"
             [disabled]="loginForm.invalid"
           />
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+          <div class="flex items-center justify-center mt-4">
+            <p class="text-sm font-medium">OR</p>
+          </div>
+          <p-button
+            label="Sign In with Google"
+            id="google-signin-button"
+            (click)="onClickLoginWithGoogle()"
+            severity="danger"
+            icon="pi pi-google"
+            styleClass="w-full mt-4"
+          />
+
+          <!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Don’t have an account yet?
             <a
               (click)="onClickRegister()"
@@ -79,7 +91,7 @@
               tabindex="0"
               >Sign up</a
             >
-          </p>
+          </p> -->
         </form>
       </div>
     </div>
