@@ -46,11 +46,10 @@ import {
   ],
 })
 export class LoginComponent implements OnInit {
+
   loginForm: FormGroup;
   loginErrorMessage: string | null = null;
   private unsubscribe: Subject<any> = new Subject();
-  @ViewChild('googleSignInButton') googleSignInButton!: ElementRef;
-
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -69,11 +68,6 @@ export class LoginComponent implements OnInit {
     this.loginForm.valueChanges.pipe(takeUntil(this.unsubscribe)).subscribe((val) => {
       if (val && this.loginErrorMessage) {
         this.loginErrorMessage = null;
-      }
-    });
-    this.socialAuthService.authState.subscribe((user) => {
-      if (user) {
-        this.onClickLoginGoogleContinue(user.idToken);
       }
     });
   }
@@ -98,16 +92,18 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  onClickLoginWithGoogle() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
+  onClickGoogleLogin(response: any) {
 
-  onClickLoginGoogleContinue(googleToken: string) {
-    console.log('Sending Google token to backend...');
+    console.log(response);
+
+    const googleToken = response.credential;  // Token received from Google
+    
     const googleLoginRequest: GoogleLoginRequest = {
       googleToken: googleToken
     };
 
+    console.log(googleLoginRequest);
+  
     this.authenticationService.loginWithGoogle(googleLoginRequest).subscribe(
       (res) => {
         this.sessionService.setSession(res);  
@@ -119,7 +115,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
+  
   successFulLogin() {
     console.log(this.sessionService.getSession());
     const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length;
