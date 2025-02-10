@@ -65,47 +65,19 @@
           </div>
           <p-button
             label="Login"
-            (click)="onClickTraditionalLogin()"
+            (click)="onClickLogin()"
             severity="help"
             styleClass="w-full mt-4"
             [disabled]="loginForm.invalid"
           />
-          <div class="flex items-center justify-center mt-4">
-            <p class="text-sm font-medium">OR</p>
-            <p></p>
-          </div>
-          <div class="flex justify-center items-center">
-            <div>
-              <div
-                id="g_id_onload"
-                data-client_id="654581949282-dmvkqbivaa8rmvem7ipjbas30p5akkrm.apps.googleusercontent.com"
-                data-context="use"
-                data-ux_mode="popup"
-                data-itp_support="true"
-                data-callback="onClickGoogleLogin"
-              ></div>
-              <div
-                class="g_id_signin"
-                data-type="standard"
-                data-shape="pill"
-                data-theme="filled_blue"
-                data-text="signin_with"
-                data-size="large"
-                data-logo_alignment="left"
-              ></div>
-            </div>
+
+          <div
+            class="jobluu-social-login flex justify-center items-center w-full mt-4"
+          >
+            <div id="googleLoginButton"></div>
           </div>
 
-          <!-- <p-button
-            label="Sign In with Google"
-            id="google-signin-button"
-            (click)="onClickLoginWithGoogle()"
-            severity="danger"
-            icon="pi pi-google"
-            styleClass="w-full mt-4"
-          /> -->
-
-          <!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Don’t have an account yet?
             <a
               (click)="onClickRegister()"
@@ -114,7 +86,7 @@
               tabindex="0"
               >Sign up</a
             >
-          </p> -->
+          </p>
         </form>
       </div>
     </div>
