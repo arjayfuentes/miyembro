@@ -44,10 +44,20 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'register',
-        loadComponent: () => import('./core/auth/pages/register/register.component').then(mod => mod.RegisterComponent),
+        loadComponent: () => import('./core/auth/pages/sign-up/sign-up.component').then(mod => mod.SignUpComponent),
         canActivate: [UnAuthGuard],
-
     },
+    {
+      path: 'additional-info-signup',
+      loadComponent: () => import('./core/auth/pages/additional-info-signup/additional-info-signup.component').then(mod => mod.AdditionalInfoSignupComponent),
+      canActivate: [UnAuthGuard],
+  },
+  //   {
+  //     path: 'register',
+  //     loadComponent: () => import('./core/auth/pages/sign-up/sign-up.component').then(mod => mod.SignUpComponent),
+  //     canActivate: [UnAuthGuard],
+
+  // },
     //  {
     //     path: '',
     //     redirectTo: 'home',

@@ -1,14 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Session } from '../../models/session';
 import { Observable } from 'rxjs';
 import { environment as env } from '@environments/environment';
 import { LoginRequest } from '../../models/login-request';
-import { LoginResponse } from '../../models/login-response';
 import { SelectOrganizationLoginRequest } from '../../models/select-login-organization-request';
 import { MemberRequest } from '../../models/member-request';
 import { Member } from '../../models/member';
-import { GoogleLoginRequest } from '../../models/google-login-request';
+import { GoogleRequest } from '../../models/google-request';
 
 
 @Injectable({
@@ -32,18 +31,21 @@ export class AuthenticationService {
     return this.http.post(`${env.apiUrl}/auth/login`, loginRequest) as Observable<Session>;
   }
 
-  loginWithGoogle(googleToken: GoogleLoginRequest): Observable<Session> {
+  loginWithGoogle(googleToken: GoogleRequest): Observable<Session> {
     return this.http.post(`${env.apiUrl}/auth/login/withGoogle`, googleToken) as Observable<Session>;
-  }
-
-  logout(): Observable<Session> {
-    return this.http.post(`${env.apiUrl}/auth/logout`, {}) as Observable<Session>;
   }
 
   register(memberRequest: MemberRequest): Observable<Member> {
     return this.http.post(`${env.apiUrl}/auth/register`, memberRequest) as Observable<Member>;
   }
 
+  signupWithGoogle(googleToken: GoogleRequest): Observable<Member> {
+    return this.http.post(`${env.apiUrl}/auth/register/withGoogle`, googleToken) as Observable<Member>;
+  }
+
+  logout(): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/logout`, {}) as Observable<Session>;
+  }
 
   selectLoginOrganization(selectOrganizationLoginRequest: SelectOrganizationLoginRequest): Observable<Session> {
     return this.http.post(`${env.apiUrl}/auth/selectLoginOrganization`, selectOrganizationLoginRequest) as Observable<Session>;

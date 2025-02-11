@@ -1,0 +1,230 @@
+<app-background>
+  <div
+    class="max-w-3xl max-sm:max-w-lg mx-auto p-5 md:h-screen min-h-screen flex items-center justify-center"
+  >
+    <form [formGroup]="additionalInfoRegisterForm" autocomplete="off">
+      <h2 class="text-lg font-medium text-purple-700 mb-3">Enter details:</h2>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div>
+          <!-- <p>{{ additionalInfoRegisterForm.value | json }}</p> -->
+          <!-- <label class="text-gray-600 text-sm mb-2 block" for="phoneNumber"
+            >Phone No.<span class="ml-2 text-red-500 font-semilbold"
+              >*
+            </span></label
+          > -->
+          <ngx-material-intl-tel-input
+            fieldControlName="phoneNumber"
+            [required]="true"
+            [autoIpLookup]="true"
+            appearance="fill"
+            [hidePhoneIcon]="true"
+            class="custom-phone-input"
+            pTooltip="{{
+              f['phoneNumber'].errors | formErrors : 'phoneNumber'
+            }}"
+            tooltipStyleClass="error-tooltip"
+            [tooltipDisabled]="
+              !(f['phoneNumber'].invalid && f['phoneNumber'].touched)
+            "
+          >
+          </ngx-material-intl-tel-input>
+        </div>
+        <div>
+          <p-floatlabel variant="in">
+            <p-datepicker
+              formControlName="birthDate"
+              inputId="in_label"
+              showIcon
+              iconDisplay="input"
+              pTooltip="{{ f['birthDate'].errors | formErrors : 'birthDate' }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !(f['birthDate'].invalid && f['birthDate'].touched)
+              "
+              [styleClass]="
+                f['birthDate'].invalid && f['birthDate'].touched
+                  ? 'border-2 border-red-500 border-error'
+                  : ''
+              "
+            />
+            <label for="in_label">Date of Birth*</label>
+          </p-floatlabel>
+        </div>
+      </div>
+      <p-divider styleClass="mt-4"></p-divider>
+      <h2 class="text-lg font-medium text-purple-700 mb-3">Address details:</h2>
+      <div class="grid sm:grid-cols-2 gap-6" formGroupName="memberAddress">
+        <div>
+          <p-floatlabel variant="in">
+            <input
+              pInputText
+              id="street"
+              formControlName="street"
+              type="text"
+              class="w-full"
+              pTooltip="{{
+                getControlErrors('memberAddress', 'street')
+                  | formErrors : 'street'
+              }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !isControlInvalidAndTouched('memberAddress', 'street')
+              "
+              [ngClass]="{
+                'border-2 border-red-500': isControlInvalidAndTouched(
+                  'memberAddress',
+                  'street'
+                )
+              }"
+            />
+            <label for="street">Street</label>
+          </p-floatlabel>
+        </div>
+        <div>
+          <p-floatlabel variant="in">
+            <input
+              pInputText
+              id="city"
+              formControlName="city"
+              type="text"
+              class="w-full"
+              pTooltip="{{
+                getControlErrors('memberAddress', 'city') | formErrors : 'city'
+              }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !isControlInvalidAndTouched('memberAddress', 'city')
+              "
+              [ngClass]="{
+                'border-2 border-red-500': isControlInvalidAndTouched(
+                  'memberAddress',
+                  'city'
+                )
+              }"
+            />
+            <label for="city">City*</label>
+          </p-floatlabel>
+        </div>
+        <div>
+          <p-floatlabel variant="in">
+            <input
+              pInputText
+              id="province"
+              formControlName="province"
+              type="text"
+              class="w-full"
+              pTooltip="{{
+                getControlErrors('memberAddress', 'province')
+                  | formErrors : 'province'
+              }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !isControlInvalidAndTouched('memberAddress', 'province')
+              "
+              [ngClass]="{
+                'border-2 border-red-500': isControlInvalidAndTouched(
+                  'memberAddress',
+                  'province'
+                )
+              }"
+            />
+            <label for="province">Province</label>
+          </p-floatlabel>
+        </div>
+        <div>
+          <p-floatlabel variant="in">
+            <input
+              pInputText
+              id="region"
+              formControlName="region"
+              type="text"
+              class="w-full"
+              pTooltip="{{
+                getControlErrors('memberAddress', 'region')
+                  | formErrors : 'region'
+              }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !isControlInvalidAndTouched('memberAddress', 'region')
+              "
+              [ngClass]="{
+                'border-2 border-red-500': isControlInvalidAndTouched(
+                  'memberAddress',
+                  'region'
+                )
+              }"
+            />
+            <label for="region">Region</label>
+          </p-floatlabel>
+        </div>
+        <div>
+          <p-floatlabel variant="in">
+            <input
+              pInputText
+              id="country"
+              formControlName="country"
+              type="text"
+              class="w-full"
+              pTooltip="{{
+                getControlErrors('memberAddress', 'country')
+                  | formErrors : 'country'
+              }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="
+                !isControlInvalidAndTouched('memberAddress', 'country')
+              "
+              [ngClass]="{
+                'border-2 border-red-500': isControlInvalidAndTouched(
+                  'memberAddress',
+                  'country'
+                )
+              }"
+            />
+            <label for="country">Country</label>
+          </p-floatlabel>
+        </div>
+      </div>
+      <p-divider styleClass="mt-4"></p-divider>
+      <h2 class="text-lg font-medium text-purple-700 mb-3">
+        Upload Profile Photo:
+        <span class="ml-2 text-red-500 font-semilbold">*</span>
+      </h2>
+      <div class="flex justify-center">
+        <div class="mt-2 w-full max-w-xs flex justify-center">
+          <p-fileupload
+            #fuBackground
+            mode="basic"
+            chooseLabel="Upload a profile pic"
+            chooseIcon="pi pi-upload"
+            name="logoImage"
+            accept="image/*"
+            maxFileSize="1000000"
+            [files]="selectedProfileImageFiles"
+            (onSelect)="onProfileImageFileSelect($event)"
+            styleClass="w-full"
+          ></p-fileupload>
+        </div>
+      </div>
+      <div class="mt-2 flex justify-between space-x-4">
+        <!-- First button -->
+        <p-button
+          label="Skip"
+          (click)="onSkipAdditionalInfo()"
+          severity="contrast"
+          [raised]="true"
+          variant="outlined"
+          styleClass="mt-4 block text-sm tracking-wider focus:outline-none"
+        />
+        <!-- Second button -->
+        <p-button
+          label="Submit"
+          (click)="onClickRegisterAdditionalInfo()"
+          severity="success"
+          [raised]="true"
+          styleClass="mt-4 block text-sm tracking-wider focus:outline-none"
+          [disabled]="additionalInfoRegisterForm.invalid"
+        />
+      </div>
+    </form>
+  </div>
+</app-background>

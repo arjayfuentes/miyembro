@@ -11,7 +11,6 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { CommonModule } from '@angular/common';
-import { MembershipService } from '../../services/membership.service';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MemberRequest } from 'src/app/core/models/member-request';
@@ -22,7 +21,6 @@ import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pi
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AlertComponent } from "../../../../shared/components/alert/alert.component";
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',

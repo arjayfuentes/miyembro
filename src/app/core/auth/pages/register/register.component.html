@@ -119,7 +119,7 @@
               !(f['password'].invalid && f['password'].touched)
             "
             [ngClass]="{
-              'border-2 border-red-500':
+              'password-incorrect border-2 border-red-500':
                 f['password'].invalid && f['password'].touched
             }"
           >
@@ -157,7 +157,7 @@
               !(f['confirmPassword'].invalid && f['confirmPassword'].touched)
             "
             [ngClass]="{
-              'border-2 border-red-500':
+              'password-incorrect border-2 border-red-500':
                 f['confirmPassword'].invalid && f['confirmPassword'].touched
             }"
           >

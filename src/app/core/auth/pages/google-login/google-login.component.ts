@@ -7,7 +7,7 @@ import { OAuthService, OAuthSuccessEvent, OAuthErrorEvent } from 'angular-oauth2
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SessionService } from '../../services/session.service';
-import { GoogleLoginRequest } from 'src/app/core/models/google-login-request';
+import { GoogleRequest } from 'src/app/core/models/google-request';
 
 @Component({
   selector: 'app-google-login',
@@ -58,7 +58,7 @@ export class GoogleLoginComponent implements OnInit {
     
   onClickLoginGoogleContinue(googleToken: string) {
     console.log('Sending Google token to backend...');
-    const googleLoginRequest: GoogleLoginRequest = {
+    const googleLoginRequest: GoogleRequest = {
       googleToken: googleToken
     };
 
