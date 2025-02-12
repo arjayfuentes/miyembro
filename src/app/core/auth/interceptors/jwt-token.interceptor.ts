@@ -7,9 +7,23 @@ export const JwtTokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>
 
   const authToken = tokenService.getSession()?.accessToken != null ? tokenService.getSession()?.accessToken : null;
 
-  const authReq = authToken
-  ? req.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } })
-  : req;
+  // Define base URLs for your APIs
+  const api1BaseUrl = 'http://localhost:8222/api/v1';
+  const api2BaseUrl = 'https://api.countrystatecity.in/v1';
 
-  return next(authReq);
+  let modifiedReq = req;
+
+  if (req.url.startsWith(api1BaseUrl) && authToken) {
+    modifiedReq = req.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } });
+  } else if (req.url.startsWith(api2BaseUrl)) {
+    modifiedReq = req.clone({ setHeaders: { 'X-CSCAPI-KEY': 'YmZnbEhCWVJOUVhGRGh2MlUzbGxIWFBRcjZQWlMyNHdZMG1Hd3V0UA==' } });
+  }
+
+  return next(modifiedReq);
+
+  // const authReq = authToken
+  // ? req.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } })
+  // : req;
+
+  // return next(authReq);
 };

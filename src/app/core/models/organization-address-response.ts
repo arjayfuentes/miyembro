@@ -6,6 +6,4 @@ export interface OrganizationAddressResponse {
     region: string;
     postCode: string;
     country: string;
-    createdAt: string;  // ISO 8601 format, you can also use Date if needed
-    updatedAt: string;  // ISO 8601 format, you can also use Date if needed
   }

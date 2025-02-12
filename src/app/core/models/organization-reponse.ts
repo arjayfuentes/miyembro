@@ -10,6 +10,4 @@ export interface OrganizationResponse {
     email: string;
     phoneNumber: string;
     websiteUrl: string;
-    createdAt: string;  // ISO 8601 format for date
-    updatedAt: string;  // ISO 8601 format for date
   }

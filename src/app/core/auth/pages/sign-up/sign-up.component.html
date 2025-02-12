@@ -21,29 +21,6 @@
         <form class="space-y-4 md:space-y-6" [formGroup]="signupForm">
           <div>
             <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Your email<span class="ml-2 text-red-500 font-semilbold"
-                >*
-              </span>
-            </label>
-            <input
-              pInputText
-              id="name1"
-              formControlName="email"
-              type="text"
-              class="w-full"
-              pTooltip="{{ f['email'].errors | formErrors : 'email' }}"
-              tooltipStyleClass="error-tooltip"
-              [tooltipDisabled]="!(f['email'].invalid && f['email'].touched)"
-              [ngClass]="{
-                'border-2 border-red-500':
-                  f['email'].invalid && f['email'].touched
-              }"
-            />
-          </div>
-          <div>
-            <label
               for="firstName"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >First Name<span class="ml-2 text-red-500 font-semilbold"
@@ -92,6 +69,29 @@
           </div>
           <div>
             <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Your email<span class="ml-2 text-red-500 font-semilbold"
+                >*
+              </span>
+            </label>
+            <input
+              pInputText
+              id="name1"
+              formControlName="email"
+              type="text"
+              class="w-full"
+              pTooltip="{{ f['email'].errors | formErrors : 'email' }}"
+              tooltipStyleClass="error-tooltip"
+              [tooltipDisabled]="!(f['email'].invalid && f['email'].touched)"
+              [ngClass]="{
+                'border-2 border-red-500':
+                  f['email'].invalid && f['email'].touched
+              }"
+            />
+          </div>
+          <div>
+            <label
               for="password"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Password
@@ -119,7 +119,7 @@
           <div>
             <label
               for="password"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              class="block mb-0 text-sm font-medium text-gray-900 dark:text-white"
               >Confirm Password
               <span class="ml-2 text-red-500 font-semilbold">* </span></label
             >
@@ -142,7 +142,7 @@
               }"
             />
           </div>
-          <div class="h-2 my-0 py-0">
+          <div class="h-4 my-0 py-0">
             <!-- Adjust the height class as needed -->
             <p
               class="text-red-500 font-medium text-xs"
@@ -152,7 +152,7 @@
             </p>
           </div>
           <p-button
-            label="Register"
+            label="Sign up"
             (click)="onClickSignup()"
             severity="help"
             styleClass="w-full mt-4"
@@ -160,7 +160,7 @@
           />
 
           <p-button
-            label="Sign Up with Google"
+            label="Sign up with Google"
             (click)="onClickSignupWithGoogle()"
             severity="danger"
             icon="pi pi-google"

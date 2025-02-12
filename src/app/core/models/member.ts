@@ -1,3 +1,4 @@
+import { LoginType } from "./login-type.enum";
 import { MemberAddress } from "./member-address";
 
 export interface Member {
@@ -7,6 +8,8 @@ export interface Member {
     email: string;
     phoneNumber: string;
     profilePicUrl: string;
+    birthDate: Date;
+    loginType: LoginType;
     memberAddress: MemberAddress;
 }
 

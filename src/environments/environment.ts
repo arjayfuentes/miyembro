@@ -18,6 +18,7 @@ export const environment = {
         strictDiscoveryDocumentValidation: false,
       },
     apiUrl: 'http://localhost:8222/api/v1',
+    countryUrl: 'https://api.countrystatecity.in/v1',
     jiraUrl: 'https://arjayprojects.atlassian.net/browse',
     jiraProfileUrl: 'https://arjayprojects.atlassian.net/jira/people',
     requireHttps : false

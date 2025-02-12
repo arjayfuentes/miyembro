@@ -18,6 +18,7 @@ import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { MemberRequest } from 'src/app/core/models/member-request';
 import { GoogleRequest } from 'src/app/core/models/google-request';
 import { LoginType } from 'src/app/core/models/login-type.enum';
+import { Member } from 'src/app/core/models/member';
 declare const google: any;
 
 @Component({
@@ -104,7 +105,7 @@ export class SignUpComponent implements OnInit {
     this.authenticationService.register(memberRequest).subscribe(
       (res) => {
         console.log(res);
-        this.successfulSignup();
+        this.successfulSignup(res);
       },
       (err: any) => {
         this.errorSignup(err);
@@ -129,7 +130,7 @@ export class SignUpComponent implements OnInit {
     this.authenticationService.signupWithGoogle(googleLoginRequest).subscribe(
       (res) => {
         console.log(res);
-        this.successfulSignup();
+        this.successfulSignup(res);
       },
       (err: any) => {
         this.errorSignup(err);
@@ -143,9 +144,11 @@ export class SignUpComponent implements OnInit {
     this.alertService.error('/signup', 'Error', error.error.message);
   }
 
-  private successfulSignup() {
+  private successfulSignup(member: Member) {
     this.alertService.success('/signup', '', 'Succefully Registered');
-    this.router.navigate(['/additional-info-signup']);
+    this.router.navigate(['/additional-info-signup'], {
+      state: { member: member }
+    });
   }
 
 }

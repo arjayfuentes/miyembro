@@ -50,4 +50,9 @@ export class AuthenticationService {
   selectLoginOrganization(selectOrganizationLoginRequest: SelectOrganizationLoginRequest): Observable<Session> {
     return this.http.post(`${env.apiUrl}/auth/selectLoginOrganization`, selectOrganizationLoginRequest) as Observable<Session>;
   }
+
+  updateMemberAfterRegistration(formData: FormData): Observable<any> {
+    return this.http.post(`${env.apiUrl}${this.baseUrl}/register/updateMemberAfterRegistration`, formData);
+  }
+
 }
