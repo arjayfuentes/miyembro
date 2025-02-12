@@ -27,6 +27,11 @@ export const appRoutes: Route[] = [
       canActivate: [AuthGuard],
     },
     {
+      path: 'edit-member-details',
+      loadComponent: () => import('./features/edit-member-details/pages/edit-member-details-page/edit-member-details-page.component').then(mod => mod.EditMemberDetailsPageComponent),
+      canActivate: [AuthGuard],
+    },
+    {
         path: 'login',
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),
         canActivate: [UnAuthGuard],

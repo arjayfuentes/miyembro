@@ -30,17 +30,20 @@ import { City } from 'src/app/core/models/city';
 import { LoginType } from 'src/app/core/models/login-type.enum';
 import { DatePipe } from '@angular/common';
 import { Member } from 'src/app/core/models/member';
+import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
+import { AvatarComponent } from "../avatar/avatar.component";
 
 @Component({
-  selector: 'app-additional-info-member-form',
-  imports: [BackgroundComponent, InputNumberModule, SelectModule, ToastModule, DatePickerModule, FloatLabelModule, FileUploadModule, NgxMaterialIntlTelInputComponent, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent],
-  templateUrl: './additional-info-member-form.component.html',
-  styleUrl: './additional-info-member-form.component.scss',
+  selector: 'app-member-form',
+  imports: [BackgroundComponent, InputNumberModule, SelectModule, ToastModule, DatePickerModule, FloatLabelModule, FileUploadModule, NgxMaterialIntlTelInputComponent, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent, AvatarComponent],
+  templateUrl: './member-form.component.html',
+  styleUrl: './member-form.component.scss',
   providers: [DatePipe]
 })
-export class AdditionalInfoMemberFormComponent implements OnInit, OnChanges{
+export class MemberFormComponent implements OnInit, OnChanges{
 
-
+  MemberFormType = MemberFormType;
+  @Input() formType: MemberFormType = MemberFormType.ADDITIONAL_INFO_MEMBER;
   @Input() member: Member | undefined;
 
   additionalInfoRegisterForm: FormGroup;

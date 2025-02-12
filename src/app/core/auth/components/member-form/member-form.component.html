@@ -8,7 +8,34 @@
     <div class="w-full p-5">
       <form [formGroup]="additionalInfoRegisterForm" autocomplete="off">
         <h2 class="text-lg font-medium text-purple-700 mb-3">Enter details:</h2>
+        <div class="grid gap-5 w-full">
+          <div class="p-5 grid place-items-center">
+            <app-avatar></app-avatar>
+          </div>
+        </div>
         <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <p-floatlabel variant="in">
+              <input
+                pInputText
+                id="firstName"
+                formControlName="firstName"
+                autocomplete="off"
+              />
+              <label for="firstName">First Name</label>
+            </p-floatlabel>
+          </div>
+          <div>
+            <p-floatlabel variant="in">
+              <input
+                pInputText
+                id="lastName"
+                formControlName="lastName"
+                autocomplete="off"
+              />
+              <label for="firstName">Last Name</label>
+            </p-floatlabel>
+          </div>
           <div>
             <ngx-material-intl-tel-input
               fieldControlName="phoneNumber"

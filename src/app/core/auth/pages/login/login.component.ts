@@ -141,4 +141,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
+  onshowForm() {
+    this.router.navigate(['/additional-info-signup']);
+
+  }
+
+
+
 }

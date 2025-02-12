@@ -14,13 +14,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Menubar } from 'primeng/menubar';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { Ripple } from 'primeng/ripple';
-import { Member } from 'src/app/core/models/member';
-import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { Session } from 'src/app/core/models/session';
+import { MemberOtherDetailsComponent } from "../../../header/components/member-other-details/member-other-details.component";
+import { MemberDetailsComponent } from "../../../header/components/member-details/member-details.component";
+import { MembershipCardDetailsComponent } from "../../../header/components/membership-card-details/membership-card-details.component";
 
 @Component({
   selector: 'app-member-card',
-  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule],
+  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule, MemberOtherDetailsComponent, MemberDetailsComponent, MembershipCardDetailsComponent],
   templateUrl: './member-card.component.html',
   styleUrl: './member-card.component.scss'
 })

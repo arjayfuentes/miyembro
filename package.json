@@ -21,6 +21,7 @@
     "@primeng/themes": "^19.0.5",
     "@react-oauth/google": "^0.12.1",
     "angular-oauth2-oidc": "^19.0.0",
+    "cropperjs": "^1.6.2",
     "gapi-script": "^1.2.0",
     "google-libphonenumber": "^3.2.40",
     "intl-tel-input": "^19.5.7",
