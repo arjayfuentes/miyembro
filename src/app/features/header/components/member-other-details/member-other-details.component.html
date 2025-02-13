@@ -3,15 +3,15 @@
     <span class="pi pi-home mr-2"></span>
     <span class="text-sm text-muted-color">
       {{
-        member?.memberAddress?.street +
-          ' ' +
-          member?.memberAddress?.city +
-          ' ' +
-          member?.memberAddress?.provinceState +
-          ', ' +
-          member?.memberAddress?.postalCode +
-          ', ' +
-          member?.memberAddress?.country
+        (member?.memberAddress?.street || '') +
+          (member?.memberAddress?.street ? ' ' : '') +
+          (member?.memberAddress?.city || '') +
+          (member?.memberAddress?.city ? ' ' : '') +
+          (member?.memberAddress?.provinceState || '') +
+          (member?.memberAddress?.provinceState ? ', ' : '') +
+          (member?.memberAddress?.postalCode || '') +
+          (member?.memberAddress?.postalCode ? ', ' : '') +
+          (member?.memberAddress?.country || '')
       }}
     </span>
   </div>

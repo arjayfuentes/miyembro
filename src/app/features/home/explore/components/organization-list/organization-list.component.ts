@@ -57,7 +57,7 @@ export class OrganizationListComponent implements OnInit{
   //   alert(organizationId);
   // }
 
-  visible: boolean = false;
+  visible = false;
 
   onClickOrganization(organization: OrganizationResponse) {
     this.visible = true;

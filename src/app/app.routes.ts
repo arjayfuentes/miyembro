@@ -52,6 +52,7 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./core/auth/pages/sign-up/sign-up.component').then(mod => mod.SignUpComponent),
         canActivate: [UnAuthGuard],
     },
+    
     {
       path: 'additional-info-signup',
       loadComponent: () => import('./core/auth/pages/additional-info-signup/additional-info-signup.component').then(mod => mod.AdditionalInfoSignupComponent),

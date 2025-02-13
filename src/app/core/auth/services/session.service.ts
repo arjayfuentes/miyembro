@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Session } from '../../models/session';
+import { Member } from '../../models/member';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class SessionService {
     const twoOrMoreOrganization: boolean = selectedOrganization !== null && (organizationsOfMember !== undefined && organizationsOfMember.length >= 2);
 
     return this.session !== null  && (notRegistered || onlyOneOrganization || twoOrMoreOrganization);
+  }
+
+  updateMember(member: Member) {
+    if (this.session) {
+      this.session.member = member;
+    }
   }
 
   setSession(session: Session): void {

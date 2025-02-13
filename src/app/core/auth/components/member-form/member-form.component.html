@@ -2,36 +2,68 @@
   <div
     class="max-w-3xl max-sm:max-w-lg mx-auto min-h-screen flex flex-col items-center justify-center"
   >
-    <h2 class="text-lg font-medium text-purple-700 mb-3">
+    <h2
+      class="text-lg font-medium text-purple-700"
+      *ngIf="formType === MemberFormType.ADDITIONAL_INFO_MEMBER"
+    >
       Add more details to your account
     </h2>
     <div class="w-full p-5">
-      <form [formGroup]="additionalInfoRegisterForm" autocomplete="off">
-        <h2 class="text-lg font-medium text-purple-700 mb-3">Enter details:</h2>
+      <form [formGroup]="memberForm" autocomplete="off">
         <div class="grid gap-5 w-full">
           <div class="p-5 grid place-items-center">
-            <app-avatar></app-avatar>
+            <app-avatar formControlName="profilePicUrl"></app-avatar>
           </div>
         </div>
         <div class="grid sm:grid-cols-2 gap-5">
-          <div>
+          <div
+            *ngIf="
+              formType === MemberFormType.ADD_MEMBER ||
+              formType === MemberFormType.UPDATE_MEMBER
+            "
+          >
             <p-floatlabel variant="in">
               <input
                 pInputText
                 id="firstName"
                 formControlName="firstName"
                 autocomplete="off"
+                pTooltip="{{
+                  f['firstName'].errors | formErrors : 'first name'
+                }}"
+                tooltipStyleClass="error-tooltip"
+                [tooltipDisabled]="
+                  !(f['firstName'].invalid && f['firstName'].touched)
+                "
+                [ngClass]="{
+                  'border-2 border-red-500':
+                    f['firstName'].invalid && f['firstName'].touched
+                }"
               />
               <label for="firstName">First Name</label>
             </p-floatlabel>
           </div>
-          <div>
+          <div
+            *ngIf="
+              formType === MemberFormType.ADD_MEMBER ||
+              formType === MemberFormType.UPDATE_MEMBER
+            "
+          >
             <p-floatlabel variant="in">
               <input
                 pInputText
                 id="lastName"
                 formControlName="lastName"
                 autocomplete="off"
+                pTooltip="{{ f['lastName'].errors | formErrors : 'last name' }}"
+                tooltipStyleClass="error-tooltip"
+                [tooltipDisabled]="
+                  !(f['lastName'].invalid && f['lastName'].touched)
+                "
+                [ngClass]="{
+                  'border-2 border-red-500':
+                    f['lastName'].invalid && f['lastName'].touched
+                }"
               />
               <label for="firstName">Last Name</label>
             </p-floatlabel>
@@ -45,12 +77,16 @@
               [hidePhoneIcon]="true"
               class="custom-phone-input"
               pTooltip="{{
-                f['phoneNumber'].errors | formErrors : 'phoneNumber'
+                f['phoneNumber'].errors | formErrors : 'phone number'
               }}"
               tooltipStyleClass="error-tooltip"
               [tooltipDisabled]="
                 !(f['phoneNumber'].invalid && f['phoneNumber'].touched)
               "
+              [ngClass]="{
+                'border-2 border-red-500':
+                  f['phoneNumber'].invalid && f['phoneNumber'].touched
+              }"
             >
             </ngx-material-intl-tel-input>
           </div>
@@ -272,46 +308,8 @@
           </div>
         </div>
         <p-divider styleClass="mt-4"></p-divider>
-        <h2 class="text-lg font-medium text-purple-700 mb-3">
-          Upload Profile Photo:
-          <span class="ml-2 text-red-500 font-semilbold">*</span>
-        </h2>
-        <div class="flex justify-center">
-          <div class="mt-2 w-full max-w-xs flex justify-center">
-            <p-fileupload
-              #fuBackground
-              mode="basic"
-              chooseLabel="Upload a profile pic"
-              chooseIcon="pi pi-upload"
-              name="logoImage"
-              accept="image/*"
-              maxFileSize="1000000"
-              [files]="selectedProfileImageFiles"
-              (onSelect)="onProfileImageFileSelect($event)"
-              styleClass="w-full"
-            ></p-fileupload>
-          </div>
-        </div>
-        <div class="mt-2 flex justify-between space-x-4">
-          <!-- First button -->
-          <p-button
-            label="Skip"
-            (click)="onSkipAdditionalInfo()"
-            severity="contrast"
-            [raised]="true"
-            variant="outlined"
-            styleClass="mt-4 block text-sm tracking-wider focus:outline-none"
-          />
-          <!-- Second button -->
-          <p-button
-            label="Submit"
-            (click)="onClickRegisterAdditionalInfo()"
-            severity="success"
-            [raised]="true"
-            styleClass="mt-4 block text-sm tracking-wider focus:outline-none"
-            [disabled]="additionalInfoRegisterForm.invalid"
-          />
-        </div>
+        <!-- For Buttons -->
+        <ng-content></ng-content>
       </form>
     </div>
   </div>

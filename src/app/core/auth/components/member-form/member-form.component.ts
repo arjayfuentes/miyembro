@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -46,11 +46,14 @@ export class MemberFormComponent implements OnInit, OnChanges{
   @Input() formType: MemberFormType = MemberFormType.ADDITIONAL_INFO_MEMBER;
   @Input() member: Member | undefined;
 
-  additionalInfoRegisterForm: FormGroup;
+
+  @Input() memberForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
+  @Output() memberFormChange = new EventEmitter<FormGroup>(); // Emit form changes
+
   selectedProfileImageFile: File | null = null; 
   selectedProfileImageFiles: File [] = [];
   loginErrorMessage: string | null = null;
-  selectedCountry: string | null = null;
+  selectedCountry: string | undefined;
   selectedState: string | null = null;
   selectedCity: string | null = null;
 
@@ -60,67 +63,56 @@ export class MemberFormComponent implements OnInit, OnChanges{
 
   
   get f(): { [key: string]: AbstractControl } {
-    return this.additionalInfoRegisterForm.controls;
+    return this.memberForm.controls;
   }
 
   get fgErrors(): { [key: string]: ValidationErrors } | null {
-      return this.additionalInfoRegisterForm.errors;
+      return this.memberForm.errors;
   }
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private sessionService: SessionService,
-    private alertService: AlertService,
     private countrySevice: CountryService,
-    private datePipe: DatePipe
   ) {
-    this.additionalInfoRegisterForm = this.formBuilder.group({
-      memberId: [null],
-      firstName: [null],
-      lastName: [null],
-      email: [null],
-      password: [null],
-      phoneNumber: [null, Validators.required],
-      profilePicUrl: [null],
-      birthDate: [null, Validators.required],
-      loginType: [null],
-      selectedProfilePicImage: [null, Validators.required],
-      memberAddress: this.formBuilder.group({
-        street: [null],
-        city: [null, Validators.required],
-        provinceState: [null, Validators.required],
-        postalCode: [null],
-        country: [null, Validators.required]
-      })
-    });
+  }
+
+  getControlErrors(groupName: string, controlName: string): ValidationErrors | null {
+    const group = this.memberForm.get(groupName) as FormGroup;
+    const control = group ? group.get(controlName) : null;
+    return control ? control.errors : null;
+
+  }
+
+  isControlInvalidAndTouched(groupName: string, controlName: string): boolean {
+    const group = this.memberForm.get(groupName) as FormGroup;
+    const control = group ? group.get(controlName) : null;
+    return control ? control.invalid && control.touched : false;
   }
 
   ngOnInit(): void {
     this.getCountries();
-    this.patchForm();
-    this.additionalInfoRegisterForm.get('memberAddress.country')?.valueChanges.subscribe(selectedCountry => {
+    this.memberForm.get('memberAddress.country')?.valueChanges.subscribe(selectedCountry => {
       if(selectedCountry) {
         this.selectedCountry = selectedCountry;
         this.getStates();
       } 
       this.states = [];
       this.cities = [];
-      this.additionalInfoRegisterForm.get('memberAddress.provinceState')?.setValue(null);
+      this.memberForm.get('memberAddress.provinceState')?.setValue(null);
       this.selectedState = null;
-      this.additionalInfoRegisterForm.get('memberAddress.city')?.setValue(null);
+      this.memberForm.get('memberAddress.city')?.setValue(null);
       this.selectedCity = null;
     });
-    this.additionalInfoRegisterForm.get('memberAddress.provinceState')?.valueChanges.subscribe(selectedState => {
+    this.memberForm.get('memberAddress.provinceState')?.valueChanges.subscribe(selectedState => {
       if(selectedState) {
         this.selectedState = selectedState;
         this.getCities();
       } 
       this.cities = [];
-      this.additionalInfoRegisterForm.get('memberAddress.city')?.setValue(null);
+      this.memberForm.get('memberAddress.city')?.setValue(null);
       this.selectedCity = null;
+    });
+    this.memberForm.valueChanges.subscribe(() => {
+      this.emitForm();
     });
   }
   
@@ -129,11 +121,26 @@ export class MemberFormComponent implements OnInit, OnChanges{
       this.patchForm();
     }
   }
+
+  emitForm(): void {
+    this.memberFormChange.emit(this.memberForm);
+  }
+
+  patchCountry() {
+    this.memberForm.get('member.memberAddress.country')?.setValue(this.member?.memberAddress.country);
+  }
+
+  patchState() {
+    this.memberForm.get('member.memberAddress.provinceState')?.setValue(this.member?.memberAddress.provinceState);
+  }
+
+  patchCity() {
+    this.memberForm.get('member.memberAddress.city')?.setValue(this.member?.memberAddress.city);
+  }
   
   patchForm() {
-    console.log(this.member);
     if (this.member) {
-      this.additionalInfoRegisterForm.patchValue({
+      this.memberForm.patchValue({
         memberId: this.member.memberId,
         firstName: this.member.firstName,
         lastName: this.member.lastName,
@@ -150,8 +157,6 @@ export class MemberFormComponent implements OnInit, OnChanges{
           country: this.member.memberAddress?.country
         }
       });
-
-      // Set selectedCountry, selectedState, and selectedCity
       this.selectedCountry = this.member.memberAddress?.country;
       this.selectedState = this.member.memberAddress?.provinceState;
       this.selectedCity = this.member.memberAddress?.city;
@@ -162,8 +167,12 @@ export class MemberFormComponent implements OnInit, OnChanges{
   getCountries() {
     this.countrySevice.getCountries().subscribe(
       (res) => {
-        console.log(res);
         this.countries = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCountry();
+          this.getStates();
+        }
+        this.setFormToPristine();
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
@@ -173,10 +182,14 @@ export class MemberFormComponent implements OnInit, OnChanges{
 
   getStates() {
     const iso2CountryCode = this.countries.find((country) => country.name === this.selectedCountry);
-    console.log(iso2CountryCode);
     this.countrySevice.getStatesByCountry(iso2CountryCode?.iso2).subscribe(
       (res) => {
         this.states = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchState();
+          this.getCities();
+        }
+        this.setFormToPristine();
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
@@ -189,11 +202,16 @@ export class MemberFormComponent implements OnInit, OnChanges{
     const state = this.states.find((state) => state.name === this.selectedState);
     this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
       (res) => {
+        
         if(res.length == 0) {
           this.getCitiesByCountry();
         } else {
           this.cities = res;
         }
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCity();
+        }
+        this.setFormToPristine();
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
@@ -206,6 +224,9 @@ export class MemberFormComponent implements OnInit, OnChanges{
     this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
       (res) => {
         this.cities = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCity();
+        }
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
@@ -214,59 +235,18 @@ export class MemberFormComponent implements OnInit, OnChanges{
   }
 
 
-  getControlErrors(groupName: string, controlName: string): ValidationErrors | null {
-    const group = this.additionalInfoRegisterForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.errors : null;
-
-  }
-
-  isControlInvalidAndTouched(groupName: string, controlName: string): boolean {
-    const group = this.additionalInfoRegisterForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.invalid && control.touched : false;
-  }
-
-  onClickRegisterAdditionalInfo() {
-    const profilePicImage: File = this.additionalInfoRegisterForm.controls['selectedProfilePicImage'].value;
-    const birthDate: Date = this.additionalInfoRegisterForm.controls['birthDate'].value;
-
-    const formattedBirthDate = this.datePipe.transform(birthDate, 'yyyy-MM-dd');
-
-    const memberRequest = { ...this.additionalInfoRegisterForm.value };
-    memberRequest.birthDate = formattedBirthDate; // Assign formatted date
-
-    delete memberRequest.selectedProfilePicImage;
-
-    const formData = new FormData();
-    formData.append('profilePicImage', profilePicImage);
-   
-    formData.append('additionalInfoRequest', JSON.stringify({
-      memberRequest: memberRequest
-    }));
-
-    this.authenticationService.updateMemberAfterRegistration(formData).subscribe(
-      (res) => {
-        console.log(res);
-        this.router.navigate(['/login']);
-        this.alertService.success('/additional-info-signup', 'Success', "Succesfully added details. You can now login");
-
-      },
-      (err: any) => {
-        console.log(err);
-        this.alertService.error('/login', 'Error', err.error.message);
-      }
-    );
+  setFormToPristine() {
+    if(this.formType === MemberFormType.UPDATE_MEMBER) {
+      this.memberForm.markAsPristine();
+    }
   }
 
   onProfileImageFileSelect(event: any) {
     this.selectedProfileImageFile = event.files[0]; 
     console.log('Selected file:', this.selectedProfileImageFile);
-    this.additionalInfoRegisterForm.controls['selectedProfilePicImage'].setValue(this.selectedProfileImageFile) ;
+    this.memberForm.controls['selectedProfilePicImage'].setValue(this.selectedProfileImageFile) ;
   }
 
-  onSkipAdditionalInfo() {
-    this.router.navigate(['/login']);
-  }
+
 
 }

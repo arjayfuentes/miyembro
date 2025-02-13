@@ -57,4 +57,9 @@ export class MemberService {
       .set('sortOrder', sortOrder.toString());
       return this.http.get<any>(url, { params }) as Observable<Page<Membership>>;
   }
+
+  updateMemberDetails(formData: FormData): Observable<Member> {
+    return this.http.post(`${env.apiUrl}${this.baseUrl}/updateMemberDetails`, formData) as Observable<Member>;
+  }
+
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
@@ -28,10 +28,15 @@ import { MembershipCardDetailsComponent } from "../../../header/components/membe
 export class MemberCardComponent {
 
   @ViewChild('op') popover!: Popover;
-
-
   @Input() session: Session | null = null;
   @Output() logout = new EventEmitter<void>();
+
+
+   constructor(
+      private router: Router
+    ) {
+      
+    }
 
   onClickLogout() {
     this.logout.emit(); // Emit event when logout is clicked
@@ -40,6 +45,10 @@ export class MemberCardComponent {
 
   togglePopover(event: Event) {
     this.popover.toggle(event);
+  }
+
+  editDetails() {
+    this.router.navigate(['/edit-member-details']);
   }
 }
 
