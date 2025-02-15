@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
@@ -17,10 +17,11 @@ import { Membership } from 'src/app/core/models/membership';
 import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { Skeleton } from 'primeng/skeleton';
+import { FormsModule } from '@angular/forms';  // Import FormsModule here
 
 @Component({
   selector: 'app-organization-list',
-  imports: [DataViewModule, ButtonModule, Tag, Skeleton, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
+  imports: [DataViewModule, ButtonModule, Tag, Skeleton, FormsModule, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.scss'
 })
@@ -39,6 +40,11 @@ export class OrganizationListComponent implements OnInit{
   loading = false;
   hasMore = true;
 
+  @Input() searchName: string | null = null;
+  @Input() selectedCountry: string | null = null;
+  @Input() selectedCity: string | null = null;
+
+
   constructor(
         private activatedRoute: ActivatedRoute,
         private organizationService: OrganizationService,
@@ -56,16 +62,36 @@ export class OrganizationListComponent implements OnInit{
     this.loadOrganizations(this.page, this.size);
   }
 
-    // Load organizations based on the current page and size
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchName']) {
+      if (!changes['searchName'].firstChange) {
+        this.onSearchNameChange();
+      } 
+    }
+    if (changes['selectedCountry']) {
+      if (!changes['selectedCountry'].firstChange) {
+        this.onSearchNameChange();
+      } 
+    }
+    if (changes['selectedCity']) {
+      if (!changes['selectedCity'].firstChange) {
+        this.onSearchNameChange();
+      } 
+    }
+  }
+
   loadOrganizations(page: number, size: number): void {
-    this.loading = true;
-    this.organizationService.getAllOrganizations(page, size).subscribe(
+    this.loading = true; 
+    this.organizationService.getAllOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
       (res) => {
-        this.organizations = [...this.organizations, ...res.content];  // Append new data to existing
-        this.loading = false;
+        console.log(res);
+        this.organizations = [...this.organizations, ...res.content];
+        this.loading = false; 
 
         if (res.content.length === 0) {
-          this.hasMore = false;  // No more data available
+          this.hasMore = false;  
+        } else {
+          this.hasMore = true;  
         }
       },
       (err: any) => {
@@ -75,18 +101,30 @@ export class OrganizationListComponent implements OnInit{
     );
   }
 
+  onSearchNameChange() {
+    if (!this.searchName || this.searchName.trim().length === 0) {
+      this.searchName = null;
+    }
+
+    this.page = 0;
+    this.organizations = [];
+    this.hasMore = true; 
+
+    this.loadOrganizations(this.page, this.size);
+  }
+
   counterArray(): any[] {
     return Array(this.calculateDynamicSize());
   }
 
   onScroll(): void {
     if (this.loading || !this.hasMore) return;
-  
-    this.page++;  // Increment the page number
-  
-    // Calculate the dynamic size based on screen width for subsequent loads
+
+    this.page++;
+
     this.size = this.calculateDynamicSize();
-    this.loadOrganizations(this.page, this.size);  // Load the next set of data
+
+    this.loadOrganizations(this.page, this.size);
   }
 
   visible = false;
@@ -106,7 +144,6 @@ export class OrganizationListComponent implements OnInit{
 
     this.membershipService.requestMembership(joinOrganizationRequest).subscribe(
       (res) => {
-        console.log(res);
         this.visible = false;
         this.alertService.success('/home/explore', 'Success', 'Successfully requested to join the group');
       },

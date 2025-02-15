@@ -25,18 +25,38 @@ export class OrganizationService {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
   }
 
-  getAllOrganizations(page: number, size: number): Observable<Page<OrganizationResponse>> {
+  getAllOrganizations(page: number, size: number, name: string | null, countryName: string | null, cityName: string | null): Observable<Page<OrganizationResponse>> {
     const url = `${env.apiUrl}${this.baseUrl}/getAllOrganizations`;
 
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-      return this.http.get<any>(url, { params }) as Observable<Page<OrganizationResponse>>;
+  
+    if (name) {
+      params = params.set('name', name);
+    }
+    if(countryName) {
+      params = params.set('countryName', countryName);
+    }
+    if(cityName) {
+      params = params.set('cityName', cityName);
+    }
+    return this.http.get<any>(url, { params }) as Observable<Page<OrganizationResponse>>;
   }
   
 
   viewAllOrganization(): Observable<OrganizationResponse []> {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/viewAllOrganization`) as Observable<OrganizationResponse []>;
+  }
+
+  getUniqueOrganizationCountries(): Observable<string[]> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCountries`) as Observable<string []>;
+  }
+
+  getOrganizationCitiesByCountry(country : string): Observable<string[]> {
+    const params = new HttpParams()
+    .set('country', country.toString());
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCitiesByCountry`, { params }) as Observable<string []>;
   }
 
 

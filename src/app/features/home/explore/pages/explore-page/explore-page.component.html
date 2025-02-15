@@ -1,1 +1,25 @@
-<app-organization-list></app-organization-list>
+<div class="flex flex-col md:flex-row md:justify-left p-2 gap-4">
+  <input [(ngModel)]="name" pInputText placeholder="Search for organizations" />
+  <p-select
+    [options]="countries"
+    [(ngModel)]="selectedCountry"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Filter by country"
+    (onChange)="getCities($event)"
+    class="w-full md:w-56"
+  />
+  <p-select
+    [options]="cities"
+    [(ngModel)]="selectedCity"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Filter by city"
+    class="w-full md:w-56"
+  />
+</div>
+<app-organization-list
+  [searchName]="name"
+  [selectedCountry]="selectedCountry"
+  [selectedCity]="selectedCity"
+></app-organization-list>
