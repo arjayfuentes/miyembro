@@ -25,6 +25,7 @@
     "gapi-script": "^1.2.0",
     "google-libphonenumber": "^3.2.40",
     "intl-tel-input": "^19.5.7",
+    "ngx-infinite-scroll": "^19.0.0",
     "ngx-material-intl-tel-input": "^19.2.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.5",

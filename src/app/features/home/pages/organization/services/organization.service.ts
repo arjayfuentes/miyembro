@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from '@environments/environment';
@@ -6,6 +6,7 @@ import { Session } from 'src/app/core/models/session';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { ImageMetadata } from '../../../create-organization/models/image-meta-data';
 import { CreateOrganizationRequest } from 'src/app/core/models/create-organization-request';
+import { Page } from 'src/app/shared/model/page';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,23 @@ export class OrganizationService {
     }
 
 
-    findMyOrganizationById(organizationId: string | undefined): Observable<OrganizationResponse> {
-      return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
-    }
+  findMyOrganizationById(organizationId: string | undefined): Observable<OrganizationResponse> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
+  }
 
-    viewAllOrganization(): Observable<OrganizationResponse []> {
-      return this.http.get(`${env.apiUrl}${this.baseUrl}/viewAllOrganization`) as Observable<OrganizationResponse []>;
-    }
+  getAllOrganizations(page: number, size: number): Observable<Page<OrganizationResponse>> {
+    const url = `${env.apiUrl}${this.baseUrl}/getAllOrganizations`;
+
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+      return this.http.get<any>(url, { params }) as Observable<Page<OrganizationResponse>>;
+  }
+  
+
+  viewAllOrganization(): Observable<OrganizationResponse []> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/viewAllOrganization`) as Observable<OrganizationResponse []>;
+  }
 
 
   uploadImage(organizationId: string | undefined, file: File, imageType: string): Observable<string> {

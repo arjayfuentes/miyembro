@@ -15,11 +15,12 @@ import { MembershipService } from 'src/app/core/auth/services/membership.service
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { Membership } from 'src/app/core/models/membership';
 import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
-import { ScrollerModule } from 'primeng/scroller';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-organization-list',
-  imports: [DataViewModule, ButtonModule, Tag, ScrollerModule, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
+  imports: [DataViewModule, ButtonModule, Tag, Skeleton, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.scss'
 })
@@ -31,15 +32,12 @@ export class OrganizationListComponent implements OnInit{
   loginErrorMessage: string | null = null;
   selectedOrganization: OrganizationResponse | undefined;
 
-  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
-  @ViewChild('dv') dataView!: DataView;
 
-  onScroll() {
-    const element = this.scrollContainer.nativeElement;
-    if (element.scrollTop + element.clientHeight >= element.scrollHeight - 10) {
-      alert('dsadsadas');
-    }
-  }
+  // Infinite Scroll properties
+  page = 0; // Start from page 1
+  size = 10;
+  loading = false;
+  hasMore = true;
 
   constructor(
         private activatedRoute: ActivatedRoute,
@@ -54,20 +52,42 @@ export class OrganizationListComponent implements OnInit{
       }
   
   ngOnInit(): void {
-    this.organizationService.viewAllOrganization().subscribe(
+    this.size = this.calculateDynamicSize();
+    this.loadOrganizations(this.page, this.size);
+  }
+
+    // Load organizations based on the current page and size
+  loadOrganizations(page: number, size: number): void {
+    this.loading = true;
+    this.organizationService.getAllOrganizations(page, size).subscribe(
       (res) => {
-        this.organizations = res;
+        this.organizations = [...this.organizations, ...res.content];  // Append new data to existing
+        this.loading = false;
+
+        if (res.content.length === 0) {
+          this.hasMore = false;  // No more data available
+        }
       },
       (err: any) => {
+        this.loading = false;
         this.loginErrorMessage = err.error.message;
       }
     );
   }
 
+  counterArray(): any[] {
+    return Array(this.calculateDynamicSize());
+  }
 
-  // onClickOrganization(organizationId: OrganizationResponse) {
-  //   alert(organizationId);
-  // }
+  onScroll(): void {
+    if (this.loading || !this.hasMore) return;
+  
+    this.page++;  // Increment the page number
+  
+    // Calculate the dynamic size based on screen width for subsequent loads
+    this.size = this.calculateDynamicSize();
+    this.loadOrganizations(this.page, this.size);  // Load the next set of data
+  }
 
   visible = false;
 
@@ -114,6 +134,22 @@ export class OrganizationListComponent implements OnInit{
         this.loginErrorMessage = err.error.message;
       }
     );
+  }
+
+  private calculateDynamicSize(): number {
+    const screenWidth = window.innerWidth;
+  
+    if (screenWidth >= 1280) {  // XL screen (Large screens)
+      return 18;  // Load 18 items for large screens
+    } else if (screenWidth >= 1024) {  // LG screen (Large screens)
+      return 18;  // Load 18 items for large screens
+    } else if (screenWidth >= 768) {  // MD screen (Medium screens)
+      return 12;  // Load 12 items for medium screens
+    } else if (screenWidth >= 640) {  // SM screen (Small screens)
+      return 10;  // Load 10 items for small screens
+    } else {
+      return 10;  // Default: Load 10 items for very small screens
+    }
   }
 
 
