@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
@@ -14,10 +14,12 @@ import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-req
 import { MembershipService } from 'src/app/core/auth/services/membership.service';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { Membership } from 'src/app/core/models/membership';
+import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
+import { ScrollerModule } from 'primeng/scroller';
 
 @Component({
   selector: 'app-organization-list',
-  imports: [DataViewModule, ButtonModule, Tag, CommonModule, DialogModule, SelectButtonModule],
+  imports: [DataViewModule, ButtonModule, Tag, ScrollerModule, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.scss'
 })
@@ -27,7 +29,17 @@ export class OrganizationListComponent implements OnInit{
   options = ['list', 'grid'];
   organizations: OrganizationResponse [] = [];
   loginErrorMessage: string | null = null;
-  selectedOrganization: OrganizationResponse | null = null;
+  selectedOrganization: OrganizationResponse | undefined;
+
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+  @ViewChild('dv') dataView!: DataView;
+
+  onScroll() {
+    const element = this.scrollContainer.nativeElement;
+    if (element.scrollTop + element.clientHeight >= element.scrollHeight - 10) {
+      alert('dsadsadas');
+    }
+  }
 
   constructor(
         private activatedRoute: ActivatedRoute,
@@ -59,7 +71,7 @@ export class OrganizationListComponent implements OnInit{
 
   visible = false;
 
-  onClickOrganization(organization: OrganizationResponse) {
+  onClickOrganization(organization: OrganizationResponse | undefined) {
     this.visible = true;
     this.selectedOrganization = organization;
     this.getMembershipByMemberIdAndOrganizationId(organization);
@@ -86,7 +98,7 @@ export class OrganizationListComponent implements OnInit{
 
   membership: Membership | null = null;
 
-  getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse) {
+  getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse | undefined) {
     this.membership = null;
     const session = this.sessionService.getSession();
     const getMembershipRequest: GetMembershipRequest = {

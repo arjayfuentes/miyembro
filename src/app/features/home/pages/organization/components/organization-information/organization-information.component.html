@@ -1,7 +1,7 @@
 <div class="flex flex-wrap">
   <div class="w-full md:w-1/4 p-2">
     <div class="">
-      <p-card [style]="{ width: '100%', height: '100%' }">
+      <p-card>
         <ng-template #header>
           <img
             class="w-full"
@@ -13,7 +13,9 @@
         <div>
           <div class="flex items-center" *ngIf="selectedOrganization !== null">
             <span class="pi pi-home mr-2"></span>
-            <span class="text-sm text-muted-color">
+            <span
+              class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-muted-color"
+            >
               {{
                 selectedOrganization?.organizationAddress?.street +
                   ' ' +
