@@ -35,7 +35,10 @@ export class OrganizationComponent implements OnInit{
 
 
   ngOnInit(): void {
-    const organizationId = this.sessionService.getSession()?.organization?.organizationId;
+    let organizationId;
+    if(this.sessionService.getSession()?.organization?.organizationId) {
+      organizationId = this.sessionService.getSession()?.organization?.organizationId;
+    }
     this.organizationService.findMyOrganizationById(organizationId).subscribe(
       (res) => {
         this.selectedOrganization = res;

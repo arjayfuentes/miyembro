@@ -1,0 +1,99 @@
+<div class="profile-container">
+  <div
+    class="organization-background bg-cover bg-center h-[250px] relative"
+    [ngStyle]="{
+      'background-image': 'url(' + organization?.backgroundImageUrl + ')'
+    }"
+  >
+    <!-- <p-button
+      label="Edit Cover Photo"
+      [raised]="true"
+      icon="pi pi-pencil"
+      size="small"
+      severity="secondary"
+      class="absolute bottom-4 right-4"
+    /> -->
+  </div>
+
+  <p-card>
+    <div
+      class="bg-surface-50 flex items-center justify-center rounded h-32 sm:h-32 p-0"
+    >
+      <div class="relative h-full">
+        <img
+          class="rounded h-full object-contain"
+          [src]="organization?.logoUrl"
+          [alt]="organization?.name"
+        />
+      </div>
+      <div>
+        <div class="mt-2 flex items-center" *ngIf="organization !== null">
+          <span class="pi pi-envelope mr-2"></span>
+          <span class="text-sm text-muted-color">
+            {{ organization?.email }}
+          </span>
+        </div>
+        <div class="mt-2 flex items-center" *ngIf="organization !== null">
+          <span class="pi pi-phone mr-2"></span>
+          <span class="text-sm text-muted-color">
+            {{ organization?.phoneNumber }}
+          </span>
+        </div>
+        <div class="mt-2 flex items-center" *ngIf="organization !== null">
+          <span class="pi pi-globe mr-2"></span>
+          <a
+            href="{{ organization?.websiteUrl }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-blue-600/100"
+          >
+            {{ organization?.websiteUrl }}
+          </a>
+        </div>
+      </div>
+      <div class="mt-4 justify-center">
+        <p class="my-2 font-semibold">About Us</p>
+        <div class="w-full max-w-full overflow-hidden">
+          <div
+            class="p-4 [&_*]:break-words [&_*]:whitespace-pre-line [&_*]:text-black"
+          >
+            <div [innerHTML]="organization?.description"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="p-5">
+    <div class="mt-4 flex justify-center">
+      <p-button
+        class="flex-auto md:flex-initial whitespace-nowrap"
+        label="Join Organization"
+        size="small"
+        styleClass="px-4 py-1"
+        severity="help"
+        (onClick)="joinOrganization()"
+        *ngIf="membership === null"
+        [raised]="true"
+      />
+      <p-button
+        class="flex-auto md:flex-initial whitespace-nowrap"
+        label="You are already a member"
+        size="small"
+        styleClass="px-4 py-1"
+        severity="success"
+        *ngIf="membership && membership?.membershipType !== null"
+        variant="text"
+      />
+      <p-button
+        class="flex-auto md:flex-initial whitespace-nowrap"
+        label="Request Pending"
+        size="small"
+        styleClass="px-4 py-1"
+        severity="secondary"
+        *ngIf="membership && membership?.membershipType === null"
+        variant="text"
+      />
+    </div>
+  </div>
+</div>

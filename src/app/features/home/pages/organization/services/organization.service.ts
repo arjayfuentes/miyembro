@@ -21,7 +21,7 @@ export class OrganizationService {
     }
 
 
-  findMyOrganizationById(organizationId: string | undefined): Observable<OrganizationResponse> {
+  findMyOrganizationById(organizationId: string | null | undefined ): Observable<OrganizationResponse> {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
   }
 

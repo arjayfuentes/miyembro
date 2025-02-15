@@ -6,6 +6,7 @@ import { ExplorePageComponent } from './features/home/explore/pages/explore-page
 import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';
 import { CreateOrganizationPageComponent } from './features/home/create-organization/pages/create-organization-page/create-organization-page.component';
 import { GoogleLoginComponent } from './core/auth/pages/google-login/google-login.component';
+import { OrganizationDetailsPageComponent } from './features/home/pages/organization/pages/organization-details-page/organization-details-page.component';
 
 export const appRoutes: Route[] = [
     {
@@ -22,6 +23,7 @@ export const appRoutes: Route[] = [
         { path: 'organization', component: OrganizationComponent },
         { path: 'members', component: MemberPageComponent },
         { path: 'create-organization', component: CreateOrganizationPageComponent },
+        { path: 'organization-details/:organizationId', component: OrganizationDetailsPageComponent },
 
       ],
       canActivate: [AuthGuard],
@@ -31,6 +33,11 @@ export const appRoutes: Route[] = [
       loadComponent: () => import('./features/edit-member-details/pages/edit-member-details-page/edit-member-details-page.component').then(mod => mod.EditMemberDetailsPageComponent),
       canActivate: [AuthGuard],
     },
+    // {
+    //   path: 'organization-details/:organizationId',
+    //   loadComponent: () => import('./features/home/pages/organization/pages/organization-details-page/organization-details-page.component').then(mod => mod.OrganizationDetailsPageComponent),
+    //   canActivate: [AuthGuard],
+    // },
     {
         path: 'login',
         loadComponent: () => import('./core/auth/pages/login/login.component').then(mod => mod.LoginComponent),

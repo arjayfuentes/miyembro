@@ -6,7 +6,7 @@
 
 <section class="bg-gray-50 dark:bg-gray-900 login-background"></section>
 
-<p-menubar [model]="items">
+<p-menubar [model]="items" styleClass="app-menu-bar">
   <ng-template #item let-item>
     <ng-container *ngIf="item.route; else urlRef">
       <a [routerLink]="item.route" class="p-menubar-item-link">

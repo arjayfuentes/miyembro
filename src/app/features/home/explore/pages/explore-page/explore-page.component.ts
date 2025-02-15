@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { OrganizationListComponent } from "../../components/organization-list/organization-list.component";
 import { FormsModule } from '@angular/forms';  // Import FormsModule here
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
-import { SessionService } from 'src/app/core/auth/services/session.service';
 import { OrganizationService } from '../../../pages/organization/services/organization.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-explore-page',
-  imports: [OrganizationListComponent, FormsModule, InputTextModule, SelectModule],
+  imports: [OrganizationListComponent, FormsModule, InputTextModule, SelectModule, CommonModule],
   templateUrl: './explore-page.component.html',
   styleUrl: './explore-page.component.scss'
 })
-export class ExplorePageComponent implements OnInit {
+export class ExplorePageComponent implements OnInit  {
 
   name: string | null = null;
   countries: { label: string; value: string }[] = [];  // 
@@ -24,7 +24,6 @@ export class ExplorePageComponent implements OnInit {
 
   
     constructor(
-      private sessionService: SessionService,
       private organizationService: OrganizationService
     ) {
     }

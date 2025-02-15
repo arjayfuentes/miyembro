@@ -16,123 +16,73 @@ import { GetMembershipRequest } from 'src/app/core/models/get-membership-request
 import { Membership } from 'src/app/core/models/membership';
 import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { Skeleton } from 'primeng/skeleton';
-import { FormsModule } from '@angular/forms';  // Import FormsModule here
+import { FormsModule } from '@angular/forms';
+import { OrganizationItemGridSkeletonComponent } from "../organization-item-grid-skeleton/organization-item-grid-skeleton.component";  // Import FormsModule here
 
 @Component({
   selector: 'app-organization-list',
-  imports: [DataViewModule, ButtonModule, Tag, Skeleton, FormsModule, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent],
+  imports: [DataViewModule, ButtonModule, Tag, FormsModule, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent, OrganizationItemGridSkeletonComponent],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.scss'
 })
 export class OrganizationListComponent implements OnInit{
 
-  layout = 'grid';
-  options = ['list', 'grid'];
-  organizations: OrganizationResponse [] = [];
-  loginErrorMessage: string | null = null;
-  selectedOrganization: OrganizationResponse | undefined;
-
-
-  // Infinite Scroll properties
-  page = 0; // Start from page 1
-  size = 10;
-  loading = false;
-  hasMore = true;
 
   @Input() searchName: string | null = null;
-  @Input() selectedCountry: string | null = null;
   @Input() selectedCity: string | null = null;
+  @Input() selectedCountry: string | null = null;
 
+  hasMore = true;
+  layout = 'grid';
+  loading = false;
+  loginErrorMessage: string | null = null;
+  membership: Membership | null = null;
+  options = ['list', 'grid'];
+  organizations: OrganizationResponse [] = [];
+  page = 0; 
+  selectedOrganization: OrganizationResponse | undefined;
+  size = 10;
+  visible = false;
 
   constructor(
-        private activatedRoute: ActivatedRoute,
         private organizationService: OrganizationService,
-        private router: Router,
         private sessionService: SessionService,
         private alertService: AlertService,
-        private membershipService: MembershipService
+        private membershipService: MembershipService,
+        private router: Router,
+  ) {
+    
+  }
 
-      ) {
-       
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchName'] && !changes['searchName'].firstChange) {
+      this.searchOrganizationWithFilter();
+    }
+    if (changes['selectedCountry'] && !changes['selectedCountry'].firstChange) {
+      this.searchOrganizationWithFilter();
+    }
+    if (changes['selectedCity'] && !changes['selectedCity'].firstChange) {
+      this.searchOrganizationWithFilter();
+    }
+  }
   
   ngOnInit(): void {
     this.size = this.calculateDynamicSize();
     this.loadOrganizations(this.page, this.size);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['searchName']) {
-      if (!changes['searchName'].firstChange) {
-        this.onSearchNameChange();
-      } 
-    }
-    if (changes['selectedCountry']) {
-      if (!changes['selectedCountry'].firstChange) {
-        this.onSearchNameChange();
-      } 
-    }
-    if (changes['selectedCity']) {
-      if (!changes['selectedCity'].firstChange) {
-        this.onSearchNameChange();
-      } 
-    }
-  }
-
-  loadOrganizations(page: number, size: number): void {
-    this.loading = true; 
-    this.organizationService.getAllOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
-      (res) => {
-        console.log(res);
-        this.organizations = [...this.organizations, ...res.content];
-        this.loading = false; 
-
-        if (res.content.length === 0) {
-          this.hasMore = false;  
-        } else {
-          this.hasMore = true;  
-        }
-      },
-      (err: any) => {
-        this.loading = false;
-        this.loginErrorMessage = err.error.message;
-      }
-    );
-  }
-
-  onSearchNameChange() {
-    if (!this.searchName || this.searchName.trim().length === 0) {
-      this.searchName = null;
-    }
-
-    this.page = 0;
-    this.organizations = [];
-    this.hasMore = true; 
-
-    this.loadOrganizations(this.page, this.size);
+    // const scrollContainer = document.querySelector('.home-body-class');  
+    // if (scrollContainer) {
+    //   scrollContainer.addEventListener('scroll', () => {
+    //     console.log('Manual Scroll Detected in Parent');
+    //   });
+    // }
   }
 
   counterArray(): any[] {
     return Array(this.calculateDynamicSize());
   }
 
-  onScroll(): void {
-    if (this.loading || !this.hasMore) return;
-
-    this.page++;
-
-    this.size = this.calculateDynamicSize();
-
-    this.loadOrganizations(this.page, this.size);
-  }
-
-  visible = false;
-
-  onClickOrganization(organization: OrganizationResponse | undefined) {
-    this.visible = true;
-    this.selectedOrganization = organization;
-    this.getMembershipByMemberIdAndOrganizationId(organization);
+  getScrollContainer() {
+    return document.querySelector('#home-body') as HTMLElement;
   }
 
   joinOrganization() {
@@ -153,9 +103,44 @@ export class OrganizationListComponent implements OnInit{
     );
   }
 
-  membership: Membership | null = null;
+  onClickOrganization(organization: OrganizationResponse | undefined) {
+    
+    this.selectedOrganization = organization;
+    this.router.navigate(['/home/organization-details', this.selectedOrganization?.organizationId]);
+    // this.visible = true;
+    // this.getMembershipByMemberIdAndOrganizationId(organization);
+  }
 
-  getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse | undefined) {
+  onScroll(): void {
+    if (this.loading || !this.hasMore) return;
+
+    this.page++;
+
+    this.size = this.calculateDynamicSize();
+
+    this.loadOrganizations(this.page, this.size);
+  }
+
+  private calculateDynamicSize(): number {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    console.log(screenHeight);
+  
+    if (screenWidth >= 1280) {  // XL screen (Large screens)
+      return 24;  // Load 18 items for large screens
+    } else if (screenWidth >= 1024) {  // LG screen (Large screens)
+      return 18;  // Load 18 items for large screens
+    } else if (screenWidth >= 768) {  // MD screen (Medium screens)
+      return 12;  // Load 12 items for medium screens
+    } else if (screenWidth >= 640) {  // SM screen (Small screens)
+      return 10;  // Load 10 items for small screens
+    } else {
+      return 10;  // Default: Load 10 items for very small screens
+    }
+  }
+
+  private getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse | undefined) {
     this.membership = null;
     const session = this.sessionService.getSession();
     const getMembershipRequest: GetMembershipRequest = {
@@ -173,21 +158,38 @@ export class OrganizationListComponent implements OnInit{
     );
   }
 
-  private calculateDynamicSize(): number {
-    const screenWidth = window.innerWidth;
-  
-    if (screenWidth >= 1280) {  // XL screen (Large screens)
-      return 18;  // Load 18 items for large screens
-    } else if (screenWidth >= 1024) {  // LG screen (Large screens)
-      return 18;  // Load 18 items for large screens
-    } else if (screenWidth >= 768) {  // MD screen (Medium screens)
-      return 12;  // Load 12 items for medium screens
-    } else if (screenWidth >= 640) {  // SM screen (Small screens)
-      return 10;  // Load 10 items for small screens
-    } else {
-      return 10;  // Default: Load 10 items for very small screens
-    }
+  private loadOrganizations(page: number, size: number): void {
+    this.loading = true; 
+    this.organizationService.getAllOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
+      (res) => {
+        console.log(res);
+        const newOrganizations = res.content.filter(org => !this.organizations.some(existingOrg => existingOrg.organizationId === org.organizationId));
+        this.organizations = [...this.organizations, ...newOrganizations];
+        this.loading = false;
+
+        if (res.content.length === 0) {
+          this.hasMore = false;  
+        } else {
+          this.hasMore = true;  
+        }
+      },
+      (err: any) => {
+        this.loading = false;
+        this.loginErrorMessage = err.error.message;
+      }
+    );
   }
 
+  private searchOrganizationWithFilter() {
+    if (!this.searchName || this.searchName.trim().length === 0) {
+      this.searchName = null;
+    }
+
+    this.page = 0;
+    this.organizations = [];
+    this.hasMore = true; 
+
+    this.loadOrganizations(this.page, this.size);
+  }
 
 }
