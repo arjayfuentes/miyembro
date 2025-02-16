@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { ImageCropperComponent } from "../image-cropper/image-cropper.component";
@@ -7,14 +7,14 @@ import { ImageCropperComponent } from "../image-cropper/image-cropper.component"
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [DialogModule, CommonModule, ImageCropperComponent],
+  imports: [DialogModule, CommonModule, ImageCropperComponent, FormsModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: AvatarComponent
+      useExisting: forwardRef(() => AvatarComponent), // ✅ Use forwardRef
     }
   ]
 })
@@ -28,7 +28,7 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
 
   disabled = false;
 
-  constructor() {
+  constructor() {  
     console.log('dadad')
 
   }
@@ -40,6 +40,8 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
 
   writeValue(_file: string): void {
     this.file = _file;
+    this.onChange(this.file); // Not
+    this.onTouched();
   }
 
   registerOnChange(fn: any): void {
@@ -81,6 +83,7 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
     if (result) {
       this.file = result;
       this.onChange(this.file);  // Update form control with the new image URL
+      this.onTouched();
       this.dialogVisible = false; // Close the dialog after selection
     }
   }

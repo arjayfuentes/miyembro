@@ -1,99 +1,74 @@
-<div class="profile-container">
+<div class="organization-page-container mx-auto md:max-w-[80%] w-full">
+  <div class="profile-container">
+    <div
+      class="organization-background bg-cover bg-center h-[150px] lg:h-[250px] relative"
+      [ngStyle]="{
+        'background-image': 'url(' + organization?.backgroundImageUrl + ')'
+      }"
+    >
+      <div
+        class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
+      >
+        <p class="text-white font-bold text-4xl">{{ organization?.name }}</p>
+        <p-avatar
+          class="p-1 bg-[#ece9fc] text-[#2a1261] w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[150px] lg:h-[150px] rounded-full"
+          size="xlarge"
+          shape="circle"
+          [image]="organization?.logoUrl"
+        />
+      </div>
+    </div>
+  </div>
+
   <div
-    class="organization-background bg-cover bg-center h-[250px] relative"
+    *ngIf="schrunk"
+    class="flex justify-center items-center gap-4 p-4 organization-badge-tabs"
     [ngStyle]="{
       'background-image': 'url(' + organization?.backgroundImageUrl + ')'
     }"
   >
-    <!-- <p-button
-      label="Edit Cover Photo"
-      [raised]="true"
-      icon="pi pi-pencil"
-      size="small"
-      severity="secondary"
-      class="absolute bottom-4 right-4"
-    /> -->
+    <p-avatar size="large" [image]="organization?.logoUrl" class="h-[45px]" />
+    <p class="text-white font-bold text-2xl">{{ organization?.name }}</p>
   </div>
-
-  <p-card>
-    <div
-      class="bg-surface-50 flex items-center justify-center rounded h-32 sm:h-32 p-0"
-    >
-      <div class="relative h-full">
-        <img
-          class="rounded h-full object-contain"
-          [src]="organization?.logoUrl"
-          [alt]="organization?.name"
-        />
-      </div>
-      <div>
-        <div class="mt-2 flex items-center" *ngIf="organization !== null">
-          <span class="pi pi-envelope mr-2"></span>
-          <span class="text-sm text-muted-color">
-            {{ organization?.email }}
-          </span>
-        </div>
-        <div class="mt-2 flex items-center" *ngIf="organization !== null">
-          <span class="pi pi-phone mr-2"></span>
-          <span class="text-sm text-muted-color">
-            {{ organization?.phoneNumber }}
-          </span>
-        </div>
-        <div class="mt-2 flex items-center" *ngIf="organization !== null">
-          <span class="pi pi-globe mr-2"></span>
-          <a
-            href="{{ organization?.websiteUrl }}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-blue-600/100"
-          >
-            {{ organization?.websiteUrl }}
-          </a>
-        </div>
-      </div>
-      <div class="mt-4 justify-center">
-        <p class="my-2 font-semibold">About Us</p>
-        <div class="w-full max-w-full overflow-hidden">
+  <p-tabs value="0">
+    <p-tablist class="sticky-tabs p-0 z-50">
+      <p-tab value="0">About Us</p-tab>
+      <p-tab value="1">Events</p-tab>
+      <p-tab value="2">Photos</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0"
+        ><div class="p-3 max-w-full mx-auto">
           <div
-            class="p-4 [&_*]:break-words [&_*]:whitespace-pre-line [&_*]:text-black"
-          >
-            <div [innerHTML]="organization?.description"></div>
-          </div>
+            [innerHTML]="organization?.description"
+            class="w-full max-w-full break-words"
+          ></div>
         </div>
-      </div>
-    </div>
-  </p-card>
 
-  <div class="p-5">
-    <div class="mt-4 flex justify-center">
-      <p-button
-        class="flex-auto md:flex-initial whitespace-nowrap"
-        label="Join Organization"
-        size="small"
-        styleClass="px-4 py-1"
-        severity="help"
-        (onClick)="joinOrganization()"
-        *ngIf="membership === null"
-        [raised]="true"
-      />
-      <p-button
-        class="flex-auto md:flex-initial whitespace-nowrap"
-        label="You are already a member"
-        size="small"
-        styleClass="px-4 py-1"
-        severity="success"
-        *ngIf="membership && membership?.membershipType !== null"
-        variant="text"
-      />
-      <p-button
-        class="flex-auto md:flex-initial whitespace-nowrap"
-        label="Request Pending"
-        size="small"
-        styleClass="px-4 py-1"
-        severity="secondary"
-        *ngIf="membership && membership?.membershipType === null"
-        variant="text"
-      />
-    </div>
-  </div>
+        <div></div>
+      </p-tabpanel>
+      <p-tabpanel value="1">
+        <p class="m-0">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
+          ab illo inventore veritatis et quasi architecto beatae vitae dicta
+          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
+          qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit,
+          sed quia non numquam eius modi.
+        </p>
+      </p-tabpanel>
+      <p-tabpanel value="2">
+        <p class="m-0">
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui
+          blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
+          et quas molestias excepturi sint occaecati cupiditate non provident,
+          similique sunt in culpa qui officia deserunt mollitia animi, id est
+          laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita
+          distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
+          cumque nihil impedit quo minus.
+        </p>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
 </div>

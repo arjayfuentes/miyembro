@@ -5,10 +5,12 @@ import { FooterComponent } from "../footer/footer.component";
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { SessionService } from 'src/app/core/auth/services/session.service';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { HomeService } from '../../services/home.service';
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, RouterModule, FooterComponent, CommonModule],
+  imports: [HeaderComponent, RouterModule, FooterComponent, CommonModule, InfiniteScrollDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [
@@ -22,8 +24,12 @@ import { SessionService } from 'src/app/core/auth/services/session.service';
 })
 export class HomeComponent {
 
+  constructor(private homeService: HomeService) {}
 
-
+  onNativeScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    this.homeService.emitScrollEvent(target.scrollTop);
+  }
   
 
 }

@@ -4,9 +4,14 @@
     <app-header></app-header>
   </div>
   <!-- home page body -->
-  <div id="home-body" class="home-container-class">
-    <router-outlet> </router-outlet>
+  <div
+    id="home-body"
+    class="home-container-class"
+    (scroll)="onNativeScroll($event)"
+  >
+    <router-outlet></router-outlet>
   </div>
+
   <!-- home page footer -->
   <div id="home-footer">
     <app-footer></app-footer>
