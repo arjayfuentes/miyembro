@@ -2,7 +2,9 @@
   [backgroundImageUrl]="backgroundImageUrl"
   [logoUrl]="logoUrl"
   [title]="title"
-></app-profile-header>
+>
+  <ng-content></ng-content>
+</app-profile-header>
 <app-shrinked-header
   [visible]="schrunk"
   [title]="title"

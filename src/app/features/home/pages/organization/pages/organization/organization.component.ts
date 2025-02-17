@@ -1,55 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
-import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
-import { OrganizationService } from '../../services/organization.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MembershipService } from 'src/app/core/auth/services/membership.service';
 import { SessionService } from 'src/app/core/auth/services/session.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
+import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
+import { Membership } from 'src/app/core/models/membership';
+import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { OrganizationService } from '../../services/organization.service';
 import { CommonModule } from '@angular/common';
-import { OrganizationInformationComponent } from "../../components/organization-information/organization-information.component";
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { TabsModule } from 'primeng/tabs';
+import { CollapsibleHeaderComponent } from 'src/app/shared/components/collapsible-header/collapsible-header.component';
+import { OrganizationAboutUsComponent } from '../../components/organization-about-us/organization-about-us.component';
+import { OrganizationEventsComponent } from '../../components/organization-events/organization-events.component';
+import { OrganizationPhotosComponent } from '../../components/organization-photos/organization-photos.component';
+import { OrganizationMembershipComponent } from '../../components/organization-membership/organization-membership.component';
 
 @Component({
   selector: 'app-organization',
-  imports: [CardModule, ButtonModule, AvatarGroupModule, AvatarModule, CommonModule, OrganizationInformationComponent],
+  imports: [CommonModule, ButtonModule, TabsModule, FormsModule, OrganizationAboutUsComponent, OrganizationEventsComponent, OrganizationPhotosComponent, OrganizationMembershipComponent, CollapsibleHeaderComponent],
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss'
 })
-export class OrganizationComponent implements OnInit{
-
-  selectedOrganization: OrganizationResponse | null = null;
-  loginErrorMessage: string | null = null;
+export class OrganizationComponent implements OnInit {
+  
+  @Input() membership: Membership | null = null;
+  @Input() organization: OrganizationResponse | null = null;
+  @Input() isMyOrganization = false;
 
   constructor(
-      private activatedRoute: ActivatedRoute,
-      private organizationService: OrganizationService,
-      private router: Router,
-      private sessionService: SessionService,
-      private alertService: AlertService
-    ) {
-     
-    }
+    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
+    private membershipService: MembershipService,
+    private organizationService: OrganizationService,
+    private sessionService: SessionService,
+  ) {}
 
-
-  ngOnInit(): void {
-    let organizationId;
-    if(this.sessionService.getSession()?.organization?.organizationId) {
-      organizationId = this.sessionService.getSession()?.organization?.organizationId;
-    }
-    this.organizationService.findMyOrganizationById(organizationId).subscribe(
-      (res) => {
-        this.selectedOrganization = res;
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
+  ngOnInit() {
+    console.log('dasdas');
   }
-
-
-
 
 }

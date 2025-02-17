@@ -140,24 +140,6 @@ export class OrganizationListComponent implements OnInit{
     }
   }
 
-  private getMembershipByMemberIdAndOrganizationId(organization: OrganizationResponse | undefined) {
-    this.membership = null;
-    const session = this.sessionService.getSession();
-    const getMembershipRequest: GetMembershipRequest = {
-      organizationId: organization?.organizationId,
-      memberId: session?.member.memberId
-    };
-
-    this.membershipService.getMembershipByMemberIdAndOrganizationId(getMembershipRequest).subscribe(
-      (res) => {
-        this.membership = res;
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
-  }
-
   private loadOrganizations(page: number, size: number): void {
     this.loading = true; 
     this.organizationService.getAllOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(

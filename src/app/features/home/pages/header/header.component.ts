@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit{
             {
                 label: 'My Organization',
                 icon: 'pi pi-sitemap',
-                route: '/home/organization',
+                route: '/home/my-organization',
                 command: () => this.removeCreateOrganization()
             },
             {

@@ -1,31 +1,33 @@
-<div class="organization-page-container mx-auto md:max-w-[80%] w-full">
-  <app-collapsible-header
-    [title]="organization?.name"
-    [backgroundImageUrl]="organization?.backgroundImageUrl"
-    [logoUrl]="organization?.logoUrl"
-  ></app-collapsible-header>
-  <p-tabs value="0">
-    <p-tablist class="sticky-tabs p-0 z-50">
-      <p-tab value="0">About Us</p-tab>
-      <p-tab value="1">Events</p-tab>
-      <p-tab value="2">Photos</p-tab>
-    </p-tablist>
-    <p-tabpanels>
-      <p-tabpanel value="0">
-        <app-organization-about-us
-          [organization]="organization"
-        ></app-organization-about-us>
-      </p-tabpanel>
-      <p-tabpanel value="1">
-        <app-organization-events
-          [organization]="organization"
-        ></app-organization-events>
-      </p-tabpanel>
-      <p-tabpanel value="2">
-        <app-organization-photos
-          [organization]="organization"
-        ></app-organization-photos>
-      </p-tabpanel>
-    </p-tabpanels>
-  </p-tabs>
-</div>
+<app-organization [organization]="organization" [membership]="membership">
+  <div class="join-organization-button absolute right-0 py-3">
+    <p-button
+      class="flex-auto md:flex-initial whitespace-nowrap"
+      label="Join"
+      size="small"
+      styleClass="px-4 py-1"
+      severity="help"
+      icon="pi pi-plus"
+      (onClick)="joinOrganization()"
+      *ngIf="membership === null"
+      [raised]="true"
+    />
+    <p-button
+      class="flex-auto md:flex-initial whitespace-nowrap"
+      label="You are a member"
+      size="small"
+      styleClass="px-4 py-1"
+      severity="success"
+      icon="pi pi-check"
+      *ngIf="membership && membership?.membershipType !== null"
+    />
+    <p-button
+      class="flex-auto md:flex-initial whitespace-nowrap"
+      label="Request Pending"
+      size="small"
+      styleClass="px-4 py-1"
+      severity="secondary"
+      icon="pi pi-clock"
+      *ngIf="membership && membership?.membershipType === null"
+    />
+  </div>
+</app-organization>

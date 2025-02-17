@@ -17,7 +17,7 @@ import { Ripple } from 'primeng/ripple';
 import { Session } from 'src/app/core/models/session';
 import { MemberOtherDetailsComponent } from "../../../header/components/member-other-details/member-other-details.component";
 import { MemberDetailsComponent } from "../../../header/components/member-details/member-details.component";
-import { MembershipCardDetailsComponent } from "../../../header/components/membership-card-details/membership-card-details.component";
+import { MembershipCardDetailsComponent } from "../../../../shared/components/membership-card-details/membership-card-details.component";
 
 @Component({
   selector: 'app-member-card',
