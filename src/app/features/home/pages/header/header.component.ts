@@ -124,11 +124,11 @@ export class HeaderComponent implements OnInit{
             this.items = [...this.items || [], {
                 label: 'Create Organization',
                 icon: 'pi pi-user',
-                route: '/home/create-organization'
+                route: '/create-organization'
             }];
         }
     
-        this.router.navigate(['/home/create-organization']);
+        this.router.navigate(['/create-organization']);
     }
 
     removeCreateOrganization() {

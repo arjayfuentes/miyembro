@@ -12,15 +12,16 @@ import { MembershipTypeValidity } from '../../models/membership-type-validity';
 import { OrganizationUploadImageComponent } from "../../components/organization-upload-image/organization-upload-image.component";
 import { OrganizationRequest } from 'src/app/core/models/organization-request';
 import { CreateOrganizationRequest } from 'src/app/core/models/create-organization-request';
-import { MembershipType } from 'src/app/core/models/membership-type';
 import { OrganizationService } from '../../../pages/organization/services/organization.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MembershipTypeRequest } from 'src/app/core/models/membership-type-request';
+import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-organization-page',
-  imports: [ButtonModule, StepperModule, OrganizationFormComponent, OrganizationUploadImageComponent, CommonModule, OrganizationAddressFormComponent, OrganizationMembershipTypeFormComponent, OrganizationUploadImageComponent],
+  imports: [BackgroundComponent, ButtonModule, StepperModule, OrganizationFormComponent, OrganizationUploadImageComponent, CommonModule, OrganizationAddressFormComponent, OrganizationMembershipTypeFormComponent, OrganizationUploadImageComponent],
   templateUrl: './create-organization-page.component.html',
   styleUrl: './create-organization-page.component.scss'
 })
@@ -34,11 +35,12 @@ export class CreateOrganizationPageComponent implements OnInit{
   membershipTypeValidities: MembershipTypeValidity [] = [];
 
   constructor(
+    private alertService: AlertService,
     private formBuilder: FormBuilder,
+    private location: Location,
     private membershipTypeService: MembershipTypeService,
     private organizationService: OrganizationService,
     private router: Router,
-    private alertService: AlertService
   ) {
     this.organizationForm = this.formBuilder.group({
       organizationId: [null],
@@ -138,9 +140,11 @@ export class CreateOrganizationPageComponent implements OnInit{
         this.alertService.error('/login', 'Error', err.error.message);
       }
     );
+  }
 
 
-
+  cancelCreateOrganization(){
+    this.location.back();
   }
 
 

@@ -1,11 +1,9 @@
-import { state } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MemberFormComponent } from 'src/app/core/auth/components/member-form/member-form.component';
-import { AuthenticationService } from 'src/app/core/auth/services/authentication.service';
 import { SessionService } from 'src/app/core/auth/services/session.service';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { Member } from 'src/app/core/models/member';

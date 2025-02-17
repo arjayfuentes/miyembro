@@ -10,20 +10,21 @@
           <p-button
             icon="pi pi-times"
             [rounded]="true"
-            [text]="true"
             [raised]="true"
             severity="danger"
+            styleClass="mt-5"
             (click)="removeMembershipType(i)"
             [disabled]="membershipTypes.length === 1"
           />
         </div>
 
+        <!-- Form Inputs with Dynamic Layout -->
         <div
           [formGroupName]="i"
-          class="grid grid-cols-1 md:grid-cols-7 gap-4 w-full items-center justify-center"
+          class="grid grid-cols-2 gap-4 w-full items-center justify-center sm:grid-cols-2 md:grid-cols-7"
         >
           <!-- Membership Type Name -->
-          <div class="w-full md:col-span-2">
+          <div class="w-full sm:col-span-1 md:col-span-2">
             <label class="text-gray-600 text-sm mb-2 block" for="name">
               Name<span class="ml-2 text-red-500 font-semibold">*</span>
             </label>
@@ -50,7 +51,7 @@
           </div>
 
           <!-- Membership Description -->
-          <div class="w-full md:col-span-2">
+          <div class="w-full sm:col-span-1 md:col-span-2">
             <label class="text-gray-600 text-sm mb-2 block" for="description">
               Description<span class="ml-2 text-red-500 font-semibold">*</span>
             </label>
@@ -77,7 +78,7 @@
           </div>
 
           <!-- Membership Validity -->
-          <div class="w-full md:col-span-2">
+          <div class="w-full sm:col-span-1 md:col-span-2">
             <label
               class="text-gray-600 text-sm mb-2 block"
               for="membershipTypeValidity"
@@ -96,11 +97,7 @@
                   ? 'border-4 border-red-500'
                   : ''
               "
-              pTooltip="{{ 
-                membershipType.get('membershipTypeValidity')?.errors?.['required'] 
-                  ? 'Validity is required' 
-                  : null 
-              }}"
+              pTooltip="{{ membershipType.get('membershipTypeValidity')?.errors?.['required'] ? 'Validity is required' : null }}"
               tooltipStyleClass="error-tooltip"
               [tooltipDisabled]="
                 !(
@@ -112,10 +109,8 @@
           </div>
 
           <!-- Membership Default? Radio Button -->
-          <div
-            class="w-full md:w-auto flex flex-col items-start justify-center md:col-span-1"
-          >
-            <label class="text-gray-600 text-sm mb-2" for="isDefault">
+          <div class="w-full sm:col-span-1 md:col-span-1">
+            <label class="text-gray-600 text-sm mb-2 block" for="isDefault">
               Default?<span class="ml-2 text-red-500 font-semibold">*</span>
             </label>
             <p-radiobutton
@@ -134,7 +129,6 @@
       <p-button
         label="Add Membership Type"
         (click)="addMembershipType()"
-        variant="outlined"
         [raised]="true"
         severity="info"
       />

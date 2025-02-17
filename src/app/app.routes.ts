@@ -1,6 +1,5 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
-import { OrganizationComponent } from './features/home/pages/organization/components/organization/organization.component';
 import { UnAuthGuard } from './core/guards/unauth-guard';
 import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
 import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';
@@ -23,7 +22,6 @@ export const appRoutes: Route[] = [
         { path: 'explore', component: ExplorePageComponent },
         { path: 'my-organization', component: MyOrganizationComponent },
         { path: 'members', component: MemberPageComponent },
-        { path: 'create-organization', component: CreateOrganizationPageComponent },
         { path: 'organization-details/:organizationId', component: OrganizationDetailsPageComponent },
 
       ],
@@ -32,6 +30,11 @@ export const appRoutes: Route[] = [
     {
       path: 'edit-member-details',
       loadComponent: () => import('./features/edit-member-details/pages/edit-member-details-page/edit-member-details-page.component').then(mod => mod.EditMemberDetailsPageComponent),
+      canActivate: [AuthGuard],
+    },
+    {
+      path: 'create-organization',
+      loadComponent: () => import('./features/home/create-organization/pages/create-organization-page/create-organization-page.component').then(mod => mod.CreateOrganizationPageComponent),
       canActivate: [AuthGuard],
     },
     // {
