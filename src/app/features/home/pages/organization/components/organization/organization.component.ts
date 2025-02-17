@@ -13,10 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { CollapsibleHeaderComponent } from 'src/app/shared/components/collapsible-header/collapsible-header.component';
-import { OrganizationAboutUsComponent } from '../../components/organization-about-us/organization-about-us.component';
-import { OrganizationEventsComponent } from '../../components/organization-events/organization-events.component';
-import { OrganizationPhotosComponent } from '../../components/organization-photos/organization-photos.component';
-import { OrganizationMembershipComponent } from '../../components/organization-membership/organization-membership.component';
+import { OrganizationAboutUsComponent } from '../organization-about-us/organization-about-us.component';
+import { OrganizationEventsComponent } from '../organization-events/organization-events.component';
+import { OrganizationPhotosComponent } from '../organization-photos/organization-photos.component';
+import { OrganizationMembershipComponent } from '../organization-membership/organization-membership.component';
 
 @Component({
   selector: 'app-organization',
@@ -24,22 +24,10 @@ import { OrganizationMembershipComponent } from '../../components/organization-m
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss'
 })
-export class OrganizationComponent implements OnInit {
+export class OrganizationComponent {
   
   @Input() membership: Membership | null = null;
   @Input() organization: OrganizationResponse | null = null;
   @Input() isMyOrganization = false;
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private alertService: AlertService,
-    private membershipService: MembershipService,
-    private organizationService: OrganizationService,
-    private sessionService: SessionService,
-  ) {}
-
-  ngOnInit() {
-    console.log('dasdas');
-  }
 
 }

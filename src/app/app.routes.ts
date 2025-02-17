@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
-import { OrganizationComponent } from './features/home/pages/organization/pages/organization/organization.component';
+import { OrganizationComponent } from './features/home/pages/organization/components/organization/organization.component';
 import { UnAuthGuard } from './core/guards/unauth-guard';
 import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
 import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';

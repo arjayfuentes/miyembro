@@ -15,7 +15,7 @@ import { TabsModule } from 'primeng/tabs';
 import { OrganizationAboutUsComponent } from "../../components/organization-about-us/organization-about-us.component";
 import { OrganizationEventsComponent } from "../../components/organization-events/organization-events.component";
 import { OrganizationPhotosComponent } from "../../components/organization-photos/organization-photos.component";
-import { OrganizationComponent } from '../organization/organization.component';
+import { OrganizationComponent } from '../../components/organization/organization.component';
 
 @Component({
   selector: 'app-organization-details-page',

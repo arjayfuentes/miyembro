@@ -10,7 +10,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { OrganizationInformationComponent } from '../../components/organization-information/organization-information.component';
-import { OrganizationComponent } from '../organization/organization.component';
+import { OrganizationComponent } from '../../components/organization/organization.component';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { MembershipService } from 'src/app/core/auth/services/membership.service';
 import { Membership } from 'src/app/core/models/membership';
