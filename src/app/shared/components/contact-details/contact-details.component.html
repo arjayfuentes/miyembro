@@ -1,0 +1,43 @@
+<div
+  [ngClass]="{
+    'text-sm': textSize === 'small'
+  }"
+>
+  <h2 class="text-lg font-medium text-purple-700 mb-3" *ngIf="showTitleHeader">
+    Contact Details:
+  </h2>
+  <div class="flex items-center" *ngIf="address">
+    <span class="pi pi-home mr-2"></span>
+    <span class="text-muted-color">
+      {{
+        (address?.street || '') +
+          (address?.street ? ' ' : '') +
+          (address?.city || '') +
+          (address?.city ? ' ' : '') +
+          (address?.provinceState || '') +
+          (address?.provinceState ? ', ' : '') +
+          (address?.postalCode || '') +
+          (address?.postalCode ? ', ' : '') +
+          (address?.country || '')
+      }}
+    </span>
+  </div>
+  <div class="mt-2 flex items-center" *ngIf="phoneNumber">
+    <span class="pi pi-phone mr-2"></span>
+    <span class="text-muted-color">
+      {{ phoneNumber }}
+    </span>
+  </div>
+  <div class="mt-2 flex items-center" *ngIf="email && showEmail">
+    <span class="pi pi-envelope mr-2"></span>
+    <span class="text-muted-color">
+      {{ email }}
+    </span>
+  </div>
+  <div class="mt-2 flex items-center" *ngIf="websiteUrl">
+    <span class="pi pi-globe mr-2"></span>
+    <span class="text-muted-color">
+      {{ websiteUrl }}
+    </span>
+  </div>
+</div>

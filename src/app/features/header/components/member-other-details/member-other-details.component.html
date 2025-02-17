@@ -1,24 +1,5 @@
-<div>
-  <div class="flex items-center" *ngIf="member?.memberAddress !== null">
-    <span class="pi pi-home mr-2"></span>
-    <span class="text-sm text-muted-color">
-      {{
-        (member?.memberAddress?.street || '') +
-          (member?.memberAddress?.street ? ' ' : '') +
-          (member?.memberAddress?.city || '') +
-          (member?.memberAddress?.city ? ' ' : '') +
-          (member?.memberAddress?.provinceState || '') +
-          (member?.memberAddress?.provinceState ? ', ' : '') +
-          (member?.memberAddress?.postalCode || '') +
-          (member?.memberAddress?.postalCode ? ', ' : '') +
-          (member?.memberAddress?.country || '')
-      }}
-    </span>
-  </div>
-  <div class="mt-2 flex items-center" *ngIf="member?.phoneNumber !== null">
-    <span class="pi pi-phone mr-2"></span>
-    <span class="text-sm text-muted-color">
-      {{ member?.phoneNumber }}
-    </span>
-  </div>
-</div>
+<app-contact-details
+  [address]="member?.memberAddress"
+  [phoneNumber]="member?.phoneNumber"
+  textSize="small"
+></app-contact-details>

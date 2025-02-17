@@ -1,35 +1,9 @@
 <div class="organization-page-container mx-auto md:max-w-[80%] w-full">
-  <div class="profile-container">
-    <div
-      class="organization-background bg-cover bg-center h-[150px] lg:h-[250px] relative"
-      [ngStyle]="{
-        'background-image': 'url(' + organization?.backgroundImageUrl + ')'
-      }"
-    >
-      <div
-        class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
-      >
-        <p class="text-white font-bold text-4xl">{{ organization?.name }}</p>
-        <p-avatar
-          class="p-1 bg-[#ece9fc] text-[#2a1261] w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[150px] lg:h-[150px] rounded-full"
-          size="xlarge"
-          shape="circle"
-          [image]="organization?.logoUrl"
-        />
-      </div>
-    </div>
-  </div>
-
-  <div
-    *ngIf="schrunk"
-    class="flex justify-center items-center gap-4 p-4 organization-badge-tabs"
-    [ngStyle]="{
-      'background-image': 'url(' + organization?.backgroundImageUrl + ')'
-    }"
-  >
-    <p-avatar size="large" [image]="organization?.logoUrl" class="h-[45px]" />
-    <p class="text-white font-bold text-2xl">{{ organization?.name }}</p>
-  </div>
+  <app-collapsible-header
+    [title]="organization?.name"
+    [backgroundImageUrl]="organization?.backgroundImageUrl"
+    [logoUrl]="organization?.logoUrl"
+  ></app-collapsible-header>
   <p-tabs value="0">
     <p-tablist class="sticky-tabs p-0 z-50">
       <p-tab value="0">About Us</p-tab>
@@ -37,37 +11,20 @@
       <p-tab value="2">Photos</p-tab>
     </p-tablist>
     <p-tabpanels>
-      <p-tabpanel value="0"
-        ><div class="p-3 max-w-full mx-auto">
-          <div
-            [innerHTML]="organization?.description"
-            class="w-full max-w-full break-words"
-          ></div>
-        </div>
-
-        <div></div>
+      <p-tabpanel value="0">
+        <app-organization-about-us
+          [organization]="organization"
+        ></app-organization-about-us>
       </p-tabpanel>
       <p-tabpanel value="1">
-        <p class="m-0">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-          aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-          qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit,
-          sed quia non numquam eius modi.
-        </p>
+        <app-organization-events
+          [organization]="organization"
+        ></app-organization-events>
       </p-tabpanel>
       <p-tabpanel value="2">
-        <p class="m-0">
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui
-          blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-          et quas molestias excepturi sint occaecati cupiditate non provident,
-          similique sunt in culpa qui officia deserunt mollitia animi, id est
-          laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita
-          distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
-          cumque nihil impedit quo minus.
-        </p>
+        <app-organization-photos
+          [organization]="organization"
+        ></app-organization-photos>
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>

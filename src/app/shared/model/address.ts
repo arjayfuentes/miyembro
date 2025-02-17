@@ -1,9 +1,7 @@
-export interface OrganizationAddressResponse {
-    organizationAddressId: string;
+export interface Address {
     street: string;
     city: string;
     provinceState: string;
-    region: string;
     postalCode: string;
     country: string;
-  }
+}
