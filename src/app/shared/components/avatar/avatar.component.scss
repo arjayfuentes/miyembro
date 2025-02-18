@@ -12,8 +12,6 @@
 }
 
 .image-container {
-    height: 200px;
-    width: 200px;
     z-index: 1;
     border-radius: 50%;
     background-color: #fff;
@@ -23,6 +21,21 @@
     &.avatar-placeholder{
         background-image: url('/assets/blank-profile-picture.jpg');
     }
+
+}
+
+.image-container.cover-photo {
+    border-radius: 0;
+
+    &.avatar-placeholder{
+        background-image: url('/assets/default-cover-photo.jpg');
+    }
+}
+
+.upload-photo-button {
+    input[type='file'] {
+        display: none;
+    } 
 }
 
 .icon-wrapper {
@@ -36,7 +49,7 @@
     align-items: center;
     justify-content: center;
     right: 0;
-    top: 75%;
+    bottom: 0;
     z-index: 2;
     color: white;
     cursor: pointer;

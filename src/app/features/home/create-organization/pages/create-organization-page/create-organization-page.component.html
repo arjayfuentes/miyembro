@@ -139,12 +139,12 @@
 
             <p-step-panel [value]="4">
               <ng-template #content let-activateCallback="activateCallback">
-                <div class="flex flex-col h-48 w-full">
+                <div class="flex flex-col h-full w-full">
                   <div
                     class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium w-full"
                   >
                     <app-organization-upload-image
-                      [organizationImageForm]="organizationImageForm"
+                      [organizationImageFileForm]="organizationImageFileForm"
                     ></app-organization-upload-image>
                   </div>
                 </div>
@@ -168,7 +168,7 @@
                     label="Create Organization"
                     icon="pi pi-arrow-right"
                     iconPos="right"
-                    [disabled]="organizationImageForm?.invalid"
+                    [disabled]="organizationImageFileForm?.invalid"
                     (onClick)="createOrganization()"
                   />
                 </div>

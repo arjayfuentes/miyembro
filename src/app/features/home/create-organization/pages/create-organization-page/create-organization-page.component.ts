@@ -18,6 +18,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { MembershipTypeRequest } from 'src/app/core/models/membership-type-request';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
 import { Location } from '@angular/common';
+import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 
 @Component({
   selector: 'app-create-organization-page',
@@ -30,7 +31,8 @@ export class CreateOrganizationPageComponent implements OnInit{
   organizationForm: FormGroup;
   organizationAddressForm: FormGroup;
   organizationMembershipTypesForm: FormGroup;
-  organizationImageForm: FormGroup;
+  organizationImageFileForm: FormGroup;
+
 
   membershipTypeValidities: MembershipTypeValidity [] = [];
 
@@ -59,13 +61,13 @@ export class CreateOrganizationPageComponent implements OnInit{
       city: ['', Validators.required],
       provinceState: [''],
       region: [''],
-      postCode: [''],
+      postalCode: [''],
       country: ['', Validators.required]
     });
     this.organizationMembershipTypesForm = this.formBuilder.group({
       membershipTypes: this.formBuilder.array([this.createMembershipType(true)]) 
     });
-    this.organizationImageForm = this.formBuilder.group({
+    this.organizationImageFileForm = this.formBuilder.group({
       logoImage: [null, Validators.required],
       backgroundImage: [null, Validators.required]
     })
@@ -105,9 +107,8 @@ export class CreateOrganizationPageComponent implements OnInit{
     organization.organizationAddress = organizationAddressFormVal;
   
     const membershipTypes: MembershipTypeRequest [] = this.organizationMembershipTypesForm.controls['membershipTypes'].value;
-    const logoImage: File = this.organizationImageForm.controls['logoImage'].value;
-    const backgroundImage: File = this.organizationImageForm.controls['backgroundImage'].value;
-    console.log(this.organizationImageForm.value);
+    const logoImage: File | null = dataURLToFile(this.organizationImageFileForm.controls['logoImage'].value, "organization-logo");
+    const backgroundImage: File | null = dataURLToFile(this.organizationImageFileForm.controls['backgroundImage'].value, "organization-background");
 
     const createOrganizationRequest: CreateOrganizationRequest = {
       organizationRequest: organization,
@@ -118,8 +119,13 @@ export class CreateOrganizationPageComponent implements OnInit{
 
 
     const formData = new FormData();
-    formData.append('logoImage', logoImage);
-    formData.append('backgroundImage', backgroundImage);
+
+    if(logoImage) {
+      formData.append('logoImage', logoImage);
+    }
+    if(backgroundImage) {
+      formData.append('backgroundImage', backgroundImage);
+    }
 
     // Append JSON as a Blob (ensure correct key and structure)
     const jsonBlob = new Blob([JSON.stringify({

@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative" [ngClass]="{ 'is-cover-photo': isCoverPhoto }">
   <!-- Ensure that sanitizedUrl is bound correctly -->
   <img
     #imageElement

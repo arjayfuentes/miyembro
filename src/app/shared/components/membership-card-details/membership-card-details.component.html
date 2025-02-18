@@ -8,13 +8,13 @@
         </span>
       </div>
       <div class="items-start">
-        <div class="flex items-center mt-5">
+        <div class="flex items-center mt-5" *ngIf="membership?.startDate">
           <span class="font-base mr-2">Member Since:</span>
           <span class="text-sm text-muted-color">
             {{ membership?.startDate | date }}
           </span>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" *ngIf="membership?.endDate">
           <span class="font-base mr-2">Ends on:</span>
           <span class="text-sm text-muted-color">
             {{ membership?.endDate | date }}

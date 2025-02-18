@@ -1,13 +1,14 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { ImageCropperComponent } from "../image-cropper/image-cropper.component";
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [DialogModule, CommonModule, ImageCropperComponent, FormsModule],
+  imports: [DialogModule, CommonModule, ImageCropperComponent, FormsModule, ButtonModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   providers: [
@@ -19,23 +20,27 @@ import { ImageCropperComponent } from "../image-cropper/image-cropper.component"
   ]
 })
 export class AvatarComponent implements OnInit, ControlValueAccessor {
-  file = '';          // Store the image after crop
-  dialogVisible = false;   // Control dialog visibility
-  image = '';          // The image URL (Blob or base64) passed to the cropper
+
+  @Input() isCoverPhoto = false;
+  @Input() avatarSize = 'normal';
+  @Input() isButtonEdit = false;
+  @ViewChild('fileInput') fileInput: any;
+
+  file = '';          
+  dialogVisible = false; 
+  disabled = false;
+  image = '';          
+  uniqueId = '';
 
   private onChange = (fileUrl: string) => { console.log('Image changed'); };
   private onTouched = () => { console.log('Input touched'); };
 
-  disabled = false;
-
   constructor() {  
-    console.log('dadad')
-
+    this.dialogVisible = false;
   }
 
   ngOnInit(): void {
-    console.log('dadad')
-
+    this.uniqueId = `avatar-input-file-${Math.random().toString(36).substr(2, 9)}`;
   }
 
   writeValue(_file: string): void {
@@ -56,11 +61,8 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  resetInput() {
-    const input = document.getElementById('avatar-input-file') as HTMLInputElement;
-    if (input) {
-      input.value = '';
-    }
+  onDialogClose(): void {
+    this.dialogVisible = false; // Close the dialog on cancel or outside click
   }
 
   onFileChange(event: any) {
@@ -74,11 +76,6 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  openAvatarEditor(image: string): void {
-    this.dialogVisible = true;
-    this.image = image;  // Set the image URL for cropping
-  }
-
   onImageSelected(result: string | null): void {
     if (result) {
       this.file = result;
@@ -86,9 +83,23 @@ export class AvatarComponent implements OnInit, ControlValueAccessor {
       this.onTouched();
       this.dialogVisible = false; // Close the dialog after selection
     }
+    this.dialogVisible = false; // Close the dialog after selection
   }
 
-  onDialogClose(): void {
-    this.dialogVisible = false; // Close the dialog on cancel or outside click
+  triggerFileInput() {
+    this.fileInput.nativeElement.click(); 
   }
+   
+  private openAvatarEditor(image: string): void {
+    this.dialogVisible = true;
+    this.image = image;  // Set the image URL for cropping
+  }
+
+  private resetInput() {
+    const input = document.getElementById('avatar-input-file') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+    }
+  }
+
 }

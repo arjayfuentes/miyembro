@@ -31,7 +31,7 @@ import { LoginType } from 'src/app/core/models/login-type.enum';
 import { DatePipe } from '@angular/common';
 import { Member } from 'src/app/core/models/member';
 import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
-import { AvatarComponent } from "../avatar/avatar.component";
+import { AvatarComponent } from 'src/app/shared/components/avatar/avatar.component';
 
 @Component({
   selector: 'app-member-form',

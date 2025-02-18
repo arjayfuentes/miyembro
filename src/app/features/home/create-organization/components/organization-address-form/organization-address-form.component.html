@@ -62,21 +62,23 @@
         />
       </div>
       <div class="sm:col-span-2">
-        <label class="text-gray-600 text-sm mb-2 block" for="postCode">
+        <label class="text-gray-600 text-sm mb-2 block" for="postalCode">
           Post Code<span class="ml-2 text-red-500 font-semilbold">*</span>
         </label>
         <input
           pInputText
-          id="postCode"
-          formControlName="postCode"
+          id="postalCode"
+          formControlName="postalCode"
           type="text"
           class="w-full"
-          pTooltip="{{ f['postCode'].errors | formErrors : 'postCode' }}"
+          pTooltip="{{ f['postalCode'].errors | formErrors : 'postalCode' }}"
           tooltipStyleClass="error-tooltip"
-          [tooltipDisabled]="!(f['postCode'].invalid && f['postCode'].touched)"
+          [tooltipDisabled]="
+            !(f['postalCode'].invalid && f['postalCode'].touched)
+          "
           [ngClass]="{
             'border-2 border-red-500':
-              f['postCode'].invalid && f['postCode'].touched
+              f['postalCode'].invalid && f['postalCode'].touched
           }"
         />
       </div>
