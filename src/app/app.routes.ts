@@ -1,12 +1,12 @@
 import { Route } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
 import { UnAuthGuard } from './core/guards/unauth-guard';
-import { ExplorePageComponent } from './features/home/explore/pages/explore-page/explore-page.component';
-import { MemberPageComponent } from './features/home/members/pages/member-page/member-page.component';
-import { CreateOrganizationPageComponent } from './features/home/create-organization/pages/create-organization-page/create-organization-page.component';
+import { ExplorePageComponent } from './features/explore/pages/explore-page/explore-page.component';
+import { MemberPageComponent } from './features/members/pages/member-page/member-page.component';
+import { CreateOrganizationPageComponent } from './features/create-organization/pages/create-organization-page/create-organization-page.component';
 import { GoogleLoginComponent } from './core/auth/pages/google-login/google-login.component';
-import { OrganizationDetailsPageComponent } from './features/home/pages/organization/pages/organization-details-page/organization-details-page.component';
-import { MyOrganizationComponent } from './features/home/pages/organization/pages/my-organization/my-organization.component';
+import { OrganizationDetailsPageComponent } from './features/organization/pages/organization-details-page/organization-details-page.component';
+import { MyOrganizationComponent } from './features/organization/pages/my-organization/my-organization.component';
 
 export const appRoutes: Route[] = [
     {
@@ -34,7 +34,7 @@ export const appRoutes: Route[] = [
     },
     {
       path: 'create-organization',
-      loadComponent: () => import('./features/home/create-organization/pages/create-organization-page/create-organization-page.component').then(mod => mod.CreateOrganizationPageComponent),
+      loadComponent: () => import('./features/create-organization/pages/create-organization-page/create-organization-page.component').then(mod => mod.CreateOrganizationPageComponent),
       canActivate: [AuthGuard],
     },
     // {

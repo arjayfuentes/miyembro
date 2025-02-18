@@ -4,7 +4,7 @@ import { CardModule } from 'primeng/card';
 import { ListboxModule } from 'primeng/listbox';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { FormsModule } from '@angular/forms';
-import { MembershipService } from '../../services/membership.service';
+import { MembershipService } from '../../../../shared/services/membership.service';
 import { SessionService } from '../../services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

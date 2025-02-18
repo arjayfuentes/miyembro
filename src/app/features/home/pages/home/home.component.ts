@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
+import { HeaderComponent } from "../../components/header/header.component";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FooterComponent } from "../footer/footer.component";
+import { FooterComponent } from "../../components/footer/footer.component";
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { SessionService } from 'src/app/core/auth/services/session.service';
