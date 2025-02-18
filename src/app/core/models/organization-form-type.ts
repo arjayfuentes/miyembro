@@ -1,0 +1,5 @@
+export enum OrganizationFormType {
+    ADD_ORGANIZATION = 'ADD_ORGANIZATION',
+    UPDATE_ORGANIZATION = 'UPDATE_ORGANIZATION'
+}
+  

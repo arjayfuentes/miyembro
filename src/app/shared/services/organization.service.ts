@@ -7,6 +7,7 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CreateOrganizationRequest } from 'src/app/core/models/create-organization-request';
 import { Page } from 'src/app/shared/model/page';
 import { ImageMetadata } from 'src/app/features/create-organization/models/image-meta-data';
+import { OrganizationRequest } from 'src/app/core/models/organization-request';
 
 @Injectable({
   providedIn: 'root'
@@ -20,69 +21,62 @@ export class OrganizationService {
     ) {
     }
 
+    completeCreateOrganization(formData: FormData): Observable<any> {
+      return this.http.post(`${env.apiUrl}${this.baseUrl}/completeCreateOrganization`, formData);
+    }
 
-  findMyOrganizationById(organizationId: string | null | undefined ): Observable<OrganizationResponse> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
-  }
+    findMyOrganizationById(organizationId: string | null | undefined ): Observable<OrganizationResponse> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/findMyOrganizationById/${organizationId}`) as Observable<OrganizationResponse>;
+    }
 
-  getAllOrganizations(page: number, size: number, name: string | null, countryName: string | null, cityName: string | null): Observable<Page<OrganizationResponse>> {
-    const url = `${env.apiUrl}${this.baseUrl}/getAllOrganizations`;
-
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
+    getAllOrganizations(page: number, size: number, name: string | null, countryName: string | null, cityName: string | null): Observable<Page<OrganizationResponse>> {
+      const url = `${env.apiUrl}${this.baseUrl}/getAllOrganizations`;
   
-    if (name) {
-      params = params.set('name', name);
+      let params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString());
+    
+      if (name) {
+        params = params.set('name', name);
+      }
+      if(countryName) {
+        params = params.set('countryName', countryName);
+      }
+      if(cityName) {
+        params = params.set('cityName', cityName);
+      }
+      return this.http.get<any>(url, { params }) as Observable<Page<OrganizationResponse>>;
     }
-    if(countryName) {
-      params = params.set('countryName', countryName);
-    }
-    if(cityName) {
-      params = params.set('cityName', cityName);
-    }
-    return this.http.get<any>(url, { params }) as Observable<Page<OrganizationResponse>>;
-  }
   
+    getOrganizationCitiesByCountry(country : string): Observable<string[]> {
+      const params = new HttpParams()
+      .set('country', country.toString());
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCitiesByCountry`, { params }) as Observable<string []>;
+    }
 
-  viewAllOrganization(): Observable<OrganizationResponse []> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/viewAllOrganization`) as Observable<OrganizationResponse []>;
-  }
+    getOrganizationImages(organizationId: string | undefined): Observable<ImageMetadata []> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/getOrganizationImages/${organizationId}`) as Observable<ImageMetadata []>;
+    }
+  
+    getUniqueOrganizationCountries(): Observable<string[]> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCountries`) as Observable<string []>;
+    }
 
-  getUniqueOrganizationCountries(): Observable<string[]> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCountries`) as Observable<string []>;
-  }
+    updateOrganization(organization: OrganizationResponse | undefined): Observable<OrganizationResponse> {
+      return this.http.put(`${env.apiUrl}${this.baseUrl}/updateOrganization`, organization) as Observable<OrganizationResponse>;
+    }
 
-  getOrganizationCitiesByCountry(country : string): Observable<string[]> {
-    const params = new HttpParams()
-    .set('country', country.toString());
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/organizationCitiesByCountry`, { params }) as Observable<string []>;
-  }
+    uploadImage(organizationId: string | undefined, file: File, imageType: string): Observable<string> {
+      const formData = new FormData();
+      formData.append('image', file, file.name);  
+      formData.append('imageType', imageType);   
 
+      return this.http.post<string>(`${env.apiUrl}${this.baseUrl}/uploadOrganizationImage/${organizationId}/upload-image`, formData);
+    }
 
-  uploadImage(organizationId: string | undefined, file: File, imageType: string): Observable<string> {
-    const formData = new FormData();
-    formData.append('image', file, file.name);  
-    formData.append('imageType', imageType);   
-
-    return this.http.post<string>(`${env.apiUrl}${this.baseUrl}/uploadOrganizationImage/${organizationId}/upload-image`, formData);
-  }
-
-
-  getOrganizationImages(organizationId: string | undefined): Observable<ImageMetadata []> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/getOrganizationImages/${organizationId}`) as Observable<ImageMetadata []>;
-  }
-
-
-  // completeCreateOrganization(createOrganizationRequest: CreateOrganizationRequest): Observable<OrganizationResponse> {
-  //   return this.http.post(`${env.apiUrl}${this.baseUrl}/completeCreateOrganization`, createOrganizationRequest) as Observable<OrganizationResponse>;
-  // }
-
-
-  completeCreateOrganization(formData: FormData): Observable<any> {
-    return this.http.post(`${env.apiUrl}${this.baseUrl}/completeCreateOrganization`, formData);
-  }
-
+    viewAllOrganization(): Observable<OrganizationResponse []> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/viewAllOrganization`) as Observable<OrganizationResponse []>;
+    }
    
 }
 

@@ -33,6 +33,11 @@ export const appRoutes: Route[] = [
       canActivate: [AuthGuard],
     },
     {
+      path: 'edit-organization-address/:organizationId',
+      loadComponent: () => import('./features/organization/pages/edit-address/edit-address.component').then(mod => mod.EditAddressComponent),
+      canActivate: [AuthGuard],
+    },
+    {
       path: 'create-organization',
       loadComponent: () => import('./features/create-organization/pages/create-organization-page/create-organization-page.component').then(mod => mod.CreateOrganizationPageComponent),
       canActivate: [AuthGuard],

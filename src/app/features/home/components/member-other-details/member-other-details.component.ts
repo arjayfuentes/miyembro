@@ -11,6 +11,11 @@ import { ContactDetailsComponent } from 'src/app/shared/components/contact-detai
 })
 export class MemberOtherDetailsComponent {
 
+
   @Input() member: Member | undefined;
+
+  goToEditOrganizationAddress() {
+    throw new Error('Method not implemented.');
+  }
 
 }

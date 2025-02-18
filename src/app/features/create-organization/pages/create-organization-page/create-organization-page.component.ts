@@ -19,6 +19,7 @@ import { BackgroundComponent } from 'src/app/shared/components/background/backgr
 import { Location } from '@angular/common';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
 
 @Component({
   selector: 'app-create-organization-page',
@@ -32,6 +33,7 @@ export class CreateOrganizationPageComponent implements OnInit{
   organizationAddressForm: FormGroup;
   organizationMembershipTypesForm: FormGroup;
   organizationImageFileForm: FormGroup;
+  OrganizationFormType = OrganizationFormType;
 
 
   membershipTypeValidities: MembershipTypeValidity [] = [];
@@ -59,7 +61,7 @@ export class CreateOrganizationPageComponent implements OnInit{
       organizationAddressId: [null],
       street: [''],
       city: ['', Validators.required],
-      provinceState: [''],
+      provinceState: ['', Validators.required],
       region: [''],
       postalCode: [''],
       country: ['', Validators.required]
@@ -143,7 +145,7 @@ export class CreateOrganizationPageComponent implements OnInit{
       },
       (err: any) => {
         console.log(err);
-        this.alertService.error('/login', 'Error', err.error.message);
+        this.alertService.error('/login', 'Error', err);
       }
     );
   }
@@ -151,7 +153,6 @@ export class CreateOrganizationPageComponent implements OnInit{
 
   cancelCreateOrganization(){
     this.location.back();
-   
   }
 
 
