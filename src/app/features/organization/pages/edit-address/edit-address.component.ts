@@ -10,10 +10,11 @@ import { Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
 import { AlertService } from 'src/app/shared/services/alert.service';
-
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-edit-address',
-  imports: [OrganizationAddressFormComponent, BackgroundComponent, ButtonModule],
+  imports: [OrganizationAddressFormComponent, BackgroundComponent, ButtonModule, ProgressBarModule, ToastModule],
   templateUrl: './edit-address.component.html',
   styleUrl: './edit-address.component.scss'
 })
@@ -57,6 +58,7 @@ export class EditAddressComponent  implements OnInit{
   }
 
   updateOrganizationAddress() {
+    this.loading =  true;
     if(this.organization) {
       const organization = JSON.parse(JSON.stringify(this.organization)); // Deep copy
       organization.organizationAddress = this.organizationAddressForm.value; 

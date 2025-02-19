@@ -20,27 +20,31 @@ import { Location } from '@angular/common';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { OrganizationService } from 'src/app/shared/services/organization.service';
 import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-create-organization-page',
-  imports: [BackgroundComponent, ButtonModule, StepperModule, OrganizationFormComponent, OrganizationUploadImageComponent, CommonModule, OrganizationAddressFormComponent, OrganizationMembershipTypeFormComponent, OrganizationUploadImageComponent],
+  imports: [ProgressBarModule, ToastModule, BackgroundComponent, ButtonModule, StepperModule, OrganizationFormComponent, OrganizationUploadImageComponent, CommonModule, OrganizationAddressFormComponent, OrganizationMembershipTypeFormComponent, OrganizationUploadImageComponent],
   templateUrl: './create-organization-page.component.html',
   styleUrl: './create-organization-page.component.scss'
 })
 export class CreateOrganizationPageComponent implements OnInit{
   
+  loading = false;
   organizationForm: FormGroup;
   organizationAddressForm: FormGroup;
   organizationMembershipTypesForm: FormGroup;
   organizationImageFileForm: FormGroup;
   OrganizationFormType = OrganizationFormType;
 
-
   membershipTypeValidities: MembershipTypeValidity [] = [];
 
   constructor(
     private alertService: AlertService,
     private formBuilder: FormBuilder,
+    private loaderService: LoaderService,
     private location: Location,
     private membershipTypeService: MembershipTypeService,
     private organizationService: OrganizationService,
@@ -101,6 +105,8 @@ export class CreateOrganizationPageComponent implements OnInit{
 
 
   createOrganization() {
+    this.loading = true;
+    this.loaderService.showLoader(this.router.url, false);
     console.log("asdasdads");
     const organizationFormVal  = this.organizationForm.value;
     const organizationAddressFormVal  = this.organizationAddressForm.value;
@@ -139,12 +145,16 @@ export class CreateOrganizationPageComponent implements OnInit{
     console.log(formData);
     this.organizationService.completeCreateOrganization(formData).subscribe(
       (res) => {
-        console.log(res)
+        console.log(res);
+        this.loading = false;
+        this.loaderService.hideLoader(this.router.url);
         this.router.navigate(['/home/explore']);
         this.alertService.success('/login', 'Success', 'Succefully Created Organization');
       },
       (err: any) => {
         console.log(err);
+        this.loading = false;
+        this.loaderService.hideLoader(this.router.url);
         this.alertService.error('/login', 'Error', err);
       }
     );

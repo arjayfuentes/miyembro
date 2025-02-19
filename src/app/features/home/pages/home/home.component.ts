@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { SessionService } from 'src/app/core/auth/services/session.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { HomeService } from '../../services/home.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ import { HomeService } from '../../services/home.service';
 })
 export class HomeComponent {
 
-  constructor(private homeService: HomeService) {}
+  constructor(private homeService: HomeService, private loaderService: LoaderService) {}
 
   onNativeScroll(event: Event): void {
     const target = event.target as HTMLElement;
