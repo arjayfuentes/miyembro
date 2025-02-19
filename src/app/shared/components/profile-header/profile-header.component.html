@@ -1,17 +1,16 @@
 <div>
-  <div
-    class="organization-background bg-cover bg-center h-[150px] lg:h-[250px] relative"
-    [ngStyle]="{
-      'background-image': backgroundImageUrl
-        ? 'url(' + backgroundImageUrl + ')'
-        : 'url(' + 'assets/app-logo-2.png' + ')',
-      'background-color': backgroundImageUrl ? 'transparent' : '#d1d5db'
-    }"
+  <app-photo-control
+    [isEditable]="isEditAllowed"
+    [(ngModel)]="backgroundImageUrl"
+    height="315"
+    width="851"
+    buttonLabel="Update Photo"
+    [isIconButtonOnly]="false"
+    styleClass="w-[100%] h-[200px] md:h-[200px] lg:h-[300px] p-0"
   >
-    <ng-content select="[organization-membership]"></ng-content>
-    <ng-content select="[edit-organization-photo]"></ng-content>
-
+    <ng-content organization-membership></ng-content>
     <div
+      organization-logo
       class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
     >
       <p
@@ -19,18 +18,15 @@
       >
         {{ title }}
       </p>
-      <!-- <app-avatar
+      <app-photo-control
         [(ngModel)]="logoUrl"
-        #logoUrlControl
-        avatarSize="medium"
-        class="bg-[#ece9fc] rounded-full"
-      ></app-avatar> -->
-      <p-avatar
-        class="p-1 bg-[#ece9fc] text-[#2a1261] w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[150px] lg:h-[150px] rounded-full"
-        size="xlarge"
-        shape="circle"
-        [image]="logoUrl ? logoUrl : 'assets/app-logo-2.png'"
-      />
+        height="200"
+        width="200"
+        [isEditable]="isEditAllowed"
+        [isRound]="true"
+        styleClass="w-[100px] h-[100px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] lg:w-[150px] lg:h-[150px]"
+      >
+      </app-photo-control>
     </div>
-  </div>
+  </app-photo-control>
 </div>
