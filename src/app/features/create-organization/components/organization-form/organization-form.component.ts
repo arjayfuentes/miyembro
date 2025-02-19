@@ -15,6 +15,7 @@ import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pi
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { TextareaModule } from 'primeng/textarea';
 import { EditorModule } from 'primeng/editor';
+import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
 
 @Component({
   selector: 'app-organization-form',
@@ -24,9 +25,11 @@ import { EditorModule } from 'primeng/editor';
 })
 export class OrganizationFormComponent implements OnInit {
 
+  @Input() formType: OrganizationFormType = OrganizationFormType.ADD_ORGANIZATION;
   @Input() organizationForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
   @Output() organizationFormChange = new EventEmitter<FormGroup>(); // Emit form changes
-
+  OrganizationFormType = OrganizationFormType;
+  
   ngOnInit(): void {
     this.organizationForm.valueChanges.subscribe(() => {
       this.emitForm();

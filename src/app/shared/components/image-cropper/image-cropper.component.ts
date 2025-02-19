@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ImageCropperComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() image = '';  // The image input (Blob URL or base64)
+  @Input() image  = '';  // The image input (Blob URL or base64)
   @Input() isCoverPhoto = false;
   @Output() dialogClosed = new EventEmitter<void>();
   @Output() imageSelected = new EventEmitter<string | null>();

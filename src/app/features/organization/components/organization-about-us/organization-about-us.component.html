@@ -1,9 +1,18 @@
-<div class="p-3 max-w-full mx-auto">
-  <div
-    [innerHTML]="organization?.description"
-    class="w-full max-w-full break-words"
-  ></div>
-</div>
+<p-card styleClass="p-3 max-w-full mx-auto my-5 relative">
+  <app-organization-description [organization]="organization">
+    <div class="flex justify-end">
+      <p-button
+        *ngIf="isEditAllowed"
+        label="Edit"
+        icon="pi pi-pencil"
+        styleClass="ml-1 py-1"
+        severity="info"
+        size="small"
+        (click)="goToEditOrganizationDescription()"
+      />
+    </div>
+  </app-organization-description>
+</p-card>
 <p-card>
   <app-contact-details
     [showTitleHeader]="true"
@@ -12,6 +21,26 @@
     [showEmail]="true"
     [phoneNumber]="organization?.phoneNumber"
     [websiteUrl]="organization?.websiteUrl"
-    (editAddress)="goToEditOrganizationAddress()"
-  ></app-contact-details>
+  >
+    <p-button
+      edit-organization-address
+      *ngIf="isEditAllowed"
+      label="Edit"
+      icon="pi pi-pencil"
+      styleClass="ml-1 py-0"
+      severity="info"
+      size="small"
+      (click)="goToEditOrganizationAddress()"
+    />
+    <p-button
+      edit-organization-contact-details
+      *ngIf="isEditAllowed"
+      label="Edit"
+      icon="pi pi-pencil"
+      styleClass="ml-1 py-0"
+      severity="info"
+      size="small"
+      (click)="goToEditOrganizationContactDetails()"
+    />
+  </app-contact-details>
 </p-card>

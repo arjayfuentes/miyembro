@@ -3,6 +3,7 @@
     [title]="organization?.name"
     [backgroundImageUrl]="organization?.backgroundImageUrl"
     [logoUrl]="organization?.logoUrl"
+    [isEditAllowed]="isEditAllowed"
   >
     <ng-content></ng-content>
   </app-collapsible-header>
@@ -17,6 +18,7 @@
       <p-tabpanel value="0">
         <app-organization-about-us
           [organization]="organization"
+          [isEditAllowed]="isEditAllowed"
         ></app-organization-about-us>
       </p-tabpanel>
       <p-tabpanel value="1">

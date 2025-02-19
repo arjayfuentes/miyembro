@@ -24,10 +24,22 @@ import { OrganizationMembershipComponent } from '../organization-membership/orga
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss'
 })
-export class OrganizationComponent {
+export class OrganizationComponent implements OnInit {
   
+  @Input() isMyOrganization = false;
   @Input() membership: Membership | null = null;
   @Input() organization: OrganizationResponse | null = null;
-  @Input() isMyOrganization = false;
+
+  isEditAllowed = false;
+
+  constructor( 
+    private sessionService: SessionService
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.isEditAllowed = this.isMyOrganization && this.sessionService.getSession()?.role.name === 'Admin';
+  }
 
 }

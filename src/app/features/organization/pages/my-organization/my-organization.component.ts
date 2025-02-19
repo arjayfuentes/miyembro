@@ -23,18 +23,17 @@ import { Membership } from 'src/app/core/models/membership';
 })
 export class MyOrganizationComponent implements OnInit{
 
-  organization: OrganizationResponse | null = null;
-  membership: Membership | null = null;
-
   loginErrorMessage: string | null = null;
+  membership: Membership | null = null;
+  organization: OrganizationResponse | null = null;
 
   constructor(
       private organizationService: OrganizationService,
       private membershipService: MembershipService,
       private sessionService: SessionService,
-    ) {
-     
-    }
+  ) {
+    
+  }
 
 
   ngOnInit(): void {

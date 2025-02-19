@@ -20,11 +20,4 @@ export class ContactDetailsComponent {
   @Input() showTitleHeader = false;
   @Input() textSize = 'normal';
 
-  @Output() editAddress = new EventEmitter<boolean>(); 
-
-
-  onEditAddress() {
-    this.editAddress.emit(true);
-  }
-
 }

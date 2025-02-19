@@ -8,7 +8,8 @@
       'background-color': backgroundImageUrl ? 'transparent' : '#d1d5db'
     }"
   >
-    <ng-content></ng-content>
+    <ng-content select="[organization-membership]"></ng-content>
+    <ng-content select="[edit-organization-photo]"></ng-content>
 
     <div
       class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
@@ -18,6 +19,12 @@
       >
         {{ title }}
       </p>
+      <!-- <app-avatar
+        [(ngModel)]="logoUrl"
+        #logoUrlControl
+        avatarSize="medium"
+        class="bg-[#ece9fc] rounded-full"
+      ></app-avatar> -->
       <p-avatar
         class="p-1 bg-[#ece9fc] text-[#2a1261] w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[150px] lg:h-[150px] rounded-full"
         size="xlarge"

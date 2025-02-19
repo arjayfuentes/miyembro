@@ -10,14 +10,7 @@
       *ngIf="showTitleHeader"
     >
       Address:
-      <p-button
-        label="Edit"
-        icon="pi pi-pencil"
-        styleClass="ml-1 py-0"
-        severity="info"
-        size="small"
-        (click)="onEditAddress()"
-      />
+      <ng-content select="[edit-organization-address]"></ng-content>
     </h2>
     <div class="mt-2 flex items-center">
       <span class="pi pi-home mr-2"></span>
@@ -43,13 +36,7 @@
       *ngIf="showTitleHeader"
     >
       Contact Details:
-      <p-button
-        label="Edit"
-        icon="pi pi-pencil"
-        styleClass="ml-1 py-0"
-        severity="info"
-        size="small"
-      />
+      <ng-content select="[edit-organization-contact-details]"></ng-content>
     </h2>
     <div class="mt-2 flex items-center" *ngIf="phoneNumber">
       <span class="pi pi-phone mr-2"></span>

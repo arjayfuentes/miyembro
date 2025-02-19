@@ -34,7 +34,17 @@ export const appRoutes: Route[] = [
     },
     {
       path: 'edit-organization-address/:organizationId',
-      loadComponent: () => import('./features/organization/pages/edit-address/edit-address.component').then(mod => mod.EditAddressComponent),
+      loadComponent: () => import('./features/organization/pages/edit-organization-address/edit-organization-address.component').then(mod => mod.EditOrganizationAddressComponent),
+      canActivate: [AuthGuard],
+    },
+    {
+      path: 'edit-organization-contact-details/:organizationId',
+      loadComponent: () => import('./features/organization/pages/edit-organization-contact-details/edit-organization-contact-details.component').then(mod => mod.EditOrganizationContactDetailsComponent),
+      canActivate: [AuthGuard],
+    },
+    {
+      path: 'edit-organization-description/:organizationId',
+      loadComponent: () => import('./features/organization/pages/edit-organization-description/edit-organization-description.component').then(mod => mod.EditOrganizationDescriptionComponent),
       canActivate: [AuthGuard],
     },
     {

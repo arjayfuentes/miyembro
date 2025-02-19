@@ -3,8 +3,23 @@
   [logoUrl]="logoUrl"
   [title]="title"
 >
-  <ng-content></ng-content>
+  <ng-content organization-membership></ng-content>
+  <div
+    edit-organization-photo
+    class="absolute bottom-0 left-0 py-3 px-3"
+    *ngIf="isEditAllowed"
+  >
+    <p-splitbutton
+      label="Edit Photo"
+      icon="pi pi-pencil"
+      styleClass="ml-1 py-1"
+      severity="secondary"
+      [model]="items"
+      size="small"
+    />
+  </div>
 </app-profile-header>
+
 <app-shrinked-header
   [visible]="schrunk"
   [title]="title"

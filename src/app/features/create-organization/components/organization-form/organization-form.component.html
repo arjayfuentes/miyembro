@@ -2,7 +2,10 @@
   <form [formGroup]="organizationForm" autocomplete="off">
     <div class="grid sm:grid-cols-2 gap-5">
       <!-- Organization Name - Full Width -->
-      <div class="sm:col-span-2">
+      <div
+        class="sm:col-span-2"
+        *ngIf="formType === OrganizationFormType.ADD_ORGANIZATION"
+      >
         <label class="text-gray-600 text-sm mb-2 block" for="name">
           Organization Name<span class="ml-2 text-red-500 font-semilbold"
             >*</span
@@ -24,7 +27,13 @@
       </div>
 
       <!-- Description - Full Width -->
-      <div class="sm:col-span-2">
+      <div
+        class="sm:col-span-2"
+        *ngIf="
+          formType === OrganizationFormType.ADD_ORGANIZATION ||
+          formType === OrganizationFormType.UPDATE_ORGANIZATION_DESCRIPTION
+        "
+      >
         <label class="text-gray-600 text-sm mb-2 block" for="description">
           Description<span class="ml-2 text-red-500 font-semilbold">*</span>
         </label>
@@ -46,7 +55,12 @@
       </div>
 
       <!-- Email -->
-      <div>
+      <div
+        *ngIf="
+          formType === OrganizationFormType.ADD_ORGANIZATION ||
+          formType === OrganizationFormType.UPDATE_ORGANIZATION_CONTACT_DETAILS
+        "
+      >
         <label class="text-gray-600 text-sm mb-2 block" for="email">
           Email
         </label>
@@ -66,7 +80,12 @@
       </div>
 
       <!-- Phone Number -->
-      <div>
+      <div
+        *ngIf="
+          formType === OrganizationFormType.ADD_ORGANIZATION ||
+          formType === OrganizationFormType.UPDATE_ORGANIZATION_CONTACT_DETAILS
+        "
+      >
         <label class="text-gray-600 text-sm mb-2 block" for="phoneNumber">
           Phone Number
         </label>
@@ -89,7 +108,13 @@
       </div>
 
       <!-- Website URL -->
-      <div class="sm:col-span-2">
+      <div
+        class="sm:col-span-2"
+        *ngIf="
+          formType === OrganizationFormType.ADD_ORGANIZATION ||
+          formType === OrganizationFormType.UPDATE_ORGANIZATION_CONTACT_DETAILS
+        "
+      >
         <label class="text-gray-600 text-sm mb-2 block" for="websiteUrl">
           Website
         </label>
@@ -111,5 +136,6 @@
         />
       </div>
     </div>
+    <ng-content></ng-content>
   </form>
 </div>
