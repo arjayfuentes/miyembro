@@ -42,6 +42,11 @@ export class MyOrganizationComponent implements OnInit{
 
   ngOnInit(): void {
     this.getOrganization();
+    this.organizationService.getOrganizationUpdate().subscribe((res) => {
+      if(res) {
+        this.organization = res;
+      }
+    });
   }
 
   private getOrganization() {

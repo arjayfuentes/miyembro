@@ -1,0 +1,10 @@
+<app-collapsible-header
+  [title]="title"
+  [backgroundImageUrl]="backgroundImageUrl"
+  [logoUrl]="logoUrl"
+  [isEditAllowed]="isEditAllowed"
+  (backgroundImageUrlChange)="onOrganizationBackgroundImageUrlUpdate($event)"
+  (logoUrlChange)="onOrganizationLogoUrlUpdate($event)"
+>
+  <ng-content></ng-content>
+</app-collapsible-header>

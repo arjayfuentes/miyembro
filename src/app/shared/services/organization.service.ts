@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment as env } from '@environments/environment';
 import { Session } from 'src/app/core/models/session';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
@@ -14,11 +14,21 @@ import { OrganizationRequest } from 'src/app/core/models/organization-request';
 })
 export class OrganizationService {
 
-  baseUrl = '/organization';
+    private organizationSubject = new Subject<OrganizationResponse>();
+    
+    baseUrl = '/organization';
 
-   constructor(
+    constructor(
       private http: HttpClient,
     ) {
+    }
+
+    getOrganizationUpdate(): Observable<OrganizationResponse> {
+      return this.organizationSubject.asObservable();
+    }
+ 
+    setOrganization(organizationResponse: OrganizationResponse): void {
+      this.organizationSubject.next(organizationResponse);
     }
 
     completeCreateOrganization(formData: FormData): Observable<any> {
@@ -64,6 +74,10 @@ export class OrganizationService {
 
     updateOrganization(organization: OrganizationResponse | undefined): Observable<OrganizationResponse> {
       return this.http.put(`${env.apiUrl}${this.baseUrl}/updateOrganization`, organization) as Observable<OrganizationResponse>;
+    }
+
+    updateOrganizationPhoto(organization: OrganizationResponse | null, formData: FormData): Observable<OrganizationResponse> {
+      return this.http.post(`${env.apiUrl}${this.baseUrl}/updateOrganizationPhoto/${organization?.organizationId}`, formData) as Observable<OrganizationResponse>;
     }
 
     uploadImage(organizationId: string | undefined, file: File, imageType: string): Observable<string> {

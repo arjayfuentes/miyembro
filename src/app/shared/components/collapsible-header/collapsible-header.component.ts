@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ShrinkedHeaderComponent } from '../shrinked-header/shrinked-header.component';
 import { ProfileHeaderComponent } from '../profile-header/profile-header.component';
 import { HomeService } from 'src/app/features/home/services/home.service';
@@ -9,6 +9,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenuItem } from 'primeng/api';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
+import { OrganizationService } from '../../services/organization.service';
 
 @Component({
   selector: 'app-collapsible-header',
@@ -22,32 +23,19 @@ export class CollapsibleHeaderComponent implements OnInit{
   @Input() isEditAllowed = false;
   @Input() logoUrl: string | undefined;
   @Input() title: string | undefined;
-
-  @ViewChild('logoUrlControl') logoUrlControl: AvatarComponent | null = null;
-
-  items: MenuItem[];
+  @Output() backgroundImageUrlChange = new EventEmitter<string>(); 
+  @Output() logoUrlChange = new EventEmitter<string>(); 
+  
   scrollSubscription!: Subscription;
   schrunk = false;
   triggerHeight = 235;
 
 
   constructor(
-    private homeService: HomeService
+    private homeService: HomeService,
+    private organizationService: OrganizationService,
   ) {
-    this.items = [
-      {
-          label: 'Update Background',
-          command: () => {
-              this.updateBackgroundImage();
-          }
-      },
-      {
-          label: 'Update Profile Photo',
-          command: () => {
-              this.updateProfileImage();
-          }
-      }
-  ];
+
   }
 
   ngOnInit(): void {
@@ -60,17 +48,23 @@ export class CollapsibleHeaderComponent implements OnInit{
         }
       }
     );
+    this.organizationService.getOrganizationUpdate().subscribe((res)=> {
+      if(res) {
+        this.backgroundImageUrl = res.backgroundImageUrl;
+        console.log('background image in collapsiable header', this.backgroundImageUrl);
+        this.logoUrl = res.logoUrl;
+      }
+    });
   }
 
-  private updateBackgroundImage() {
-    console.log('dadsad');
+  
+  
+  onLogoChange(newLogoUrl: string) {
+    this.logoUrlChange.emit(newLogoUrl); 
   }
 
-  private updateProfileImage() {
-    const avatarControl = this.logoUrlControl as AvatarComponent;
-    if (avatarControl && avatarControl.fileInput) {
-      avatarControl.triggerFileInput();
-    }
+  onBackgroundImageChange(newBackgroundImageUrl: string) {
+    this.backgroundImageUrlChange.emit(newBackgroundImageUrl); 
   }
   
 }

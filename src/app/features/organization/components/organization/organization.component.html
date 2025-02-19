@@ -1,13 +1,9 @@
 <div class="mx-auto md:max-w-[80%] w-full">
-  <p>{{ organization | json }}</p>
-  <app-collapsible-header
-    [title]="organization?.name"
-    [backgroundImageUrl]="organization?.backgroundImageUrl"
-    [logoUrl]="organization?.logoUrl"
+  <app-organization-collapsing-header
+    [organization]="organization"
     [isEditAllowed]="isEditAllowed"
-  >
-    <ng-content></ng-content>
-  </app-collapsible-header>
+    ><ng-content></ng-content
+  ></app-organization-collapsing-header>
   <p-tabs value="0">
     <p-tablist class="sticky-tabs p-0 z-50">
       <p-tab value="0">About Us</p-tab>
