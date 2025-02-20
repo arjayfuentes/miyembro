@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ShrinkedHeaderComponent } from '../shrinked-header/shrinked-header.component';
 import { ProfileHeaderComponent } from '../profile-header/profile-header.component';
 import { HomeService } from 'src/app/features/home/services/home.service';

@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CollapsibleHeaderComponent } from "../../../../shared/components/collapsible-header/collapsible-header.component";
 import { OrganizationService } from 'src/app/shared/services/organization.service';
 import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Router } from '@angular/router';
-import { CreateOrganizationRequest } from 'src/app/core/models/create-organization-request';
 import { ImageType } from 'src/app/shared/model/image-type.enum';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { UpdateOrganizationPhotoRequest } from '../../model/update-organization-photo-request';
