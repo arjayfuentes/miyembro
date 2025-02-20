@@ -4,7 +4,6 @@ import { MembershipService } from 'src/app/shared/services/membership.service';
 import { SessionService } from 'src/app/core/auth/services/session.service';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
-import { Membership } from 'src/app/core/models/membership';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { OrganizationService } from '../../../../shared/services/organization.service';
@@ -18,6 +17,7 @@ import { OrganizationEventsComponent } from '../organization-events/organization
 import { OrganizationPhotosComponent } from '../organization-photos/organization-photos.component';
 import { OrganizationMembershipComponent } from '../organization-membership/organization-membership.component';
 import { OrganizationCollapsingHeaderComponent } from "../organization-collapsing-header/organization-collapsing-header.component";
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({
   selector: 'app-organization',
@@ -28,7 +28,7 @@ import { OrganizationCollapsingHeaderComponent } from "../organization-collapsin
 export class OrganizationComponent implements OnInit {
   
   @Input() isMyOrganization = false;
-  @Input() membership: Membership | null = null;
+  @Input() membership: MembershipResponse | null = null;
   @Input() organization: OrganizationResponse | null = null;
 
   isEditAllowed = false;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MembershipTypeValidity } from '../models/membership-type-validity';
 import { environment as env } from '@environments/environment';
+import { MembershipType } from 'src/app/core/models/membership-type';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class MembershipTypeService {
 
   findAllMembershipTypeValidity(): Observable<MembershipTypeValidity[]> {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/findAllMembershipTypeValidity`) as Observable<MembershipTypeValidity[]>;
+  }
+
+  getMembershipTypesByOrganizationId(organizationId: string | null): Observable<MembershipType[]> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/getMembershipTypesByOrganizationId/`+ organizationId) as Observable<MembershipType[]>;
   }
 
       

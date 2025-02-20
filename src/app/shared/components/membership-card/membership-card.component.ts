@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
 import { Member } from 'src/app/core/models/member';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 
 @Component({
@@ -15,7 +15,7 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 export class MembershipCardComponent {
 
   @Input() organization: OrganizationResponse | null = null;
-  @Input() membership: Membership | null = null;
+  @Input() membership: MembershipResponse | null = null;
   @Input() member: Member | undefined;
 
 }

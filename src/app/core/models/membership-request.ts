@@ -2,12 +2,11 @@ import { Member } from "./member";
 import { MembershipType } from "./membership-type";
 import { Role } from "./role";
 
-export interface Membership {
+export interface MembershipRequest {
     membershipId: string;
     organizationId: string;
     member: Member;
-    membershipType: MembershipType;
-    role: Role;
+    membershipType: MembershipType | undefined;
     status: string;
     startDate: Date;
     endDate: Date;

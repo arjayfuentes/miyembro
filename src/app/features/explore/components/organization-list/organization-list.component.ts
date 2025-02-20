@@ -11,12 +11,12 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
 import { MembershipService } from 'src/app/shared/services/membership.service';
-import { Membership } from 'src/app/core/models/membership';
 import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { FormsModule } from '@angular/forms';
 import { OrganizationItemGridSkeletonComponent } from "../organization-item-grid-skeleton/organization-item-grid-skeleton.component";  // Import FormsModule here
 import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({
   selector: 'app-organization-list',
@@ -35,7 +35,7 @@ export class OrganizationListComponent implements OnInit{
   layout = 'grid';
   loading = false;
   loginErrorMessage: string | null = null;
-  membership: Membership | null = null;
+  membership: MembershipResponse | null = null;
   options = ['list', 'grid'];
   organizations: OrganizationResponse [] = [];
   page = 0; 

@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { MemberService } from '../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { TabsModule } from 'primeng/tabs';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
@@ -22,7 +22,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 export class MemberListComponent {
   table: Table<any> = { rows: [], columns: [] };
   loading = false;
-  memberships: Membership [] = [];
+  memberships: MembershipResponse [] = [];
   title = 'Members';
   tableFooterCountTitle = 'Member'
   session: Session | null = null;
@@ -123,6 +123,11 @@ export class MemberListComponent {
           dataType: 'string',
           colTemplateRefName: 'userFullnameColumn',
           headerText: 'Membership Status',
+        },
+        {
+          dataField: 'membershipType.name',
+          dataType: 'string',
+          headerText: 'Membership Type',
         },
         {
           dataField: 'role.name',

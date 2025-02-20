@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CommonModule } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
@@ -17,7 +17,7 @@ import { Member } from 'src/app/core/models/member';
 export class OrganizationMembershipComponent implements OnInit {
 
   @Input() organization: OrganizationResponse | null = null;
-  @Input() membership: Membership | null = null;
+  @Input() membership: MembershipResponse | null = null;
   member: Member | undefined;
 
   constructor(

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MembershipService } from 'src/app/shared/services/membership.service';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { SessionService } from 'src/app/core/auth/services/session.service';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -27,7 +27,7 @@ export class OrganizationDetailsPageComponent implements OnInit {
   
   loading = false;
   loginErrorMessage: string | null = null;
-  membership: Membership | null = null;
+  membership: MembershipResponse | null = null;
   organization: OrganizationResponse | null = null;
   organizationId: string | null = null;
 

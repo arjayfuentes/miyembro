@@ -13,7 +13,7 @@ import { OrganizationInformationComponent } from '../../components/organization-
 import { OrganizationComponent } from '../../components/organization/organization.component';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { MembershipService } from 'src/app/shared/services/membership.service';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { PhotoControlComponent } from 'src/app/shared/components/photo-control/photo-control.component';
 import { FormsModule } from '@angular/forms';
 
@@ -26,7 +26,7 @@ import { FormsModule } from '@angular/forms';
 export class MyOrganizationComponent implements OnInit{
 
   loginErrorMessage: string | null = null;
-  membership: Membership | null = null;
+  membership: MembershipResponse | null = null;
   organization: OrganizationResponse | null = null;
 
   constructor(

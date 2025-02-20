@@ -1,5 +1,5 @@
 import { Member } from "./member";
-import { Membership } from "./membership";
+import { MembershipResponse } from "./membership-response";
 import { OrganizationResponse } from "./organization-reponse";
 import { Role } from "./role";
 
@@ -11,5 +11,5 @@ export interface Session {
     permissions: string [];
     organization: OrganizationResponse | undefined;
     organizationIdsOfMember: string[] | undefined;
-    membership: Membership;
+    membership: MembershipResponse;
 }

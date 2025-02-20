@@ -6,39 +6,46 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { MemberService } from '../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
-import { Membership } from 'src/app/core/models/membership';
 import { TabsModule } from 'primeng/tabs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organization-request/approve-join-organization-request.component';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({
   selector: 'app-member-pending-request',
-  imports: [CommonModule, TableComponent, ButtonModule, CardModule, AvatarModule, AvatarGroupModule],
+  imports: [CommonModule, TableComponent, ButtonModule, CardModule, AvatarModule, AvatarGroupModule, DynamicDialogModule],
   templateUrl: './member-pending-request.component.html',
-  styleUrl: './member-pending-request.component.scss'
+  styleUrl: './member-pending-request.component.scss',
+  providers: [DialogService, MessageService]
 })
 export class MemberPendingRequestComponent {
 
-    table: Table<any> = { rows: [], columns: [] };
+    
+    first = 0; 
     loading = false;
-    memberships: Membership [] = [];
-    title = 'Members';
-    tableFooterCountTitle = 'Member'
+    memberships: MembershipResponse [] = [];
+    ref: DynamicDialogRef | undefined;
+    rowsPerPage = 5;
     session: Session | null = null;
-    totalRecords = 0;  // Total records count
-    rowsPerPage = 5;  // Default page size
-    first = 0; // 
-  
     sortField = "member.firstName";
     sortOrder = 1;  
-  
+    table: Table<any> = { rows: [], columns: [] };
+    tableFooterCountTitle = 'Member'
+    title = 'Members';
+    totalRecords = 0; 
+    
     constructor(
       private alertService: AlertService,
+      private dialogService: DialogService,
+      private memberService: MemberService, 
+      private messageService: MessageService,
       private sessionService: SessionService,
-      private memberService: MemberService
     ) {}
   
     ngOnInit(): void {
@@ -133,7 +140,21 @@ export class MemberPendingRequestComponent {
 
 
     approveJoinRequest(row: any) {
-      console.log(row);
+      this.ref = this.dialogService.open(ApproveJoinOrganizationRequestComponent, {
+          header: 'Approve Request',
+          modal: true,
+          contentStyle: { overflow: 'auto' },
+          breakpoints: { '960px': '75vw', '640px': '90vw' },
+          data: { organizationId: row.organizationId , membership: row },
+          closable: true
+      });
+  
+      this.ref.onClose.subscribe((data: any) => {
+          if (data?.membership) {
+              console.log(data.membership);
+              this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+            }
+      });
     }
 
     denyJoinRequest(row: any) {

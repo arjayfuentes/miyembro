@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Membership } from 'src/app/core/models/membership';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { AvatarModule } from 'primeng/avatar';
 
@@ -14,6 +14,6 @@ import { AvatarModule } from 'primeng/avatar';
 export class MembershipCardDetailsComponent {
 
   @Input() organization: OrganizationResponse | undefined;
-  @Input() membership: Membership | undefined;
+  @Input() membership: MembershipResponse | undefined;
 
 }
