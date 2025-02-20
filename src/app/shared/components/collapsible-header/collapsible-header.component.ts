@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ShrinkedHeaderComponent } from '../shrinked-header/shrinked-header.component';
 import { ProfileHeaderComponent } from '../profile-header/profile-header.component';
 import { HomeService } from 'src/app/features/home/services/home.service';
@@ -17,7 +17,7 @@ import { OrganizationService } from '../../services/organization.service';
   templateUrl: './collapsible-header.component.html',
   styleUrl: './collapsible-header.component.scss'
 })
-export class CollapsibleHeaderComponent implements OnInit{
+export class CollapsibleHeaderComponent implements OnInit, OnChanges{
 
   @Input() backgroundImageUrl: string | undefined;
   @Input() isEditAllowed = false;
@@ -28,7 +28,7 @@ export class CollapsibleHeaderComponent implements OnInit{
   
   scrollSubscription!: Subscription;
   schrunk = false;
-  triggerHeight = 235;
+  triggerHeight = 250;
 
 
   constructor(
@@ -36,6 +36,12 @@ export class CollapsibleHeaderComponent implements OnInit{
     private organizationService: OrganizationService,
   ) {
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['backgroundImageUrl'] && this.backgroundImageUrl) {
+      console.log(this.backgroundImageUrl);
+    }
   }
 
   ngOnInit(): void {
@@ -50,9 +56,8 @@ export class CollapsibleHeaderComponent implements OnInit{
     );
     this.organizationService.getOrganizationUpdate().subscribe((res)=> {
       if(res) {
-        this.backgroundImageUrl = res.backgroundImageUrl;
-        console.log('background image in collapsiable header', this.backgroundImageUrl);
-        this.logoUrl = res.logoUrl;
+        this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;
+        this.logoUrl = `${res.logoUrl}?v=${new Date().getTime()}`;
       }
     });
   }
@@ -60,10 +65,12 @@ export class CollapsibleHeaderComponent implements OnInit{
   
   
   onLogoChange(newLogoUrl: string) {
+    this.logoUrl = newLogoUrl;
     this.logoUrlChange.emit(newLogoUrl); 
   }
 
   onBackgroundImageChange(newBackgroundImageUrl: string) {
+    this.backgroundImageUrl = newBackgroundImageUrl;
     this.backgroundImageUrlChange.emit(newBackgroundImageUrl); 
   }
   

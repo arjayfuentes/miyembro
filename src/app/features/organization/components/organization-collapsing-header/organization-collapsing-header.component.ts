@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CollapsibleHeaderComponent } from "../../../../shared/components/collapsible-header/collapsible-header.component";
 import { OrganizationService } from 'src/app/shared/services/organization.service';
@@ -24,6 +24,7 @@ export class OrganizationCollapsingHeaderComponent implements OnChanges {
     logoUrl: string | undefined;
     title: string | undefined;
 
+
     constructor( 
       private alertService: AlertService,
       private loaderService: LoaderService,
@@ -42,7 +43,7 @@ export class OrganizationCollapsingHeaderComponent implements OnChanges {
     }
 
     onOrganizationBackgroundImageUrlUpdate(event: any) {
-      if(event && this.backgroundImageUrl !== event) {
+      if(event && this.backgroundImageUrl !== event && (event instanceof File)) {
         const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
           imageType: ImageType.BACKGROUND_IMAGE
         }
@@ -51,7 +52,7 @@ export class OrganizationCollapsingHeaderComponent implements OnChanges {
     }
 
     onOrganizationLogoUrlUpdate(event: any) {
-      if(event && this.logoUrl !== event) {
+      if(event && this.logoUrl !== event && (event instanceof File)) {
         const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
           imageType: ImageType.LOGO_IMAGE
         }
@@ -71,11 +72,7 @@ export class OrganizationCollapsingHeaderComponent implements OnChanges {
       this.loaderService.showLoader(this.router.url, false);
       this.organizationService.updateOrganizationPhoto(this.organization, formData).subscribe(
         (res) => {
-          console.log(res);
-          console.log('background image in ORG collapsiable header', res.backgroundImageUrl);
-
           this.organizationService.setOrganization(res);
-
           this.loaderService.hideLoader(this.router.url);
           this.alertService.success('/login', 'Success', 'Succefully updated image');
         },
