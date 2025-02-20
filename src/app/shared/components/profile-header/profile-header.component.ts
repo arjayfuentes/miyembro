@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { PhotoControlComponent } from '../photo-control/photo-control.component';
 import { ReadableTitleComponent } from '../readable-title/readable-title.component';
 import { ChipModule } from 'primeng/chip';
+import { ProfileHeaderService } from '../../services/profile-header.service';
 
 @Component({
   selector: 'app-profile-header',
@@ -15,7 +16,7 @@ import { ChipModule } from 'primeng/chip';
   templateUrl: './profile-header.component.html',
   styleUrl: './profile-header.component.scss'
 })
-export class ProfileHeaderComponent implements OnChanges{
+export class ProfileHeaderComponent {
 
   @Input() backgroundImageUrl: string | undefined;
   @Input() logoUrl: string | undefined;
@@ -25,17 +26,18 @@ export class ProfileHeaderComponent implements OnChanges{
   @Output() backgroundImageUrlChange = new EventEmitter<string>(); 
   @Output() logoUrlChange = new EventEmitter<string>(); 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['backgroundImageUrl'] && this.backgroundImageUrl) {
-      console.log("BACKGROUND IMAGE in PROFILE HEADER", this.backgroundImageUrl)
-    }
+  constructor(
+    private profileHeaderService: ProfileHeaderService
+  ) {
+    
   }
+
   onLogoChange(newLogoUrl: string) {
-    this.logoUrlChange.emit(newLogoUrl); 
+    this.profileHeaderService.setLogoImage(newLogoUrl);
   }
 
   onBackgroundImageChange(newBackgroundImageUrl: string) {
-    this.backgroundImageUrlChange.emit(newBackgroundImageUrl); 
+    this.profileHeaderService.setBackgroundImage(newBackgroundImageUrl);
   }
 
 }

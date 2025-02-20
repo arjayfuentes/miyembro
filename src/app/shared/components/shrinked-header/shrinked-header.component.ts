@@ -9,18 +9,11 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
   templateUrl: './shrinked-header.component.html',
   styleUrl: './shrinked-header.component.scss'
 })
-export class ShrinkedHeaderComponent implements OnChanges{
+export class ShrinkedHeaderComponent {
 
   @Input() backgroundImageUrl: string | undefined;
   @Input() logoUrl: string | undefined;
   @Input() title: string | undefined;
   @Input() visible = false;
-
-
-   ngOnChanges(changes: SimpleChanges): void {
-      if (changes['backgroundImageUrl'] && this.backgroundImageUrl) {
-        console.log('SRHINK HEADER', this.backgroundImageUrl);
-      }
-    }
 
 }

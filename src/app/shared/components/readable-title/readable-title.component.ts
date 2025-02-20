@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, Renderer2, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, Renderer2, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-readable-title',
@@ -14,19 +14,17 @@ export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
   @Input() styleClass: string | undefined = '';
   @Input() imageId: string | undefined = ''; // Pass the imageId here
 
-  textColor = 'black'; // Default color
+  textColor = 'black';
   private observer: MutationObserver | undefined;
-  private isInitialColorSet = false; // Flag to avoid flickering
-  private isImageLoaded = false; // Flag to check if image is loaded
+  private debounceTimeout: any;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngAfterViewInit() {
-    // Set initial text color based on background color immediately
-    this.setInitialTextColor();
+    this.updateTextColor();
 
     // Observe the image element for changes to its source (in case the image changes)
-    this.observer = new MutationObserver(() => this.updateTextColor());
+    this.observer = new MutationObserver(() => this.debouncedUpdateTextColor());
     const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
 
     if (imageElement) {
@@ -35,52 +33,34 @@ export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
         attributeFilter: ['src']
       });
     }
-
-    // Update the view after initialization if needed
-    this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
     this.observer?.disconnect();
-  }
-
-  private setInitialTextColor() {
-    const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
-
-    if (imageElement) {
-      // If the image is already loaded, directly calculate the text color
-      if (imageElement.complete && imageElement.naturalHeight !== 0) {
-        this.setTextColorFromImage(imageElement.src);
-      } else {
-        // Wait for image load
-        imageElement.onload = () => this.setTextColorFromImage(imageElement.src);
-      }
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
     }
   }
 
-  private setTextColorFromImage(imageUrl: string) {
-    this.getImageAverageColor(imageUrl).then(avgColor => {
-      if (avgColor) {
-        this.textColor = this.getContrastColor(avgColor);
-        this.renderer.setStyle(this.el.nativeElement, 'color', this.textColor);
-        this.isImageLoaded = true; // Image is loaded and color is set
-      }
-    });
+  private debouncedUpdateTextColor() {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+    this.debounceTimeout = setTimeout(() => this.updateTextColor(), 100); // Adjust the delay as needed
   }
 
   private updateTextColor() {
-    // Only update if the image is fully loaded
-    if (this.isImageLoaded) {
-      const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
+    const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
 
-      if (imageElement && imageElement.src) {
-        this.getImageAverageColor(imageElement.src).then(avgColor => {
-          if (avgColor) {
-            this.textColor = this.getContrastColor(avgColor);
-            this.renderer.setStyle(this.el.nativeElement, 'color', this.textColor);
-          }
-        });
-      }
+    if (imageElement && imageElement.src) {
+      // Delay the color update until the image is fully loaded
+      this.getImageAverageColor(imageElement.src).then(avgColor => {
+        // If average color calculation is successful, update text color
+        if (avgColor) {
+          this.textColor = this.getContrastColor(avgColor);
+          this.renderer.setStyle(this.el.nativeElement, 'color', this.textColor);
+        }
+      });
     }
   }
 
@@ -117,7 +97,12 @@ export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
     const rgb = this.extractRGB(bgColor);
     if (!rgb) return 'black';
 
-    // Standard luminance calculation for contrast
+    // Check if the color is white (or near-white)
+    if (rgb[0] === 255 && rgb[1] === 255 && rgb[2] === 255) {
+      return 'black'; // Special handling for white backgrounds
+    }
+
+    // Standard luminance calculation for other colors
     const luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
     return luminance > 0.5 ? 'black' : 'white';
   }

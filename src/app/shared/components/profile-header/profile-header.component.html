@@ -1,7 +1,7 @@
 <div>
   <app-photo-control
     [isEditable]="isEditAllowed"
-    [(ngModel)]="backgroundImageUrl"
+    [ngModel]="backgroundImageUrl"
     height="315"
     width="851"
     (ngModelChange)="onBackgroundImageChange($event)"
@@ -14,11 +14,19 @@
       organization-logo
       class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
     >
-      <p class="text-white font-[750] text-4xl sm:text-4xl">
+      <p
+        class="font-[750] text-4xl sm:text-4xl mix-blend-mode: difference"
+        style="mix-blend-mode: difference"
+      >
         {{ title }}
       </p>
+      <!-- <app-readable-title
+        [imageId]="'photoControlBackground'"
+        styleClass="font-[750] text-4xl sm:text-4xl"
+        [text]="title"
+      ></app-readable-title> -->
       <app-photo-control
-        [(ngModel)]="logoUrl"
+        [ngModel]="logoUrl"
         height="200"
         width="200"
         [isEditable]="isEditAllowed"

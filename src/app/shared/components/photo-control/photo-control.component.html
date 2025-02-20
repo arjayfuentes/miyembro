@@ -12,8 +12,8 @@
   [ngClass]="[styleClass, isRound ? 'rounded-full' : 'rounded-lg']"
 >
   <img
-    [src]="fileUrl || 'assets/default-image.png'"
-    class="w-full h-full border-2 border-gray-300 bg-white"
+    [src]="fileUrl || ''"
+    class="w-full h-full border-2 border-gray-300"
     [ngClass]="{
       'rounded-full bg-cover': isRound,
       'object-cover ': !isRound

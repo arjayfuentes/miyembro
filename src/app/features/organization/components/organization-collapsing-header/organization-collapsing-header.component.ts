@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ImageType } from 'src/app/shared/model/image-type.enum';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { UpdateOrganizationPhotoRequest } from '../../model/update-organization-photo-request';
+import { ProfileHeaderService } from 'src/app/shared/services/profile-header.service';
 
 @Component({
   selector: 'app-organization-collapsing-header',
@@ -14,74 +15,87 @@ import { UpdateOrganizationPhotoRequest } from '../../model/update-organization-
   templateUrl: './organization-collapsing-header.component.html',
   styleUrl: './organization-collapsing-header.component.scss'
 })
-export class OrganizationCollapsingHeaderComponent implements OnChanges {
+export class OrganizationCollapsingHeaderComponent implements OnInit, OnChanges {
   
     @Input() organization: OrganizationResponse | null = null;
     @Input() isEditAllowed = false;
 
-    backgroundImageUrl: string | undefined;
-    logoUrl: string | undefined;
-    title: string | undefined;
+  backgroundImageUrl: string | undefined;
+  logoUrl: string | undefined;
+  title: string | undefined;
 
 
-    constructor( 
-      private alertService: AlertService,
-      private loaderService: LoaderService,
-      private organizationService: OrganizationService,
-      private router: Router,
-    ) {
+  constructor( 
+    private alertService: AlertService,
+    private loaderService: LoaderService,
+    private organizationService: OrganizationService,
+    private profileHeaderService: ProfileHeaderService,
+    private router: Router,
+  ) {
 
-    }
+  }
 
-    ngOnChanges(changes: SimpleChanges): void {
-      if (changes['organization'] && this.organization) {
-        this.backgroundImageUrl = this.organization.backgroundImageUrl;
-        this.logoUrl = this.organization.logoUrl;
-        this.title = this.organization.name;
+
+  ngOnInit(): void {
+    this.profileHeaderService.getBackgroundImageUpdate().subscribe((res)=> {
+      if(res && this.backgroundImageUrl !== res && (res instanceof File)) {
+        this.onOrganizationBackgroundImageUrlUpdate(res);
       }
-    }
-
-    onOrganizationBackgroundImageUrlUpdate(event: any) {
-      if(event && this.backgroundImageUrl !== event && (event instanceof File)) {
-        const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
-          imageType: ImageType.BACKGROUND_IMAGE
-        }
-        this.updateOrganizationPhoto(event, updateOrganizationPhotoRequest );
+    });
+    this.profileHeaderService.getLogoImageUpdate().subscribe((res)=> {
+      if(res && this.logoUrl !== res && (res instanceof File)) {
+        this.onOrganizationLogoUrlUpdate(res);
       }
+    });
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['organization'] && this.organization) {
+      this.backgroundImageUrl = this.organization.backgroundImageUrl;
+      this.logoUrl = this.organization.logoUrl;
+      this.title = this.organization.name;
+    }
+  }
+
+  onOrganizationBackgroundImageUrlUpdate(event: any) {
+    const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
+      imageType: ImageType.BACKGROUND_IMAGE
+    }
+    this.updateOrganizationPhoto(event, updateOrganizationPhotoRequest );
+  }
+
+  onOrganizationLogoUrlUpdate(event: any) {
+    const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
+      imageType: ImageType.LOGO_IMAGE
+    }
+    this.updateOrganizationPhoto(event, updateOrganizationPhotoRequest );
+  }
+
+
+  updateOrganizationPhoto(file: any, updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest) {
+    const formData = new FormData();
+
+    if(file) {
+      formData.append('image', file);
     }
 
-    onOrganizationLogoUrlUpdate(event: any) {
-      if(event && this.logoUrl !== event && (event instanceof File)) {
-        const updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest = {
-          imageType: ImageType.LOGO_IMAGE
-        }
-        this.updateOrganizationPhoto(event, updateOrganizationPhotoRequest );
+    formData.append('imageType', updateOrganizationPhotoRequest.imageType);
+    this.loaderService.showLoader(this.router.url, false);
+    this.organizationService.updateOrganizationPhoto(this.organization, formData).subscribe(
+      (res) => {
+        this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;
+        this.logoUrl = `${res.logoUrl}?v=${new Date().getTime()}`;
+        this.loaderService.hideLoader(this.router.url);
+        this.alertService.success('/login', 'Success', 'Succefully updated image');
+      },
+      (err: any) => {
+        console.log(err);
+        this.loaderService.hideLoader(this.router.url);
+        this.alertService.error('/login', 'Error', err);
       }
-    }
-
-
-    updateOrganizationPhoto(file: any, updateOrganizationPhotoRequest: UpdateOrganizationPhotoRequest) {
-      const formData = new FormData();
-  
-      if(file) {
-        formData.append('image', file);
-      }
-  
-      formData.append('imageType', updateOrganizationPhotoRequest.imageType);
-      this.loaderService.showLoader(this.router.url, false);
-      this.organizationService.updateOrganizationPhoto(this.organization, formData).subscribe(
-        (res) => {
-          this.organizationService.setOrganization(res);
-          this.loaderService.hideLoader(this.router.url);
-          this.alertService.success('/login', 'Success', 'Succefully updated image');
-        },
-        (err: any) => {
-          console.log(err);
-          this.loaderService.hideLoader(this.router.url);
-          this.alertService.error('/login', 'Error', err);
-        }
-      );
-    }
+    );
+  }
 
     
 

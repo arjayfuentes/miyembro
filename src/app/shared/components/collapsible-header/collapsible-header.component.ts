@@ -17,7 +17,7 @@ import { OrganizationService } from '../../services/organization.service';
   templateUrl: './collapsible-header.component.html',
   styleUrl: './collapsible-header.component.scss'
 })
-export class CollapsibleHeaderComponent implements OnInit, OnChanges{
+export class CollapsibleHeaderComponent implements OnInit{
 
   @Input() backgroundImageUrl: string | undefined;
   @Input() isEditAllowed = false;
@@ -38,12 +38,6 @@ export class CollapsibleHeaderComponent implements OnInit, OnChanges{
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['backgroundImageUrl'] && this.backgroundImageUrl) {
-      console.log(this.backgroundImageUrl);
-    }
-  }
-
   ngOnInit(): void {
     this.scrollSubscription = this.homeService.scrollObservable$.subscribe(
       (scrollTop) => {
@@ -54,12 +48,6 @@ export class CollapsibleHeaderComponent implements OnInit, OnChanges{
         }
       }
     );
-    this.organizationService.getOrganizationUpdate().subscribe((res)=> {
-      if(res) {
-        this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;
-        this.logoUrl = `${res.logoUrl}?v=${new Date().getTime()}`;
-      }
-    });
   }
 
   
