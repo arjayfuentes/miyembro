@@ -38,6 +38,18 @@
       <ng-template #endDateColumn let-row>
         {{ row['endDate'] | date : 'MMMM d, y' }}
       </ng-template>
+      <ng-template #editMembershipColumn let-row>
+        <p-button
+          label="Edit"
+          icon="pi pi-pencil"
+          size="small"
+          severity="secondary"
+          [raised]="true"
+          [rounded]="true"
+          styleClass="py-1"
+          (onClick)="onEditMembership(row)"
+        />
+      </ng-template>
     </app-table>
   </p-card>
 </div>

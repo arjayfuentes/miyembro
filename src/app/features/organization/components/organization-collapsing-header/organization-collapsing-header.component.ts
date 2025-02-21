@@ -52,8 +52,8 @@ export class OrganizationCollapsingHeaderComponent implements OnInit, OnChanges 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['organization'] && this.organization) {
-      this.backgroundImageUrl = this.organization.backgroundImageUrl;
-      this.logoUrl = this.organization.logoUrl;
+      this.backgroundImageUrl = `${this.organization.backgroundImageUrl}?v=${new Date().getTime()}`;
+      this.logoUrl = `${this.organization.logoUrl}?v=${new Date().getTime()}`;
       this.title = this.organization.name;
     }
   }
@@ -84,6 +84,7 @@ export class OrganizationCollapsingHeaderComponent implements OnInit, OnChanges 
     this.loaderService.showLoader(this.router.url, false);
     this.organizationService.updateOrganizationPhoto(this.organization, formData).subscribe(
       (res) => {
+        console.log(res);
         this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;
         this.logoUrl = `${res.logoUrl}?v=${new Date().getTime()}`;
         this.loaderService.hideLoader(this.router.url);

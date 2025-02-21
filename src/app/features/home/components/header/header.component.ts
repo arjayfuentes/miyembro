@@ -61,6 +61,7 @@ export class HeaderComponent implements OnInit{
 
     items: MenuItem[] | undefined;
     session: Session | null = null;
+    profilePicUrl: string | undefined;
 
     members = [
         { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
@@ -75,10 +76,13 @@ export class HeaderComponent implements OnInit{
         private alertService: AlertService,
         private socialAuthService: SocialAuthService
         
-    ) {}
+    ) {
+
+    }
 
     ngOnInit() {
         this.session = this.sessionService.getSession();
+        this.profilePicUrl = `${this.session?.member.profilePicUrl }?v=${new Date().getTime()}`;
         this.items = [
             {
                 label: 'Explore',

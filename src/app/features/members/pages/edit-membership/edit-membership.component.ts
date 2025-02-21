@@ -1,0 +1,126 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SelectModule } from 'primeng/select';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
+import { MembershipType } from 'src/app/core/models/membership-type';
+import { MembershipTypeService } from 'src/app/features/create-organization/services/membership-type.service';
+import { MemberDetailsComponent } from 'src/app/features/home/components/member-details/member-details.component';
+import { MembershipService } from 'src/app/shared/services/membership.service';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { MemberFormComponent } from "../../../../core/auth/components/member-form/member-form.component";
+import { MembershipFormComponent } from "../../components/membership-form/membership-form.component";
+import { RoleService } from 'src/app/shared/services/role.service';
+import { Role } from 'src/app/core/models/role';
+import { MembershipStatusResponse } from '../../models/membership-status-response';
+import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
+import { MembershipRequest } from 'src/app/core/models/membership-request';
+
+@Component({
+  selector: 'app-edit-membership',
+  imports: [SelectModule, FormsModule, ReactiveFormsModule, MemberDetailsComponent, ButtonModule, FloatLabelModule, MemberFormComponent, MembershipFormComponent],
+  templateUrl: './edit-membership.component.html',
+  styleUrl: './edit-membership.component.scss'
+})
+export class EditMembershipComponent implements OnInit {
+
+    membership: MembershipResponse | undefined;
+    membershipTypes: MembershipType [] = [];
+    membershipStatuses: MembershipStatusResponse [] = [];
+
+    roles: Role [] = [];
+    organizationId: string | null = null;
+    selectedMembership: MembershipType | undefined;
+    membershipForm: FormGroup; 
+    
+
+    constructor(
+      public config: DynamicDialogConfig,    
+      private dialogService: DialogService, 
+      private formBuilder: FormBuilder,
+      private membershipService: MembershipService,
+      private membershipStatusService: MembershipStatusService,
+      private membershipTypeService: MembershipTypeService,
+      private ref: DynamicDialogRef,
+      private roleService: RoleService
+    ) {
+      if (config.data) {
+        this.organizationId = config.data.organizationId;
+        this.membership = config.data.membership;
+      }
+      this.membershipForm = this.formBuilder.group({
+        membershipId: [null],
+        organizationId: [null],
+        member: [null],
+        membershipType: [null, Validators.required],
+        membershipStatus: [null, Validators.required],
+        role: [null, Validators.required],
+        startDate: [null, Validators.required],
+        endDate: [null]
+      });
+    }
+
+    ngOnInit(): void {
+      this.getMembershipTypes();
+      this.getRoles();
+      this.getMembershipStatuses();
+    }
+
+    cancelEditMembership() {
+      this.ref.close();
+    }
+
+    onUpdateMembership() {
+
+      const membership = this.membershipForm.value;
+    
+      const membershipRequest: MembershipRequest = membership as MembershipRequest;
+    
+      this.membershipService.updateMembership(membershipRequest).subscribe(
+        (res) => {
+          this.membership = res;
+          console.log(this.membership);
+          this.ref.close({
+            membership: this.membership
+          });
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+    }
+
+    private getMembershipTypes() {
+      this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId).subscribe(
+        (res) => {
+          this.membershipTypes = res;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+    }
+
+    private getRoles() {
+      this.roleService.getMemberRoles().subscribe(
+        (res) => {
+          this.roles = res;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+    }
+
+    private getMembershipStatuses() {
+      this.membershipStatusService.getMemberMembershipStatuses().subscribe(
+        (res) => {
+          this.membershipStatuses = res;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+    }
+}

@@ -39,5 +39,10 @@ constructor(
     return this.http.put(`${env.apiUrl}${this.baseUrl}/updateMembershipType/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
 
+  updateMembership(membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/updateMembership/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+  }
+
+
 
 }

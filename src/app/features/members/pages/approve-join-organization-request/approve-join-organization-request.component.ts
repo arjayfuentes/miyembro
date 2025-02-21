@@ -21,7 +21,6 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 })
 export class ApproveJoinOrganizationRequestComponent {
 
-  dialogStyle: string;
   membership: MembershipResponse | undefined;
   membershipTypes: MembershipType [] = [];
   organizationId: string | null = null;
@@ -38,7 +37,6 @@ export class ApproveJoinOrganizationRequestComponent {
       this.organizationId = config.data.organizationId;
       this.membership = config.data.membership;
     }
-    this.dialogStyle = config.styleClass || 'w-[50vw] h-[60vh]';
   }
 
   ngOnInit(): void {

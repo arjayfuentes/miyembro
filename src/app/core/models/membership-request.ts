@@ -1,3 +1,4 @@
+import { MembershipStatusRequest } from "src/app/features/members/models/membership-status-request";
 import { Member } from "./member";
 import { MembershipType } from "./membership-type";
 import { Role } from "./role";
@@ -7,7 +8,7 @@ export interface MembershipRequest {
     organizationId: string;
     member: Member;
     membershipType: MembershipType | undefined;
-    status: string;
+    membershipStatus: MembershipStatusRequest;
     startDate: Date;
     endDate: Date;
 }

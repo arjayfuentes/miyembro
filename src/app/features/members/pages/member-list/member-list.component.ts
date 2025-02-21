@@ -12,19 +12,26 @@ import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
+import { ButtonModule } from 'primeng/button';
+import { EditMembershipComponent } from '../edit-membership/edit-membership.component';
+import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-member-list',
-  imports: [CommonModule, TableComponent, MemberListComponent, CardModule, AvatarModule, AvatarGroupModule],
+  imports: [CommonModule, TableComponent, ButtonModule, MemberListComponent, CardModule, AvatarModule, AvatarGroupModule],
   templateUrl: './member-list.component.html',
-  styleUrl: './member-list.component.scss'
+  styleUrl: './member-list.component.scss',
+  providers: [DialogService, MessageService]
 })
 export class MemberListComponent {
+
   table: Table<any> = { rows: [], columns: [] };
   loading = false;
   memberships: MembershipResponse [] = [];
   title = 'Members';
   tableFooterCountTitle = 'Member'
+  ref: DynamicDialogRef | undefined;
   session: Session | null = null;
   totalRecords = 0;  // Total records count
   rowsPerPage = 10;  // Default page size
@@ -35,6 +42,7 @@ export class MemberListComponent {
 
   constructor(
     private alertService: AlertService,
+    private dialogService: DialogService,
     private sessionService: SessionService,
     private memberService: MemberService
   ) {}
@@ -68,6 +76,25 @@ export class MemberListComponent {
     );
   }
 
+
+  onEditMembership(row: any) {
+    this.ref = this.dialogService.open(EditMembershipComponent, {
+        header: 'Edit Membership',
+        modal: true,
+        contentStyle: { overflow: 'auto' },
+        breakpoints: { '960px': '75vw', '640px': '90vw' },
+        data: { organizationId: row.organizationId , membership: row },
+        closable: true
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+        if (data?.membership) {
+            console.log(data.membership);
+            this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+          }
+    });
+  }
+
   pageChangeTable(event: any) {
     const pageNo = event.first / event.rowsPerPage;
     this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
@@ -87,19 +114,6 @@ export class MemberListComponent {
           colTemplateRefName: 'nameColumn',
           headerText: 'Name',
         },
-       
-        // {
-        //   dataField: 'member.firstName',
-        //   dataType: 'string',
-        //   colTemplateRefName: 'userFullnameColumn',
-        //   headerText: 'First Name',
-        // },
-        // {
-        //   dataField: 'member.lastName',
-        //   dataType: 'string',
-        //   colTemplateRefName: 'userFullnameColumn',
-        //   headerText: 'Last Name',
-        // },
         {
           dataField: 'member.email',
           dataType: 'string',
@@ -119,7 +133,7 @@ export class MemberListComponent {
           headerText: 'Address',
         },
         {
-          dataField: 'status',
+          dataField: 'membershipStatus.name',
           dataType: 'string',
           colTemplateRefName: 'userFullnameColumn',
           headerText: 'Membership Status',
@@ -145,6 +159,12 @@ export class MemberListComponent {
           dataType: 'templateRef',
           colTemplateRefName: 'endDateColumn',
           headerText: 'Membership End Date',
+        },
+        {
+          dataField: 'editMembership',
+          dataType: 'templateRef',
+          colTemplateRefName: 'editMembershipColumn',
+          headerText: 'Edit'
         },
       ],
       rows: this.memberships,
