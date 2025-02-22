@@ -187,6 +187,7 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'nameColumn',
           headerFilterType: 'text',
           headerText: 'Name',
+          sortable: true
         },
         {
           dataField: 'member.email',
@@ -194,12 +195,14 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'userFullnameColumn',
           headerFilterType: 'text',
           headerText: 'Email',
+          sortable: true
         },
         {
           dataField: 'member.phoneNumber',
           dataType: 'string',
           colTemplateRefName: 'userFullnameColumn',
           headerText: 'Mobile Number',
+          sortable: true
         },
         {
           dataField: 'member.memberAddress.city',
@@ -207,28 +210,32 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'addressColumn',
           headerText: 'Address',
           headerFilterType: 'combo',
-          options: this.addressOptions
+          options: this.addressOptions,
+          sortable: true
         },
         {
           dataField: 'membershipStatus.name',
           dataType: 'string',
           headerFilterType: 'select',
           headerText: 'Membership Status',
-          options: this.membershipStatuses
+          options: this.membershipStatuses,
+          sortable: true
         },
         {
           dataField: 'membershipType.name',
           dataType: 'string',
           headerFilterType: 'select',
           headerText: 'Membership Type',
-          options: this.membershipTypes
+          options: this.membershipTypes,
+          sortable: true
         },
         {
           dataField: 'role.name',
           dataType: 'string',
           headerFilterType: 'select',
           headerText: 'Role',
-          options: this.roles
+          options: this.roles,
+          sortable: true
 
         },
         {
@@ -237,6 +244,7 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'startDateColumn',
           headerFilterType: 'customDate',
           headerText: 'Membership Start Date',
+          sortable: true
         },
         {
           dataField: 'endDate',
@@ -244,6 +252,7 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'endDateColumn',
           headerFilterType: 'customDate',
           headerText: 'Membership End Date',
+          sortable: true
         },
         {
           dataField: 'editMembership',

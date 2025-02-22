@@ -12,6 +12,7 @@ export interface Column {
     buttonIcon?: string;
     buttonLabel?: string;
     options?: any [];
+    sortable?: boolean;
   }
   
   export type HeaderFilterType = 'text' | 'date' | 'combo' | 'select' | 'customDate' ;
