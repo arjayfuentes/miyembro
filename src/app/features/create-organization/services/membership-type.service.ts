@@ -23,7 +23,7 @@ export class MembershipTypeService {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/findAllMembershipTypeValidity`) as Observable<MembershipTypeValidity[]>;
   }
 
-  getMembershipTypesByOrganizationId(organizationId: string | null): Observable<MembershipType[]> {
+  getMembershipTypesByOrganizationId(organizationId: string | null | undefined): Observable<MembershipType[]> {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/getMembershipTypesByOrganizationId/`+ organizationId) as Observable<MembershipType[]>;
   }
 

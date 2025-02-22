@@ -10,9 +10,12 @@
       [(first)]="first"
       (pageChangeTable)="pageChangeTable($event)"
       (sortChangeTable)="sortChangeTable($event)"
+      (filterChangeTable)="filterChangeTable($event)"
+      (clearFilterChangeTable)="clearFilterChangeTable()"
       [loading]="loading"
       [(sortField)]="sortField"
       [(sortOrder)]="sortOrder"
+      dataKey="membershipId"
     >
       <ng-template #nameColumn let-row>
         <div style="display: flex; align-items: center">

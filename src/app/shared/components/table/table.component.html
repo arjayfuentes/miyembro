@@ -8,14 +8,26 @@
   [first]="first"
   [(selection)]="selectedItems"
   [showCurrentPageReport]="true"
-  (onPage)="pageChange($event)"
-  dataKey="membershipId"
+  (onPage)="onPageChange($event)"
+  [dataKey]="dataKey"
   [scrollable]="true"
   [tableStyle]="{ 'min-width': '50rem' }"
   [lazy]="true"
   [loading]="false"
   (onSort)="onSort($event)"
+  (onFilter)="onFilter($event)"
+  #dt1
 >
+  <ng-template #caption>
+    <div class="flex">
+      <p-button
+        label="Clear"
+        [outlined]="true"
+        icon="pi pi-filter-slash"
+        (click)="clear(dt1)"
+      />
+    </div>
+  </ng-template>
   <ng-template #header>
     <tr>
       <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
@@ -23,8 +35,127 @@
         *ngFor="let col of table.columns"
         [pSortableColumn]="col.dataField ?? ''"
       >
-        {{ col.headerText }}
-        <p-sortIcon [field]="col.dataField ?? ''" />
+        <div class="flex items-center">
+          {{ col.headerText }}
+          <p-columnFilter
+            type="text"
+            [field]="col.dataField"
+            display="menu"
+            [showAddButton]="false"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            *ngIf="col.headerFilterType === 'text'"
+          />
+          <p-columnFilter
+            type="date"
+            [field]="col.dataField"
+            display="menu"
+            [showAddButton]="false"
+            [showOperator]="false"
+            [showApplyButton]="false"
+            *ngIf="col.headerFilterType === 'date'"
+          />
+          <p-columnFilter
+            [field]="col.dataField"
+            *ngIf="col.headerFilterType === 'combo'"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+          >
+            <ng-template #header>
+              <div class="px-4 pt-4 pb-0">
+                <span class="font-bold">{{ col.headerText }}</span>
+              </div>
+            </ng-template>
+            <ng-template #filter let-value let-filter="filterCallback">
+              <div class="flex flex-col items-center space-y-2">
+                <p-select
+                  [options]="col.options"
+                  [(ngModel)]="
+                    selectedValuesComboSelectValueMap[
+                      col.dataField ?? 'default'
+                    ]
+                  "
+                  optionLabel="name"
+                  optionValue="value"
+                  class="w-full md:w-56"
+                ></p-select>
+                <input
+                  type="text"
+                  [(ngModel)]="
+                    selectedValuesComboInputValueMap[col.dataField ?? 'default']
+                  "
+                  pInputText
+                  class="w-full md:w-56"
+                  class="address-input"
+                />
+              </div>
+              <div class="flex justify-between w-full mt-3">
+                <p-button
+                  label="Clear"
+                  size="small"
+                  class="py-2"
+                  variant="outlined"
+                  (onClick)="onClearComboColumnFilter(col, filter)"
+                ></p-button>
+                <p-button
+                  label="Apply"
+                  size="small"
+                  class="py-2"
+                  (onClick)="
+                    onApplyComboColumnFilter(
+                      selectedValuesComboInputValueMap[
+                        col.dataField ?? 'default'
+                      ],
+                      filter,
+                      col.dataField
+                    )
+                  "
+                ></p-button>
+              </div>
+            </ng-template>
+          </p-columnFilter>
+          <p-columnFilter
+            [field]="col.dataField"
+            *ngIf="col.headerFilterType === 'select'"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+          >
+            <ng-template #header>
+              <div class="px-4 pt-4 pb-0">
+                <span class="font-bold">{{ col.headerText }}</span>
+              </div>
+            </ng-template>
+            <ng-template #filter let-value let-filter="filterCallback">
+              <p-multiSelect
+                [(ngModel)]="
+                  selectedValuesMultiSelectMap[col.dataField ?? 'default']
+                "
+                [options]="col.options"
+                placeholder="Any"
+                (onChange)="filter($event.value)"
+                optionLabel="name"
+                styleClass="w-full md:w-80"
+              >
+                <ng-template let-option #item>
+                  <div class="inline-block align-middle">
+                    <span class="ml-1 mt-1">{{ option.name }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+          <p-sortIcon [field]="col.dataField ?? ''" />
+        </div>
       </th>
     </tr>
   </ng-template>
