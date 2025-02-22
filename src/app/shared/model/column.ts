@@ -4,7 +4,7 @@ export interface Column {
     // all properties below do not exist in the backend Column model
     textAlign?: string; // row custom alignment
     headerText?: string; // custom table header text
-    headerFilterType?: string;
+    headerFilterType?: HeaderFilterType;
     colTemplateRefName?: string; // template reference name for custom rows
     colHeaderTemplateRefName?: string; // template reference name for custom columns
     durationFormat?: string; // selected format for duration field
@@ -14,3 +14,4 @@ export interface Column {
     options?: any [];
   }
   
+  export type HeaderFilterType = 'text' | 'date' | 'combo' | 'select' | 'customDate' ;

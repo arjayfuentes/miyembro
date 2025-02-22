@@ -10,10 +10,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { Table as PrimeTable} from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-table',
-  imports: [TableModule, ButtonModule, FormsModule, ReactiveFormsModule, CommonModule, IconFieldModule, InputIconModule, SelectModule, MultiSelectModule, InputTextModule],
+  imports: [TableModule, ButtonModule, FormsModule, DatePickerModule, ReactiveFormsModule, CommonModule, IconFieldModule, InputIconModule, SelectModule, MultiSelectModule, InputTextModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
@@ -43,11 +44,31 @@ export class TableComponent implements AfterContentInit, OnChanges{
   @Output() sortOrderChange = new EventEmitter<number>();
   @Output() totalRecordsChange = new EventEmitter<number>();  
 
+  selectedValuesDateMap: { [key: string]: Date | Date[] | null } = {}; // Map to store date values for each column
   selectedItems: any [] = [];
   selectedValuesComboInputValueMap: { [key: string]: string } = {};
   selectedValuesComboSelectValueMap: { [key: string]: any[] } = {};
   selectedValuesMultiSelectMap: { [key: string]: any[] } = {}; 
   templateList!: TemplateRef<any>[];
+
+
+  clearDateColumnFilter(col: any, filterCallback: any) {
+    const key = col.dataField ?? 'default'; 
+    this.selectedValuesDateMap[key] = null;
+  
+    if (typeof filterCallback === 'function') {
+      filterCallback(null); 
+    }
+  }
+  
+  applyDateColumnFilter(col: any, filterCallback: any) {
+    const key = col.dataField ?? 'default'; 
+    const selectedDate = this.selectedValuesDateMap[key];
+  
+    if (typeof filterCallback === 'function') {
+      filterCallback(selectedDate); 
+    }
+  }
  
   ngAfterContentInit(): void {
     this.templateList = this.tempList.toArray();
@@ -70,6 +91,9 @@ export class TableComponent implements AfterContentInit, OnChanges{
     });
     Object.keys(this.selectedValuesComboInputValueMap).forEach((key) => {
       this.selectedValuesComboInputValueMap[key] = '';
+    });
+    Object.keys(this.selectedValuesDateMap).forEach((key) => {
+      this.selectedValuesDateMap[key] = null; 
     });
     this.clearFilterChangeTable.emit();
   }

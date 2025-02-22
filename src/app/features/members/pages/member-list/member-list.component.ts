@@ -235,14 +235,14 @@ export class MemberListComponent implements OnInit {
           dataField: 'startDate',
           dataType: 'templateRef',
           colTemplateRefName: 'startDateColumn',
-          headerFilterType: 'date',
+          headerFilterType: 'customDate',
           headerText: 'Membership Start Date',
         },
         {
           dataField: 'endDate',
           dataType: 'templateRef',
           colTemplateRefName: 'endDateColumn',
-          headerFilterType: 'date',
+          headerFilterType: 'customDate',
           headerText: 'Membership End Date',
         },
         {
