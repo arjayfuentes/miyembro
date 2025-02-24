@@ -92,7 +92,8 @@ export class MemberListComponent implements OnInit {
   clearFilterChangeTable() {
     this.membershipFilters = {} as MembershipFilters;
     console.log(this.membershipFilters);
-
+    this.sortField = "member.firstName";
+    this.sortOrder = 1;
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
   }
 
@@ -100,6 +101,8 @@ export class MemberListComponent implements OnInit {
     const eventFilters = event.filters;
     const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
     const membershipTypes = eventFilters['membershipType.name'][0].value;
+    const membershipRoles = eventFilters['role.name'][0].value;
+
     const memberAddress =  eventFilters['member.memberAddress.city'][0].value;
 
     const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
@@ -112,13 +115,14 @@ export class MemberListComponent implements OnInit {
       memberMemberAddressCountry: memberMemberAddressCountry,
       membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
       membershipTypeNames: membershipTypes ? membershipTypes.map((filter: any) => filter.name) : null,
-      roleName:  eventFilters['role.name'][0].value,
+      roleNames:  membershipRoles ? membershipRoles.map((filter: any) => filter.name) : null,
       startDates:  eventFilters['startDate'][0].value,
       endDates:  eventFilters['endDate'][0].value,
     }
     this.membershipFilters = filters;
     console.log(this.membershipFilters);
-
+    this.sortField = "member.firstName";
+    this.sortOrder = 1;
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
     console.log(event);
 
@@ -195,6 +199,7 @@ export class MemberListComponent implements OnInit {
 
     this.memberService.getMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
       (res) => {
+        console.log(res);
         this.memberships = res.content;
         this.totalRecords = res.totalElements;
         this.first = pageNo * res.pageable.pageSize;

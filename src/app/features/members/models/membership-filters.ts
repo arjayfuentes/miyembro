@@ -5,7 +5,7 @@ export interface MembershipFilters {
     memberMemberAddressCountry: string | null;
     membershipStatusNames?: any [] | null;
     membershipTypeNames?: any [] | null;
-    roleName: string | null;
+    roleNames?: any [] | null;
     startDates: Date [] | null;
     endDates: Date [] | null;
 }
