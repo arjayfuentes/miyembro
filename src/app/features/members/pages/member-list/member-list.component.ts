@@ -26,6 +26,7 @@ import { MembershipStatusResponse } from '../../models/membership-status-respons
 import { Role } from 'src/app/core/models/role';
 import { RoleService } from 'src/app/shared/services/role.service';
 import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
+import { MembershipFilters } from '../../models/membership-filters';
 
 @Component({
   selector: 'app-member-list',
@@ -36,19 +37,11 @@ import { MembershipStatusService } from 'src/app/shared/services/membership-stat
 })
 export class MemberListComponent implements OnInit {
 
-  addressOptions: any [] = [{
-    dataField: 'membership.address.city',
-    name: 'City',
-    value: 'membership.address.city',
-  },
-  {
-    dataField: 'membership.address.country',
-    name: 'Country',
-    value: 'membership.address.country',
-  }];
+  addressOptions: any [] = [];
   first = 0; 
   loading = false;
   memberships: MembershipResponse [] = [];
+  membershipFilters: MembershipFilters | undefined;
   membershipStatuses: MembershipStatusResponse [] = [];
   membershipTypes: MembershipType [] = [];
   organizationId: string | undefined | null = null;
@@ -75,6 +68,16 @@ export class MemberListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.addressOptions = [{
+      dataField: 'member.memberAddress.city',
+      name: 'City',
+      value: 'member.memberAddress.city',
+    },
+    {
+      dataField: 'member.memberAddress.country',
+      name: 'Country',
+      value: 'member.memberAddress.country',
+    }];
     const pageNo = this.first;
     this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
     this.session = this.sessionService.getSession();
@@ -87,11 +90,38 @@ export class MemberListComponent implements OnInit {
   }
 
   clearFilterChangeTable() {
+    this.membershipFilters = {} as MembershipFilters;
+    console.log(this.membershipFilters);
+
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
   }
 
   filterChangeTable(event:any) {
+    const eventFilters = event.filters;
+    const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+    const membershipTypes = eventFilters['membershipType.name'][0].value;
+    const memberAddress =  eventFilters['member.memberAddress.city'][0].value;
+
+    const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
+    const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
+        
+    const filters = {
+      memberFirstName: eventFilters['member.firstName'][0].value,
+      memberEmail: eventFilters['member.email'][0].value,
+      memberMemberAddressCity: memberMemberAddressCity,
+      memberMemberAddressCountry: memberMemberAddressCountry,
+      membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
+      membershipTypeNames: membershipTypes ? membershipTypes.map((filter: any) => filter.name) : null,
+      roleName:  eventFilters['role.name'][0].value,
+      startDates:  eventFilters['startDate'][0].value,
+      endDates:  eventFilters['endDate'][0].value,
+    }
+    this.membershipFilters = filters;
+    console.log(this.membershipFilters);
+
+    this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
     console.log(event);
+
   }
 
   onEditMembership(row: any) {
@@ -161,9 +191,10 @@ export class MemberListComponent implements OnInit {
     const organizationId = session?.organization?.organizationId;
     const order = sortOrder == 1 ? 'ASC': 'DESC';
 
-    this.memberService.getMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order).subscribe(
+    const filters = this.membershipFilters ?? {} as MembershipFilters
+
+    this.memberService.getMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
       (res) => {
-        console.log(res);
         this.memberships = res.content;
         this.totalRecords = res.totalElements;
         this.first = pageNo * res.pageable.pageSize;

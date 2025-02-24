@@ -197,13 +197,16 @@ export class TableComponent implements AfterContentInit, OnChanges{
   }
 
   private initializeSelectedValuesMultiSelectMap(): void {
-    this.selectedValuesMultiSelectMap = {};
-    this.table.columns.forEach((col) => {
-      if (col.headerFilterType === 'select') {
-        const key = col.dataField ?? 'default'; 
-        this.selectedValuesMultiSelectMap[key] = []; 
-      }
-    });
+    if(!this.selectedValuesMultiSelectMap) {
+      this.selectedValuesMultiSelectMap = {};
+      this.table.columns.forEach((col) => {
+        if (col.headerFilterType === 'select') {
+          const key = col.dataField ?? 'default'; 
+          this.selectedValuesMultiSelectMap[key] = []; 
+        }
+      });
+    }
+   
   }
 
 

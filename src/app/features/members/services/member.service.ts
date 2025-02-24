@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Member } from 'src/app/core/models/member';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { Page } from 'src/app/shared/model/page';
+import { MembershipFilters } from '../models/membership-filters';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class MemberService {
   }
 
 
-  getMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<MembershipResponse>> {
+  getMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string, membershipFilters: MembershipFilters | undefined ): Observable<Page<MembershipResponse>> {
     const url = `${env.apiUrl}${this.baseUrl}/organization/${organizationId}/memberships`;
 
     const params = new HttpParams()
@@ -44,7 +45,7 @@ export class MemberService {
       .set('pageSize', pageSize.toString())
       .set('sortField', sortField.toString())
       .set('sortOrder', sortOrder.toString());
-      return this.http.get<any>(url, { params }) as Observable<Page<MembershipResponse>>;
+      return this.http.post<any>(url, membershipFilters, { params }) as Observable<Page<MembershipResponse>>;
   }
 
   getPendingMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<MembershipResponse>> {

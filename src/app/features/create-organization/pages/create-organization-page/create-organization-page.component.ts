@@ -107,7 +107,6 @@ export class CreateOrganizationPageComponent implements OnInit{
   createOrganization() {
     this.loading = true;
     this.loaderService.showLoader(this.router.url, false);
-    console.log("asdasdads");
     const organizationFormVal  = this.organizationForm.value;
     const organizationAddressFormVal  = this.organizationAddressForm.value;
 
