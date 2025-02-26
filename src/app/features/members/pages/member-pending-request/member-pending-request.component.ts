@@ -20,6 +20,7 @@ import { MembershipService } from 'src/app/shared/services/membership.service';
 import { MembershipFilters } from '../../models/membership-filters';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({
   selector: 'app-member-pending-request',
@@ -32,6 +33,7 @@ export class MemberPendingRequestComponent {
 
     addressOptions: any [] = [];
     first = 0; 
+    loading = false;
     memberships: MembershipResponse [] = [];
     membershipFilters: MembershipFilters | undefined;
     ref: DynamicDialogRef | undefined;
@@ -69,37 +71,72 @@ export class MemberPendingRequestComponent {
       this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
       this.session = this.sessionService.getSession();
     }
+
+    approveJoinRequest(row: any) {
+      this.ref = this.dialogService.open(ApproveJoinOrganizationRequestComponent, {
+          header: 'Approve Request',
+          modal: true,
+          contentStyle: { overflow: 'auto' },
+          breakpoints: { '960px': '75vw', '640px': '90vw' },
+          data: { organizationId: row.organizationId , membership: row },
+          closable: true
+      });
+      this.ref.onClose.subscribe((data: any) => {
+          if (data?.membership) {
+              console.log(data.membership);
+              this.alertService.success(this.router.url, 'Success', "Succesfully approve request");
+              this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+            }
+      });
+    }
     
     clearFilterChangeTable() {
         this.membershipFilters = {} as MembershipFilters;
         this.sortField = "member.firstName";
         this.sortOrder = 1;
         this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
-      }
+    }
+
+    denyJoinRequest(membership: MembershipResponse) {
     
-      filterChangeTable(event:any) {
-        const eventFilters = event.filters;    
-        const memberAddress =  eventFilters['member.memberAddress.city'][0].value;
+      const { role, ...membershipToUpdate } = { ...membership };
     
-        const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
-        const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
-            
-        const filters = {
-          memberFirstName: eventFilters['member.firstName'][0].value,
-          memberEmail: eventFilters['member.email'][0].value,
-          memberMemberAddressCity: memberMemberAddressCity,
-          memberMemberAddressCountry: memberMemberAddressCountry,
-          membershipStatusNames: null,
-          membershipTypeNames: null,
-          roleNames:  null,
-          startDates:  null,
-          endDates:  null,
+      const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
+    
+      this.membershipService.denyMembershipRequest(membershipRequest).subscribe(
+        (res) => {
+          this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+          this.alertService.success(this.router.url, 'Success', "Succesfully denied request");
+        },
+        (err: any) => {
+          console.log(err);
         }
-        this.membershipFilters = filters;
-        this.sortField = "member.firstName";
-        this.sortOrder = 1;
-        this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+      );
+    }
+
+    filterChangeTable(event:any) {
+      const eventFilters = event.filters;    
+      const memberAddress =  eventFilters['member.memberAddress.city'][0].value;
+  
+      const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
+      const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
+          
+      const filters = {
+        memberFirstName: eventFilters['member.firstName'][0].value,
+        memberEmail: eventFilters['member.email'][0].value,
+        memberMemberAddressCity: memberMemberAddressCity,
+        memberMemberAddressCountry: memberMemberAddressCountry,
+        membershipStatusNames: null,
+        membershipTypeNames: null,
+        roleNames:  null,
+        startDates:  null,
+        endDates:  null,
       }
+      this.membershipFilters = filters;
+      this.sortField = "member.firstName";
+      this.sortOrder = 1;
+      this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+    }
   
     pageChangeTable(event: any) {
       const pageNo = event.first / event.rowsPerPage;
@@ -112,6 +149,7 @@ export class MemberPendingRequestComponent {
     }
 
     private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
+      this.loading = true;
       this.loaderService.showLoader(this.router.url, false);
       const session = this.sessionService.getSession();
       const organizationId = session?.organization?.organizationId;
@@ -127,15 +165,16 @@ export class MemberPendingRequestComponent {
           this.totalRecords = res.totalElements;
           this.first = pageNo * res.pageable.pageSize;
           this.setTableData();
+          this.loading = false;
           this.loaderService.hideLoader(this.router.url);
         },
         (err: any) => {
           console.log(err);
+          this.loading = false;
           this.loaderService.hideLoader(this.router.url);
         }
       );
     }
-
   
     private setTableData() {
       this.table = {
@@ -186,26 +225,5 @@ export class MemberPendingRequestComponent {
     }
 
 
-    approveJoinRequest(row: any) {
-      this.ref = this.dialogService.open(ApproveJoinOrganizationRequestComponent, {
-          header: 'Approve Request',
-          modal: true,
-          contentStyle: { overflow: 'auto' },
-          breakpoints: { '960px': '75vw', '640px': '90vw' },
-          data: { organizationId: row.organizationId , membership: row },
-          closable: true
-      });
-  
-      this.ref.onClose.subscribe((data: any) => {
-          if (data?.membership) {
-              console.log(data.membership);
-              this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
-            }
-      });
-    }
-
-    denyJoinRequest(row: any) {
-      console.log(row);
-    }
 
 }

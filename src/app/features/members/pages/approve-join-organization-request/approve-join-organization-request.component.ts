@@ -52,7 +52,7 @@ export class ApproveJoinOrganizationRequestComponent {
   
     const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
   
-    this.membershipService.updateMembershipType(membershipRequest).subscribe(
+    this.membershipService.approveMembershipRequest(membershipRequest).subscribe(
       (res) => {
         this.membership = res;
         console.log(this.membership);
@@ -67,7 +67,30 @@ export class ApproveJoinOrganizationRequestComponent {
   }
 
   cancelApproveJoinRequest() {
-    this.ref.close(); // Send th
+   this.ref.close();
+  }
+
+  denyJoinRequest() {
+    if (this.membership) {
+      this.membership.membershipType = this.selectedMembership;
+    }
+  
+    const { role, ...membershipToUpdate } = { ...this.membership };
+  
+    const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
+  
+    this.membershipService.denyMembershipRequest(membershipRequest).subscribe(
+      (res) => {
+        this.membership = res;
+        console.log(this.membership);
+        this.ref.close({
+          membership: this.membership
+        });
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
     
 

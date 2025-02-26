@@ -34,8 +34,17 @@
       (onClick)="approveJoinRequest()"
     />
     <p-button
-      label="Cancel"
+      label="Deny"
       icon="pi pi-times"
+      size="small"
+      [raised]="true"
+      [rounded]="true"
+      severity="danger"
+      class="mb-2"
+      (onClick)="denyJoinRequest()"
+    />
+    <p-button
+      label="Cancel"
       size="small"
       severity="secondary"
       [raised]="true"

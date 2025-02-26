@@ -70,7 +70,7 @@ export class OrganizationDetailsPageComponent implements OnInit {
       memberId: session?.member.memberId
     };
 
-    this.membershipService.getMembershipByMemberIdAndOrganizationId(getMembershipRequest).subscribe(
+    this.membershipService.getMembershipByMemberIdAndOrganizationId(organization?.organizationId, session?.member.memberId).subscribe(
       (res) => {
         this.membership = res;
       },

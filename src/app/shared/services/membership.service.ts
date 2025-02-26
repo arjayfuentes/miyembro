@@ -24,8 +24,16 @@ constructor(
     
   }
 
-  getMembershipByMemberIdAndOrganizationId(getMembershipRequest: GetMembershipRequest | undefined): Observable<MembershipResponse> {
-    return this.http.post(`${env.apiUrl}${this.baseUrl}/getMembershipByMemberIdAndOrganizationId`, getMembershipRequest) as Observable<MembershipResponse>;
+  approveMembershipRequest(membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/membership-request/` + membership?.membershipId + '/approve', membership) as Observable<MembershipResponse>;
+  }
+
+  denyMembershipRequest(membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/membership-request/` + membership?.membershipId + '/deny', membership) as Observable<MembershipResponse>;
+  }
+
+  getMembershipByMemberIdAndOrganizationId(organizationId: string | undefined, memberId: string | undefined): Observable<MembershipResponse> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/organization/` + organizationId + '/member/' + memberId) as Observable<MembershipResponse>;
   }
 
   getMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string, membershipFilters: MembershipFilters | undefined ): Observable<Page<MembershipResponse>> {
@@ -51,19 +59,19 @@ constructor(
   }
 
   getOrganizationByMemberId(memberId: string | undefined): Observable<OrganizationResponse[]> {
-    return this.http.get(`${env.apiUrl}/membership/getOrganizationByMemberId/${memberId}`, {}) as Observable<OrganizationResponse[]>;
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/getOrganizationByMemberId/${memberId}`) as Observable<OrganizationResponse[]>;
   }
 
   requestMembership(joinOrganizationRequest: JoinOrganizationRequest | undefined): Observable<MembershipResponse> {
-      return this.http.post(`${env.apiUrl}${this.baseUrl}/requestMembership`, joinOrganizationRequest) as Observable<MembershipResponse>;
+      return this.http.post(`${env.apiUrl}${this.baseUrl}/membership-request/request`, joinOrganizationRequest) as Observable<MembershipResponse>;
   }
 
   updateMembership(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/updateMembership/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/update-membership/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
 
   updateMembershipType(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/updateMembershipType/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/update-membership/{membership-id}/membership-type/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
 
 
