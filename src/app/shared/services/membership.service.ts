@@ -39,7 +39,7 @@ constructor(
       return this.http.post<any>(url, membershipFilters, { params }) as Observable<Page<MembershipResponse>>;
   }
 
-  getPendingMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<MembershipResponse>> {
+  getPendingMembershipsByOrganization(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string , membershipFilters: MembershipFilters | undefined ): Observable<Page<MembershipResponse>> {
     const url = `${env.apiUrl}${this.baseUrl}/organization/${organizationId}/memberships/pending`;
 
     const params = new HttpParams()
@@ -47,7 +47,7 @@ constructor(
       .set('pageSize', pageSize.toString())
       .set('sortField', sortField.toString())
       .set('sortOrder', sortOrder.toString());
-      return this.http.get<any>(url, { params }) as Observable<Page<MembershipResponse>>;
+      return this.http.post<any>(url, membershipFilters, { params }) as Observable<Page<MembershipResponse>>;
   }
 
   getOrganizationByMemberId(memberId: string | undefined): Observable<OrganizationResponse[]> {

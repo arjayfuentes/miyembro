@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organization-request/approve-join-organization-request.component';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipService } from 'src/app/shared/services/membership.service';
+import { MembershipFilters } from '../../models/membership-filters';
 
 @Component({
   selector: 'app-member-pending-request',
@@ -27,12 +28,13 @@ import { MembershipService } from 'src/app/shared/services/membership.service';
 })
 export class MemberPendingRequestComponent {
 
-    
+    addressOptions: any [] = [];
     first = 0; 
     loading = false;
     memberships: MembershipResponse [] = [];
+    membershipFilters: MembershipFilters | undefined;
     ref: DynamicDialogRef | undefined;
-    rowsPerPage = 5;
+    rowsPerPage = 10;
     session: Session | null = null;
     sortField = "member.firstName";
     sortOrder = 1;  
@@ -50,18 +52,72 @@ export class MemberPendingRequestComponent {
     ) {}
   
     ngOnInit(): void {
+      this.addressOptions = [{
+        dataField: 'member.memberAddress.city',
+        name: 'City',
+        value: 'member.memberAddress.city',
+      },
+      {
+        dataField: 'member.memberAddress.country',
+        name: 'Country',
+        value: 'member.memberAddress.country',
+      }];
       const pageNo = this.first;
       this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
       this.session = this.sessionService.getSession();
     }
+    
+    clearFilterChangeTable() {
+        this.membershipFilters = {} as MembershipFilters;
+        this.sortField = "member.firstName";
+        this.sortOrder = 1;
+        this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+      }
+    
+      filterChangeTable(event:any) {
+        const eventFilters = event.filters;    
+        const memberAddress =  eventFilters['member.memberAddress.city'][0].value;
+    
+        const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
+        const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
+            
+        const filters = {
+          memberFirstName: eventFilters['member.firstName'][0].value,
+          memberEmail: eventFilters['member.email'][0].value,
+          memberMemberAddressCity: memberMemberAddressCity,
+          memberMemberAddressCountry: memberMemberAddressCountry,
+          membershipStatusNames: null,
+          membershipTypeNames: null,
+          roleNames:  null,
+          startDates:  null,
+          endDates:  null,
+        }
+        this.membershipFilters = filters;
+        this.sortField = "member.firstName";
+        this.sortOrder = 1;
+        this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+      }
   
+    pageChangeTable(event: any) {
+      const pageNo = event.first / event.rowsPerPage;
+      this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+    }
+  
+    sortChangeTable(event: any) {
+      const pageNo = event.first / event.rowsPerPage;
+      this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+    }
+
     private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
       this.loading = true;
       const session = this.sessionService.getSession();
       const organizationId = session?.organization?.organizationId;
       const order = sortOrder == 1 ? 'ASC': 'DESC';
+
+      const filters = this.membershipFilters ?? {} as MembershipFilters
+
   
-      this.membershipService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order).subscribe(
+      this.membershipService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
         (res) => {
           console.log(res);
           this.memberships = res.content;
@@ -77,16 +133,7 @@ export class MemberPendingRequestComponent {
         }
       );
     }
-  
-    pageChangeTable(event: any) {
-      const pageNo = event.first / event.rowsPerPage;
-      this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
-    }
-  
-    sortChangeTable(event: any) {
-      const pageNo = event.first / event.rowsPerPage;
-      this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
-    }
+
   
     private setTableData() {
       this.table = {
@@ -96,36 +143,33 @@ export class MemberPendingRequestComponent {
             dataType: 'templateRef',
             colTemplateRefName: 'nameColumn',
             headerText: 'Name',
+            headerFilterType: 'text',
+            sortable: true
           },
-          // {
-          //   dataField: 'member.firstName',
-          //   dataType: 'string',
-          //   colTemplateRefName: 'userFullnameColumn',
-          //   headerText: 'First Name',
-          // },
-          // {
-          //   dataField: 'member.lastName',
-          //   dataType: 'string',
-          //   colTemplateRefName: 'userFullnameColumn',
-          //   headerText: 'Last Name',
-          // },
           {
             dataField: 'member.email',
             dataType: 'string',
             colTemplateRefName: 'userFullnameColumn',
             headerText: 'Email',
+            headerFilterType: 'text',
+            sortable: true
           },
           {
             dataField: 'member.phoneNumber',
             dataType: 'string',
             colTemplateRefName: 'userFullnameColumn',
             headerText: 'Mobile Number',
+            sortable: true
           },
           {
             dataField: 'member.memberAddress.city',
             dataType: 'templateRef',
             colTemplateRefName: 'addressColumn',
             headerText: 'Address',
+            headerFilterType: 'combo',
+            options: this.addressOptions,
+            sortable: true
+
           },
           {
             dataField: 'approveDeny',

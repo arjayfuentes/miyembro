@@ -202,7 +202,11 @@
               </p-multiSelect>
             </ng-template>
           </p-columnFilter>
-          <p-sortIcon [field]="col.dataField ?? ''" *ngIf="col.sortable" />
+          <p-sortIcon
+            [field]="col.dataField ?? ''"
+            *ngIf="col.sortable"
+            class="ml-1"
+          />
         </div>
       </th>
     </tr>
