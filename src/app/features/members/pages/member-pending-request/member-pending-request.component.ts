@@ -16,6 +16,7 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
 import { MessageService } from 'primeng/api';
 import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organization-request/approve-join-organization-request.component';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
+import { MembershipService } from 'src/app/shared/services/membership.service';
 
 @Component({
   selector: 'app-member-pending-request',
@@ -43,7 +44,7 @@ export class MemberPendingRequestComponent {
     constructor(
       private alertService: AlertService,
       private dialogService: DialogService,
-      private memberService: MemberService, 
+      private membershipService: MembershipService, 
       private messageService: MessageService,
       private sessionService: SessionService,
     ) {}
@@ -60,7 +61,7 @@ export class MemberPendingRequestComponent {
       const organizationId = session?.organization?.organizationId;
       const order = sortOrder == 1 ? 'ASC': 'DESC';
   
-      this.memberService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order).subscribe(
+      this.membershipService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order).subscribe(
         (res) => {
           console.log(res);
           this.memberships = res.content;

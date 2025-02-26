@@ -35,16 +35,16 @@ export class AuthenticationService {
     return this.http.post(`${env.apiUrl}/auth/login/withGoogle`, googleToken) as Observable<Session>;
   }
 
+  logout(): Observable<Session> {
+    return this.http.post(`${env.apiUrl}/auth/logout`, {}) as Observable<Session>;
+  }
+
   register(memberRequest: MemberRequest): Observable<Member> {
     return this.http.post(`${env.apiUrl}/auth/register`, memberRequest) as Observable<Member>;
   }
 
-  signupWithGoogle(googleToken: GoogleRequest): Observable<Member> {
+  registerWithGoogle(googleToken: GoogleRequest): Observable<Member> {
     return this.http.post(`${env.apiUrl}/auth/register/withGoogle`, googleToken) as Observable<Member>;
-  }
-
-  logout(): Observable<Session> {
-    return this.http.post(`${env.apiUrl}/auth/logout`, {}) as Observable<Session>;
   }
 
   selectLoginOrganization(selectOrganizationLoginRequest: SelectOrganizationLoginRequest): Observable<Session> {

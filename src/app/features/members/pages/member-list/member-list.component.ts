@@ -27,6 +27,7 @@ import { Role } from 'src/app/core/models/role';
 import { RoleService } from 'src/app/shared/services/role.service';
 import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
 import { MembershipFilters } from '../../models/membership-filters';
+import { MembershipService } from 'src/app/shared/services/membership.service';
 
 @Component({
   selector: 'app-member-list',
@@ -60,6 +61,7 @@ export class MemberListComponent implements OnInit {
     private alertService: AlertService,
     private dialogService: DialogService,
     private memberService: MemberService,
+    private membershipService: MembershipService,
     private membershipStatusService: MembershipStatusService,
     private membershipTypeService: MembershipTypeService,
     private roleService: RoleService,
@@ -197,7 +199,7 @@ export class MemberListComponent implements OnInit {
 
     const filters = this.membershipFilters ?? {} as MembershipFilters
 
-    this.memberService.getMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
+    this.membershipService.getMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
       (res) => {
         console.log(res);
         this.memberships = res.content;

@@ -127,7 +127,7 @@ export class SignUpComponent implements OnInit {
       googleToken: googleToken
     };
 
-    this.authenticationService.signupWithGoogle(googleLoginRequest).subscribe(
+    this.authenticationService.registerWithGoogle(googleLoginRequest).subscribe(
       (res) => {
         console.log(res);
         this.successfulSignup(res);
