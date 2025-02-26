@@ -94,7 +94,7 @@ export class OrganizationListComponent implements OnInit{
     this.membershipService.requestMembership(joinOrganizationRequest).subscribe(
       (res) => {
         this.visible = false;
-        this.alertService.success('/home/explore', 'Success', 'Successfully requested to join the group');
+        this.alertService.success('/home/explore', 'Success', 'Successfully sent the request to join the group');
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;

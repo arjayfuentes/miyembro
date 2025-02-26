@@ -53,7 +53,7 @@ export class OrganizationDetailsPageComponent implements OnInit {
 
     this.membershipService.requestMembership(joinOrganizationRequest).subscribe(
       (res) => {
-        this.alertService.success('/home/explore', 'Success', 'Successfully requested to join the group');
+        this.alertService.success('/home/explore', 'Success', 'Successfully sent the request to join the group');
         this.membership = res;
       },
       (err: any) => {
