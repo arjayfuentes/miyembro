@@ -28,6 +28,8 @@ import { RoleService } from 'src/app/shared/services/role.service';
 import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
 import { MembershipFilters } from '../../models/membership-filters';
 import { MembershipService } from 'src/app/shared/services/membership.service';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-member-list',
@@ -58,13 +60,13 @@ export class MemberListComponent implements OnInit {
   session: Session | null = null;
 
   constructor(
-    private alertService: AlertService,
     private dialogService: DialogService,
-    private memberService: MemberService,
+    private loaderService: LoaderService,
     private membershipService: MembershipService,
     private membershipStatusService: MembershipStatusService,
     private membershipTypeService: MembershipTypeService,
     private roleService: RoleService,
+    private router: Router,
     private sessionService: SessionService,
 
   ) {}
@@ -193,6 +195,8 @@ export class MemberListComponent implements OnInit {
 
   private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
     this.loading = true;
+    this.loaderService.showLoader(this.router.url, false);
+
     const session = this.sessionService.getSession();
     const organizationId = session?.organization?.organizationId;
     const order = sortOrder == 1 ? 'ASC': 'DESC';
@@ -207,11 +211,12 @@ export class MemberListComponent implements OnInit {
         this.first = pageNo * res.pageable.pageSize;
         this.setTableData();
         this.loading = false;
+        this.loaderService.hideLoader(this.router.url);
       },
       (err: any) => {
         console.log(err);
         this.loading = false;
-
+        this.loaderService.hideLoader(this.router.url);
       }
     );
   }

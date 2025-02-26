@@ -18,6 +18,8 @@ import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organiz
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipService } from 'src/app/shared/services/membership.service';
 import { MembershipFilters } from '../../models/membership-filters';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Component({
   selector: 'app-member-pending-request',
@@ -30,7 +32,6 @@ export class MemberPendingRequestComponent {
 
     addressOptions: any [] = [];
     first = 0; 
-    loading = false;
     memberships: MembershipResponse [] = [];
     membershipFilters: MembershipFilters | undefined;
     ref: DynamicDialogRef | undefined;
@@ -46,8 +47,10 @@ export class MemberPendingRequestComponent {
     constructor(
       private alertService: AlertService,
       private dialogService: DialogService,
+      private loaderService: LoaderService,
       private membershipService: MembershipService, 
       private messageService: MessageService,
+      private router: Router,
       private sessionService: SessionService,
     ) {}
   
@@ -109,7 +112,7 @@ export class MemberPendingRequestComponent {
     }
 
     private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
-      this.loading = true;
+      this.loaderService.showLoader(this.router.url, false);
       const session = this.sessionService.getSession();
       const organizationId = session?.organization?.organizationId;
       const order = sortOrder == 1 ? 'ASC': 'DESC';
@@ -124,12 +127,11 @@ export class MemberPendingRequestComponent {
           this.totalRecords = res.totalElements;
           this.first = pageNo * res.pageable.pageSize;
           this.setTableData();
-          this.loading = false;
+          this.loaderService.hideLoader(this.router.url);
         },
         (err: any) => {
           console.log(err);
-          this.loading = false;
-  
+          this.loaderService.hideLoader(this.router.url);
         }
       );
     }
