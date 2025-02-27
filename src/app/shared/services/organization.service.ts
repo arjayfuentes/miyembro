@@ -23,6 +23,10 @@ export class OrganizationService {
     ) {
     }
 
+    getOrganizationsByMemberId(memberId: string | undefined): Observable<OrganizationResponse[]> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/getOrganizationsByMemberId/members/${memberId}`) as Observable<OrganizationResponse[]>;
+    }
+
     getOrganizationUpdate(): Observable<OrganizationResponse> {
       return this.organizationSubject.asObservable();
     }
