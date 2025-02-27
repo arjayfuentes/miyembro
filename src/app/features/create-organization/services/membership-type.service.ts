@@ -10,7 +10,7 @@ import { MembershipType } from 'src/app/core/models/membership-type';
 })
 export class MembershipTypeService {
 
-   baseUrl = '/membership-type';
+   baseUrl = '/membership-types';
   
   
   constructor(
@@ -19,12 +19,12 @@ export class MembershipTypeService {
 
   }
 
-  findAllMembershipTypeValidity(): Observable<MembershipTypeValidity[]> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/findAllMembershipTypeValidity`) as Observable<MembershipTypeValidity[]>;
+  getAllMembershipTypeValidity(): Observable<MembershipTypeValidity[]> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/validities`) as Observable<MembershipTypeValidity[]>;
   }
 
   getMembershipTypesByOrganizationId(organizationId: string | null | undefined): Observable<MembershipType[]> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/getMembershipTypesByOrganizationId/`+ organizationId) as Observable<MembershipType[]>;
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId) as Observable<MembershipType[]>;
   }
 
       

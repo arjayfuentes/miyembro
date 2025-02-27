@@ -93,7 +93,7 @@ export class CreateOrganizationPageComponent implements OnInit{
 
   
   ngOnInit(): void {
-    this.membershipTypeService.findAllMembershipTypeValidity().subscribe(
+    this.membershipTypeService.getAllMembershipTypeValidity().subscribe(
       (res) => {
         this.membershipTypeValidities = res;
       },
