@@ -12,6 +12,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
+import { MemberService } from 'src/app/features/members/services/member.service';
 
 @Component({
   selector: 'app-additional-info-signup',
@@ -32,6 +33,7 @@ export class AdditionalInfoSignupComponent {
     private authenticationService: AuthenticationService,
     private router: Router,
     private alertService: AlertService,
+    private memberService: MemberService,
     private datePipe: DatePipe
   ) {
     this.memberForm = this.formBuilder.group({
@@ -85,7 +87,7 @@ export class AdditionalInfoSignupComponent {
       memberRequest: memberRequest
     }));
 
-    this.authenticationService.updateMemberAfterRegistration(formData).subscribe(
+    this.memberService.updateMemberAfterRegistration(memberRequest.memberId, formData).subscribe(
       (res) => {
         this.router.navigate(['/login']);
         this.alertService.success('/additional-info-signup', 'Success', "Succesfully added details. You can now login");

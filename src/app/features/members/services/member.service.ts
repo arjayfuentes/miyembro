@@ -21,23 +21,12 @@ export class MemberService {
     
   }
 
-  getMembersByOrganization(organizationId: string | undefined): Observable<Member[]> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/organization/` + organizationId) as Observable<Member[]>;
+  updateMemberAfterRegistration(memberId: string, formData: FormData): Observable<any> {
+    return this.http.post(`${env.apiUrl}${this.baseUrl}/` + memberId + '/register', formData);
   }
 
-  getMembersByOrganizationPage(organizationId: string | undefined, pageNo: number, pageSize: number, sortField: string, sortOrder: string): Observable<Page<Member>> {
-    const url = `${env.apiUrl}${this.baseUrl}/organizationPage/${organizationId}`;
-
-    const params = new HttpParams()
-      .set('pageNo', pageNo.toString())
-      .set('pageSize', pageSize.toString())
-      .set('sortField', sortField.toString())
-      .set('sortOrder', sortOrder.toString());
-      return this.http.get<any>(url, { params }) as Observable<Page<Member>>;
-  }
-
-  updateMemberDetails(formData: FormData): Observable<Member> {
-    return this.http.post(`${env.apiUrl}${this.baseUrl}/updateMemberDetails`, formData) as Observable<Member>;
+  updateMemberDetails(memberId: string, formData: FormData): Observable<Member> {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + memberId, formData) as Observable<Member>;
   }
 
 }

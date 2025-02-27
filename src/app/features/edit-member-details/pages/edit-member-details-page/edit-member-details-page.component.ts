@@ -83,7 +83,7 @@ export class EditMemberDetailsPageComponent implements OnInit {
       memberRequest: memberRequest
     }));
 
-    this.memberService.updateMemberDetails(formData).subscribe(
+    this.memberService.updateMemberDetails(memberRequest.memberId, formData).subscribe(
       (res) => {
         this.router.navigate(['/home/explore']);
         this.sessionService.updateMember(res);

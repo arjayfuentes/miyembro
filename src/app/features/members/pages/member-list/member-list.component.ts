@@ -183,7 +183,7 @@ export class MemberListComponent implements OnInit {
   }
 
   private getRoles() {
-    this.roleService.getMemberRoles().subscribe(
+    this.roleService.getVisibleRoles().subscribe(
       (res) => {
         this.roles = res;
       },

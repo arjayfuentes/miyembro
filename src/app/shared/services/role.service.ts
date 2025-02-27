@@ -9,7 +9,7 @@ import { Role } from 'src/app/core/models/role';
 })
 export class RoleService {
 
-  baseUrl = '/role';
+  baseUrl = '/roles';
 
 
 constructor(
@@ -18,7 +18,7 @@ constructor(
     
   }
 
-  getMemberRoles(): Observable<Role[]> {
-      return this.http.get(`${env.apiUrl}${this.baseUrl}/getMemberRoles`) as Observable<Role[]>;
+  getVisibleRoles(): Observable<Role[]> {
+      return this.http.get(`${env.apiUrl}${this.baseUrl}/visible`) as Observable<Role[]>;
   }
 }

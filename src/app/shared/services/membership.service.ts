@@ -63,7 +63,7 @@ constructor(
   }
 
   updateMembership(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
 
 
