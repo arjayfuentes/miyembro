@@ -10,7 +10,7 @@ import { MembershipStatusResponse } from "src/app/features/members/models/member
 })
 export class MembershipStatusService {
 
-  baseUrl = '/membership-status';
+  baseUrl = '/membership-statuses';
 
 
 constructor(
@@ -19,8 +19,8 @@ constructor(
     
   }
 
-  getMemberMembershipStatuses(): Observable<MembershipStatusResponse[]> {
-    return this.http.get(`${env.apiUrl}${this.baseUrl}/getMemberMembershipStatuses`, {}) as Observable<MembershipStatusResponse[]>;
+  getApprovedMembershipStatuses(): Observable<MembershipStatusResponse[]> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/approved`, {}) as Observable<MembershipStatusResponse[]>;
   }
 
 }

@@ -161,7 +161,7 @@ export class MemberListComponent implements OnInit {
   } 
   
   private getMembershipStatuses() {
-    this.membershipStatusService.getMemberMembershipStatuses().subscribe(
+    this.membershipStatusService.getApprovedMembershipStatuses().subscribe(
       (res) => {
         this.membershipStatuses = res;
       },
