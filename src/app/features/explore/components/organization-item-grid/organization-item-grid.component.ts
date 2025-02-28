@@ -10,14 +10,13 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 })
 export class OrganizationItemGridComponent {
 
-  @Output() organizationClickChanged = new EventEmitter<OrganizationResponse | undefined>();
   @Input() organization: OrganizationResponse | undefined;
+  @Output() organizationClickChanged = new EventEmitter<OrganizationResponse | undefined>();
 
   onClickOrganization(organization: OrganizationResponse | undefined) {
     this.organizationClickChanged.emit(organization);
   }
 
-  // Handle keyboard events (for accessibility)
   onKeyboardEvent(event: KeyboardEvent, organization: any) {
     if (event.key === 'Enter' || event.key === ' ') {  // Space or Enter key
       this.onClickOrganization(organization);  // Trigger click action

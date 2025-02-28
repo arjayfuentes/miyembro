@@ -14,34 +14,19 @@ import { OrganizationListComponent } from '../../components/organization-list/or
 })
 export class ExplorePageComponent implements OnInit  {
 
-  name: string | null = null;
-  countries: { label: string; value: string }[] = [];  // 
   cities: { label: string; value: string }[] = [];  // If you have cities too
-
-
+  countries: { label: string; value: string }[] = [];  // 
+  name: string | null = null;
   selectedCountry: string | null = null;
   selectedCity: string | null = null;
 
-  
-    constructor(
-      private organizationService: OrganizationService
-    ) {
-    }
-
+  constructor(
+    private organizationService: OrganizationService
+  ) {
+  }
 
   ngOnInit(): void {
     this.getCountries();
-  }
-
-  getCountries() {
-    this.organizationService.getUniqueOrganizationCountries().subscribe(
-      (res) => {
-        this.countries = res.map((country: string) => ({ label: country, value: country }));
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
   }
 
   getCities(event: any) {
@@ -57,9 +42,17 @@ export class ExplorePageComponent implements OnInit  {
         }
       );
     }
-    
   }
 
-
+  getCountries() {
+    this.organizationService.getUniqueOrganizationCountries().subscribe(
+      (res) => {
+        this.countries = res.map((country: string) => ({ label: country, value: country }));
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 
 }

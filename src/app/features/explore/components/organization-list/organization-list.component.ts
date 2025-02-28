@@ -44,13 +44,18 @@ export class OrganizationListComponent implements OnInit{
   visible = false;
 
   constructor(
-        private organizationService: OrganizationService,
-        private sessionService: SessionService,
-        private alertService: AlertService,
-        private membershipService: MembershipService,
-        private router: Router,
+    private alertService: AlertService,
+    private membershipService: MembershipService,
+    private organizationService: OrganizationService,
+    private router: Router,
+    private sessionService: SessionService,
   ) {
     
+  }
+
+  ngOnInit(): void {
+    this.size = this.calculateDynamicSize();
+    this.loadOrganizations(this.page, this.size);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -65,11 +70,6 @@ export class OrganizationListComponent implements OnInit{
     }
   }
   
-  ngOnInit(): void {
-    this.size = this.calculateDynamicSize();
-    this.loadOrganizations(this.page, this.size);
-  }
-
   counterArray(): any[] {
     return Array(this.calculateDynamicSize());
   }
