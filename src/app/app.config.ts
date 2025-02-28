@@ -8,10 +8,11 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { SessionService } from './core/services/session.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from './core/services/alert.service';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { JwtTokenInterceptor } from './core/interceptors/jwt-token.interceptor';
+import { ConfirmDialogService } from './core/services/confirm-dialog.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,6 +35,8 @@ export const appConfig: ApplicationConfig = {
     SessionService,
     MessageService,
     AlertService,
+    ConfirmDialogService,
+    ConfirmationService,
     provideHttpClient(withInterceptors([JwtTokenInterceptor])),
   ]
 };

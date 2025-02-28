@@ -16,6 +16,8 @@ import { Role } from 'src/app/core/models/role';
 import { MembershipStatusResponse } from '../../../../core/models/membership-status-response';
 import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
+import { ConfirmDialogService } from 'src/app/core/services/confirm-dialog.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-membership',
@@ -43,13 +45,15 @@ export class EditMembershipComponent implements OnInit {
   selectedMembership: MembershipType | undefined;
 
   constructor(
-    public config: DynamicDialogConfig,    
+    private config: DynamicDialogConfig, 
+    private confirmDialogService: ConfirmDialogService,   
     private formBuilder: FormBuilder,
     private membershipService: MembershipService,
     private membershipStatusService: MembershipStatusService,
     private membershipTypeService: MembershipTypeService,
     private ref: DynamicDialogRef,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private router: Router,
   ) {
     if (config.data) {
       this.organizationId = config.data.organizationId;
@@ -73,8 +77,26 @@ export class EditMembershipComponent implements OnInit {
     this.getMembershipStatuses();
   }
 
-  cancelEditMembership() {
+  onCancelEditMembership() {
     this.ref.close();
+  }
+
+  onDeleteMembership(event: Event) {
+    const key = this.router.url;
+    this.confirmDialogService.warning(
+      key,
+      "Are you sure you want to remove this member from the group", 
+      "Remove Member", 
+      true,
+      "Remove Member",
+      event,
+      () => {
+        this.deleteMembership();
+      },
+      () => {
+       console.log('sadas');
+      },
+    );
   }
 
   onUpdateMembership() {
@@ -83,6 +105,25 @@ export class EditMembershipComponent implements OnInit {
     const membershipRequest: MembershipRequest = membership as MembershipRequest;
   
     this.membershipService.updateMembership(membershipRequest).subscribe(
+      (res) => {
+        this.membership = res;
+        this.ref.close({
+          membership: this.membership
+        });
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+  
+  private deleteMembership() {
+    
+    const membership = this.membership;
+  
+    const membershipRequest: MembershipRequest = membership as MembershipRequest;
+  
+    this.membershipService.deletMembershipFromOrganization(membershipRequest).subscribe(
       (res) => {
         this.membership = res;
         this.ref.close({

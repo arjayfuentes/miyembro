@@ -22,11 +22,15 @@ export class MembershipService {
   }
 
   approveMembershipRequest(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}` + membership?.membershipId + '/approve', membership) as Observable<MembershipResponse>;
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId + '/approve', membership) as Observable<MembershipResponse>;
+  }
+
+  deletMembershipFromOrganization(membership: MembershipRequest | undefined ) {
+    return this.http.delete(`${env.apiUrl}${this.baseUrl}/organizations/` +  membership?.organizationId + '/memberships/' + membership?.membershipId) as Observable<MembershipResponse>;
   }
 
   denyMembershipRequest(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}` + membership?.membershipId + '/deny', membership) as Observable<MembershipResponse>;
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId + '/deny', membership) as Observable<MembershipResponse>;
   }
 
   getMembershipByMemberIdAndOrganizationId(organizationId: string | undefined, memberId: string | undefined): Observable<MembershipResponse> {

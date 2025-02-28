@@ -37,7 +37,21 @@
       severity="secondary"
       [raised]="true"
       [rounded]="true"
-      (onClick)="cancelEditMembership()"
+      (onClick)="onCancelEditMembership()"
+    />
+  </div>
+
+  <div class="w-full max-w-lg flex justify-center space-x-4">
+    <p-button
+      label="Remove this member from the group"
+      size="small"
+      [raised]="true"
+      [rounded]="true"
+      severity="danger"
+      class="mb-2"
+      variant="text"
+      styleClass="text-xs"
+      (onClick)="onDeleteMembership($event)"
     />
   </div>
 </div>
