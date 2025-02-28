@@ -27,6 +27,8 @@ import {
     SocialAuthService,
     GoogleLoginProvider,
   } from "@abacritt/angularx-social-login";
+import { MenuService } from 'src/app/core/services/menu.service';
+import { MenuItemResponse } from 'src/app/core/models/menu-item-response';
 
 @Component({
   selector: 'app-header',
@@ -73,74 +75,102 @@ import {
 })
 export class HeaderComponent implements OnInit{
 
+  availableItems: MenuItem [] = [];
+  items: MenuItem[] | undefined;
+  menuItemResponses: MenuItemResponse[] = [];
 
-    items: MenuItem[] | undefined;
-    profilePicUrl: string | undefined;
-    session: Session | null = null;
+  profilePicUrl: string | undefined;
+  session: Session | null = null;
 
-    constructor(
-        private alertService: AlertService,
-        private authenticationService: AuthenticationService,
-        private router: Router,
-        private sessionService: SessionService,
-        private socialAuthService: SocialAuthService
-    ) {
+  constructor(
+      private alertService: AlertService,
+      private authenticationService: AuthenticationService,
+      private menuService: MenuService,
+      private router: Router,
+      private sessionService: SessionService,
+      private socialAuthService: SocialAuthService
+  ) {
 
-    }
+  }
 
-    ngOnInit() {
-        this.session = this.sessionService.getSession();
-        this.profilePicUrl = `${this.session?.member.profilePicUrl }?v=${new Date().getTime()}`;
-        this.items = [
-            {
-                label: 'Explore',
-                icon: 'pi pi-search-plus',
-                route: '/home/explore',
-                command: () => this.removeCreateOrganization()
-            },
-            {
-                label: 'My Organization',
-                icon: 'pi pi-sitemap',
-                route: '/home/my-organization',
-                command: () => this.removeCreateOrganization()
-            },
-            {
-                label: 'Members',
-                icon: 'pi pi-user',
-                route: '/home/members',
-                command: () => this.removeCreateOrganization()
-            }
-        ];
-    }
-
-    onClickLogout() {
-        this.authenticationService.logout().subscribe(
-        (res) => {
-            this.socialAuthService.signOut();
-            this.sessionService.clearSession();
-            localStorage.removeItem('authToken');
-            this.router.navigate(['/login']);
-            this.alertService.success('/logout', 'Success', 'Succefully logout');
+  ngOnInit() {
+      this.session = this.sessionService.getSession();
+      this.profilePicUrl = `${this.session?.member.profilePicUrl }?v=${new Date().getTime()}`;
+      this.availableItems = [
+        {
+            label: 'Explore',
+            icon: 'pi pi-search-plus',
+            route: '/home/explore',
+            command: () => this.removeCreateOrganization()
         },
-        (err: any) => {
-            console.log(err);
+        {
+            label: 'My Organization',
+            icon: 'pi pi-sitemap',
+            route: '/home/my-organization',
+            command: () => this.removeCreateOrganization()
+        },
+        {
+            label: 'Members',
+            icon: 'pi pi-user',
+            route: '/home/members',
+            command: () => this.removeCreateOrganization()
         }
-        );
-    }
+      ];
+      this.getMenus();
+  }
 
-    goToCreateOrganization() {
-        const exists = this.items?.some(item => item.label === 'Create Organization');
-        if (!exists) {
-            this.items = [...this.items || [], {
-                label: 'Create Organization',
-                icon: 'pi pi-user',
-                route: '/create-organization'
-            }];
-        }
-        this.router.navigate(['/create-organization']);  
-    }
+  onClickLogout() {
+      this.authenticationService.logout().subscribe(
+      (res) => {
+          this.socialAuthService.signOut();
+          this.sessionService.clearSession();
+          localStorage.removeItem('authToken');
+          this.router.navigate(['/login']);
+          this.alertService.success('/logout', 'Success', 'Succefully logout');
+      },
+      (err: any) => {
+          console.log(err);
+      }
+      );
+  }
 
-    removeCreateOrganization() {
-        this.items = this.items?.filter(item => item.label !== 'Create Organization') || [];
-    }
+  
+  goToCreateOrganization() {
+      const exists = this.items?.some(item => item.label === 'Create Organization');
+      if (!exists) {
+          this.items = [...this.items || [], {
+              label: 'Create Organization',
+              icon: 'pi pi-user',
+              route: '/create-organization'
+          }];
+      }
+      this.router.navigate(['/create-organization']);  
+  }
+
+  removeCreateOrganization() {
+      this.items = this.items?.filter(item => item.label !== 'Create Organization') || [];
+  }
+
+  private getMenus() {
+    const organizationId = this.sessionService.organizationId;
+    this.menuService.getMenus(organizationId).subscribe(
+      (res) => {
+        this.menuItemResponses = res;
+        this.setMenuItems();
+      },
+      (err: any) => {
+        this.alertService.error('/login', 'Error', err.error.message);
+      }
+    );
+  }
+
+  private setMenuItems() {
+    this.menuItemResponses.forEach(menuItemResponse => {
+      const availableItem = this.availableItems.find(item => item.label === menuItemResponse.label);
+      
+      if (availableItem) {
+        this.items = [...(this.items || []), availableItem];
+      }
+    });
+  }
 }

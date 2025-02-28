@@ -7,6 +7,7 @@ import { Member } from '../models/member';
 })
 export class SessionService {
 
+  organizationId: string | null = null;
   private session: Session | null = null; 
 
   clearSession(): void {
@@ -34,6 +35,9 @@ export class SessionService {
 
   setSession(session: Session): void {
     this.session = session;
+    if(this.session.organization?.organizationId) {
+      this.organizationId = this.session.organization.organizationId;
+    }
   }
 
   updateMember(member: Member) {

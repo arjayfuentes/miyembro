@@ -1,11 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrganizationResponse } from '../models/organization-reponse';
 import { environment as env } from '@environments/environment';
 import { MembershipResponse } from '../models/membership-response';
 import { JoinOrganizationRequest } from '../models/join-membership-request';
-import { GetMembershipRequest } from '../models/get-membership-request';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
 import { MembershipFilters } from 'src/app/core/models/membership-filters';
 import { Page } from '../models/page';
