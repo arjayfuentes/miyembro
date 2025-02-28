@@ -63,7 +63,7 @@ updateOrganizationAddress() {
   if(this.organization) {
     const organization = JSON.parse(JSON.stringify(this.organization)); // Deep copy
     organization.organizationAddress = this.organizationAddressForm.value; 
-    this.organizationService.updateOrganization(organization).subscribe(
+    this.organizationService.updateOrganization(organization.organizationId, organization).subscribe(
       (res) => {
         this.organization = res;
         this.alertService.success('/edit-organization-address', 'Success', "Succesfully udpated address");
@@ -79,7 +79,7 @@ updateOrganizationAddress() {
 }
 
 private getOrganization() {
-  this.organizationService.findMyOrganizationById(this.organizationId).subscribe(
+  this.organizationService.getMyOrganizationById(this.organizationId).subscribe(
     (res) => {
       this.organization = res;
     },

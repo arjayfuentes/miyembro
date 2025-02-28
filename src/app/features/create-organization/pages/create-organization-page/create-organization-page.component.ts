@@ -142,7 +142,7 @@ export class CreateOrganizationPageComponent implements OnInit{
 
     formData.append('createOrganizationRequest', jsonBlob);
     console.log(formData);
-    this.organizationService.completeCreateOrganization(formData).subscribe(
+    this.organizationService.createOrganization(formData).subscribe(
       (res) => {
         console.log(res);
         this.loading = false;

@@ -59,7 +59,7 @@ export class EditOrganizationDescriptionComponent implements OnInit {
   updateOrganizationDescription() {
     this.loaderService.showLoader(this.router.url, false);
     if(this.organization) {
-      this.organizationService.updateOrganization(this.organizationForm.value).subscribe(
+      this.organizationService.updateOrganization(this.organization.organizationId, this.organizationForm.value).subscribe(
         (res) => {
           this.organization = res;
           this.alertService.success(this.router.url, 'Success', "Succesfully udpated description");
@@ -77,7 +77,7 @@ export class EditOrganizationDescriptionComponent implements OnInit {
   }
 
   private getOrganization() {
-    this.organizationService.findMyOrganizationById(this.organizationId).subscribe(
+    this.organizationService.getMyOrganizationById(this.organizationId).subscribe(
       (res) => {
         this.organization = res;
         this.patchForm();

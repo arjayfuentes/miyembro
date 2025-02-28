@@ -52,7 +52,7 @@ export class MyOrganizationComponent implements OnInit{
     if(this.sessionService.getSession()?.organization?.organizationId) {
       organizationId = this.sessionService.getSession()?.organization?.organizationId;
     }
-    this.organizationService.findMyOrganizationById(organizationId).subscribe(
+    this.organizationService.getMyOrganizationById(organizationId).subscribe(
       (res) => {
         this.organization = res;
         this.getMembershipByMemberIdAndOrganizationId(this.organization);

@@ -13,7 +13,7 @@ import { MembershipFilters } from '../models/membership-filters';
 export class MemberService {
 
   
-  baseUrl = '/member';
+  baseUrl = '/members';
 
   constructor(
     private http: HttpClient,

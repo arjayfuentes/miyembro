@@ -82,7 +82,7 @@ export class OrganizationCollapsingHeaderComponent implements OnInit, OnChanges 
 
     formData.append('imageType', updateOrganizationPhotoRequest.imageType);
     this.loaderService.showLoader(this.router.url, false);
-    this.organizationService.updateOrganizationPhoto(this.organization, formData).subscribe(
+    this.organizationService.updateOrganizationPhoto(this.organization?.organizationId, formData).subscribe(
       (res) => {
         console.log(res);
         this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;

@@ -141,7 +141,7 @@ export class OrganizationListComponent implements OnInit{
 
   private loadOrganizations(page: number, size: number): void {
     this.loading = true; 
-    this.organizationService.getAllOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
+    this.organizationService.getOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
       (res) => {
         console.log(res);
         const newOrganizations = res.content.filter(org => !this.organizations.some(existingOrg => existingOrg.organizationId === org.organizationId));

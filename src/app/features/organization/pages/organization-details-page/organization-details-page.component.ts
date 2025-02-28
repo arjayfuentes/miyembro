@@ -82,7 +82,7 @@ export class OrganizationDetailsPageComponent implements OnInit {
 
 
   private getOrganization() {
-    this.organizationService.findMyOrganizationById(this.organizationId).subscribe(
+    this.organizationService.getMyOrganizationById(this.organizationId).subscribe(
       (res) => {
         console.log(res);
         this.organization = res;
