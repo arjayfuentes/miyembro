@@ -28,6 +28,15 @@ export class GoogleAuthService {
     this.oAuthService.loadDiscoveryDocumentAndTryLogin();
   }
 
+  getProfile() {
+    const profile = this.oAuthService.getIdentityClaims();
+    return profile;
+  }
+
+  getToken() {
+    return this.oAuthService.getAccessToken();
+  }
+
   login() {
     this.oAuthService.initImplicitFlow();
   }
@@ -37,12 +46,5 @@ export class GoogleAuthService {
     this.oAuthService.logOut();
   }
 
-  getProfile() {
-    const profile = this.oAuthService.getIdentityClaims();
-    return profile;
-  }
 
-  getToken() {
-    return this.oAuthService.getAccessToken();
-  }
 }

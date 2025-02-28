@@ -11,8 +11,7 @@ export class RoleService {
 
   baseUrl = '/roles';
 
-
-constructor(
+  constructor(
     private http: HttpClient,
   ) {
     
@@ -21,4 +20,5 @@ constructor(
   getVisibleRoles(): Observable<Role[]> {
       return this.http.get(`${env.apiUrl}${this.baseUrl}/visible`) as Observable<Role[]>;
   }
+  
 }

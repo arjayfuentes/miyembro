@@ -6,11 +6,12 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ProfileHeaderService {
 
-  private profileHeaderBackgroundSubject = new Subject<File | string | null>();
-  private profileHeaderLogoSubject = new Subject<File | string | null>();
-
+  
   backgroundImage: File | string | null = null;
   logoImage: File | string | null = null;
+
+  private profileHeaderBackgroundSubject = new Subject<File | string | null>();
+  private profileHeaderLogoSubject = new Subject<File | string | null>();
 
   getBackgroundImageUpdate(): Observable<File | string | null> {
     return this.profileHeaderBackgroundSubject.asObservable();

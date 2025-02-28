@@ -17,8 +17,7 @@ export class MembershipService {
 
   baseUrl = '/memberships';
 
-
-constructor(
+  constructor(
     private http: HttpClient,
   ) {
     
@@ -65,9 +64,5 @@ constructor(
   updateMembership(membership: MembershipRequest | undefined ) {
     return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
-
-
-
-
 
 }

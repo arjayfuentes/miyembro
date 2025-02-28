@@ -24,15 +24,16 @@ export class CountryService {
     return this.http.get(`${env.countryUrl}${this.baseUrl}`, {})  as Observable<Country[]>;
   }
 
-  getStatesByCountry(iso2CountryCode: string | undefined): Observable<State[]> {
-    return this.http.get(`${env.countryUrl}${this.baseUrl}/${iso2CountryCode}/states`, {})  as Observable<State[]>;
+  getCitiesByCountry(iso2CountryCode: string | undefined): Observable<City[]> {
+    return this.http.get(`${env.countryUrl}${this.baseUrl}/${iso2CountryCode}/cities`, {})  as Observable<City[]>;
   }
 
   getCitiesByStateAndCountry(iso2CountryCode: string | undefined, iso2StateCode: string | undefined): Observable<City[]> {
     return this.http.get(`${env.countryUrl}${this.baseUrl}/${iso2CountryCode}/states/${iso2StateCode}/cities`, {})  as Observable<City[]>;
   }
 
-  getCitiesByCountry(iso2CountryCode: string | undefined): Observable<City[]> {
-    return this.http.get(`${env.countryUrl}${this.baseUrl}/${iso2CountryCode}/cities`, {})  as Observable<City[]>;
+  getStatesByCountry(iso2CountryCode: string | undefined): Observable<State[]> {
+    return this.http.get(`${env.countryUrl}${this.baseUrl}/${iso2CountryCode}/states`, {})  as Observable<State[]>;
   }
+ 
 }

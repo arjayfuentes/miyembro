@@ -12,8 +12,7 @@ export class MembershipStatusService {
 
   baseUrl = '/membership-statuses';
 
-
-constructor(
+  constructor(
     private http: HttpClient,
   ) {
     

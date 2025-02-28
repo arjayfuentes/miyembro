@@ -10,8 +10,7 @@ import { MembershipType } from 'src/app/core/models/membership-type';
 })
 export class MembershipTypeService {
 
-   baseUrl = '/membership-types';
-  
+  baseUrl = '/membership-types';
   
   constructor(
       private http: HttpClient,
@@ -27,5 +26,4 @@ export class MembershipTypeService {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId) as Observable<MembershipType[]>;
   }
 
-      
 }

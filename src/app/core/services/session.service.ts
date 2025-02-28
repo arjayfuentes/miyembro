@@ -17,6 +17,10 @@ export class SessionService {
     return this.session;
   }
 
+  hasPermission(permissionName: string): boolean {
+    return this.session?.permissions?.includes(permissionName) || false;
+  }
+
   isLoggedIn(): boolean {
     const selectedOrganization = this.session?.organization;
     const organizationsOfMember = this.session?.organizationIdsOfMember;
@@ -28,19 +32,14 @@ export class SessionService {
     return this.session !== null  && (notRegistered || onlyOneOrganization || twoOrMoreOrganization);
   }
 
+  setSession(session: Session): void {
+    this.session = session;
+  }
+
   updateMember(member: Member) {
     if (this.session) {
       this.session.member = member;
     }
   }
-
-  setSession(session: Session): void {
-    this.session = session;
-  }
-
-  hasPermission(permissionName: string): boolean {
-    return this.session?.permissions?.includes(permissionName) || false;
-  }
-
   
 }
