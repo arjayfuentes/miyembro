@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig,  DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MembershipType } from 'src/app/core/models/membership-type';
 import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
 import { MembershipService } from 'src/app/core/services/membership.service';
@@ -15,7 +15,16 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({
   selector: 'app-approve-join-organization-request',
-  imports: [AvatarModule, AvatarGroupModule, MemberDetailsComponent, SelectModule, FormsModule, ReactiveFormsModule, ButtonModule, CommonModule],
+  imports: [
+    AvatarModule,
+    AvatarGroupModule,
+    ButtonModule,
+    CommonModule,
+    FormsModule,
+    MemberDetailsComponent,
+    ReactiveFormsModule,
+    SelectModule
+  ],
   templateUrl: './approve-join-organization-request.component.html',
   styleUrl: './approve-join-organization-request.component.scss'
 })

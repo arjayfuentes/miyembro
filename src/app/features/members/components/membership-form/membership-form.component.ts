@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IftaLabelModule } from 'primeng/iftalabel';
@@ -16,7 +16,18 @@ import { MembershipStatusResponse } from '../../../../core/models/membership-sta
 
 @Component({
   selector: 'app-membership-form',
-  imports: [FloatLabelModule, SelectModule, FormsModule, ReactiveFormsModule, IftaLabelModule, TooltipModule, CommonModule, FormErrorsFilterPipe, FormErrorsPipe, DatePickerModule],
+  imports: [
+    CommonModule,
+    DatePickerModule,
+    FloatLabelModule,
+    FormErrorsFilterPipe,
+    FormErrorsPipe,
+    FormsModule,
+    IftaLabelModule,
+    ReactiveFormsModule,
+    SelectModule,
+    TooltipModule
+  ],
   templateUrl: './membership-form.component.html',
   styleUrl: './membership-form.component.scss'
 })

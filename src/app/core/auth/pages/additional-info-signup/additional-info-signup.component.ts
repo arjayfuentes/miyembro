@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Router } from '@angular/router';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
-import { MemberService } from 'src/app/features/members/services/member.service';
+import { MemberService } from 'src/app/core/services/member.service';
 
 @Component({
   selector: 'app-additional-info-signup',

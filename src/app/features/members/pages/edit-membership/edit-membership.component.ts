@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SelectModule } from 'primeng/select';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipType } from 'src/app/core/models/membership-type';
@@ -19,7 +19,16 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({
   selector: 'app-edit-membership',
-  imports: [SelectModule, FormsModule, ReactiveFormsModule, MemberDetailsComponent, ButtonModule, FloatLabelModule, MemberFormComponent, MembershipFormComponent],
+  imports: [
+    ButtonModule,
+    FloatLabelModule,
+    FormsModule,
+    MemberDetailsComponent,
+    MemberFormComponent,
+    MembershipFormComponent,
+    ReactiveFormsModule,
+    SelectModule
+  ],
   templateUrl: './edit-membership.component.html',
   styleUrl: './edit-membership.component.scss'
 })

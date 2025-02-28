@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from 'src/app/core/services/session.service';
-import { Member } from 'src/app/core/models/member';
 import { Table } from 'src/app/core/models/table';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
-import { TabsModule } from 'primeng/tabs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
@@ -23,7 +21,15 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({
   selector: 'app-member-pending-request',
-  imports: [CommonModule, TableComponent, ButtonModule, CardModule, AvatarModule, AvatarGroupModule, DynamicDialogModule],
+  imports: [
+    AvatarGroupModule,
+    AvatarModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DynamicDialogModule,
+    TableComponent
+  ],
   templateUrl: './member-pending-request.component.html',
   styleUrl: './member-pending-request.component.scss',
   providers: [DialogService, MessageService]

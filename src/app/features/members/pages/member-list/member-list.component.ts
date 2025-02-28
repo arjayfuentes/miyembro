@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from 'src/app/core/services/session.service';
 import { Table } from 'src/app/core/models/table';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
@@ -32,7 +31,21 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-member-list',
-  imports: [CommonModule, TableComponent, ButtonModule, FormsModule, ReactiveFormsModule, InputTextModule, InputIconModule, TableModule, IconFieldModule, CardModule, AvatarModule, AvatarGroupModule, MultiSelectModule],
+  imports: [
+    AvatarGroupModule,
+    AvatarModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    FormsModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    MultiSelectModule,
+    ReactiveFormsModule,
+    TableComponent,
+    TableModule
+  ],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.scss',
   providers: [DialogService, MessageService]
