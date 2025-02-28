@@ -102,7 +102,6 @@ export class LoginComponent implements OnInit {
   }
 
   private loginWithGoogle(response: any) {
-    console.log(response);
     const googleToken = response.code;
     
     const googleLoginRequest: GoogleRequest = {
@@ -120,14 +119,12 @@ export class LoginComponent implements OnInit {
   }
 
   private errorLogin(error: any) {
-    console.log(error);
     this.loginErrorMessage = error.error.message;
     this.alertService.error('/login', 'Error', error.error.message);
   }
 
   private successFulLogin(session: Session) {
     this.sessionService.setSession(session);  
-    console.log(this.sessionService.getSession());
     const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length;
     if (numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
       this.router.navigate(['/choose-organization']);

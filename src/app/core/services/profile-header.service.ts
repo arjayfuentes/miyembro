@@ -21,8 +21,6 @@ export class ProfileHeaderService {
   }
 
   setBackgroundImage(backgroundImage: File | string | null): void {
-    console.log('Setting background image:', backgroundImage);
-
     this.profileHeaderBackgroundSubject.next(backgroundImage);
   }
 

@@ -104,7 +104,6 @@ export class SignUpComponent implements OnInit {
     const memberRequest: MemberRequest = this.signupForm.value;
     this.authenticationService.register(memberRequest).subscribe(
       (res) => {
-        console.log(res);
         this.successfulSignup(res);
       },
       (err: any) => {
@@ -120,7 +119,6 @@ export class SignUpComponent implements OnInit {
   }
 
   private signupWithGoogle(response: any) {
-    console.log(response);
     const googleToken = response.code;
     
     const googleLoginRequest: GoogleRequest = {
@@ -129,7 +127,6 @@ export class SignUpComponent implements OnInit {
 
     this.authenticationService.registerWithGoogle(googleLoginRequest).subscribe(
       (res) => {
-        console.log(res);
         this.successfulSignup(res);
       },
       (err: any) => {
@@ -139,7 +136,6 @@ export class SignUpComponent implements OnInit {
   }
 
   private errorSignup(error: any) {
-    console.log(error);
     this.loginErrorMessage = error.error.message;
     this.alertService.error('/signup', 'Error', error.error.message);
   }

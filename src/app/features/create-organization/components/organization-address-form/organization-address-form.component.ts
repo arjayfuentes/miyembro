@@ -72,8 +72,6 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
       this.selectedCity = null;
     });
     this.organizationAddressForm.get('provinceState')?.valueChanges.subscribe(selectedState => {
-      console.log('provinceState');
-
       if(selectedState) {
         this.selectedState = selectedState;
         this.getCities();
@@ -113,7 +111,6 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
     this.countrySevice.getCountries().subscribe(
       (res) => {
         this.countries = res;
-        console.log(this.organizationAddressForm);
         if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
           this.patchCountry();
           this.getStates();
@@ -156,7 +153,6 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
     const state = this.states.find((state) => state.name === this.organizationAddressForm.get('provinceState')?.value);
     this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
       (res) => {
-        console.log(res);
         if(res.length == 0) {
           this.getCitiesByCountry();
         } else {
@@ -178,8 +174,6 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
     this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
       (res) => {
         this.cities = res;
-        console.log(res);
-
         if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
           this.patchCity();
         }

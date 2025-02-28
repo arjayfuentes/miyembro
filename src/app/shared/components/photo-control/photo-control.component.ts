@@ -19,7 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     useExisting: forwardRef(() => PhotoControlComponent), 
   }],
 })
-export class PhotoControlComponent implements OnDestroy, OnInit, ControlValueAccessor{
+export class PhotoControlComponent implements OnDestroy, ControlValueAccessor{
 
     @Input() height  = "200";
     @Input() isEditable = true;
@@ -43,10 +43,6 @@ export class PhotoControlComponent implements OnDestroy, OnInit, ControlValueAcc
         public dialogService: DialogService, 
         public messageService: MessageService
     ) {}
-
-    ngOnInit(): void {
-       console.log('asdadas');
-    }
 
     ngOnDestroy() {
         if (this.ref) {

@@ -8,11 +8,6 @@ export class HomeService {
 
   private scrollSubject = new Subject<number>();
 
-  constructor() {
-    console.log('dasda');
-   }
-
-
   scrollObservable$: Observable<number> = this.scrollSubject.asObservable();
 
   emitScrollEvent(scrollTop: number): void {

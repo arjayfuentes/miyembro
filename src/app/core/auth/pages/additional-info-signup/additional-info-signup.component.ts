@@ -60,7 +60,6 @@ export class AdditionalInfoSignupComponent {
     const state = this.location.getState() as { member?: Member };
     if (state && state.member) {
       this.member = state.member;
-      console.log(this.member);
     }
   }
 

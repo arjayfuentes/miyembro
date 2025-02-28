@@ -33,11 +33,15 @@ export class ProfileHeaderComponent {
   }
 
   onLogoChange(newLogoUrl: string) {
-    this.profileHeaderService.setLogoImage(newLogoUrl);
+    if(this.logoUrl != newLogoUrl) {
+      this.profileHeaderService.setLogoImage(newLogoUrl);
+    }
   }
 
   onBackgroundImageChange(newBackgroundImageUrl: string) {
-    this.profileHeaderService.setBackgroundImage(newBackgroundImageUrl);
+    if(this.backgroundImageUrl != newBackgroundImageUrl) {
+      this.profileHeaderService.setBackgroundImage(newBackgroundImageUrl);
+    }
   }
 
 }

@@ -243,7 +243,6 @@ export class MemberFormComponent implements OnInit, OnChanges{
 
   onProfileImageFileSelect(event: any) {
     this.selectedProfileImageFile = event.files[0]; 
-    console.log('Selected file:', this.selectedProfileImageFile);
     this.memberForm.controls['selectedProfilePicImage'].setValue(this.selectedProfileImageFile) ;
   }
 

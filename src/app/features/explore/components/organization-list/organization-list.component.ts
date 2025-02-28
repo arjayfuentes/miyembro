@@ -68,12 +68,6 @@ export class OrganizationListComponent implements OnInit{
   ngOnInit(): void {
     this.size = this.calculateDynamicSize();
     this.loadOrganizations(this.page, this.size);
-    // const scrollContainer = document.querySelector('.home-body-class');  
-    // if (scrollContainer) {
-    //   scrollContainer.addEventListener('scroll', () => {
-    //     console.log('Manual Scroll Detected in Parent');
-    //   });
-    // }
   }
 
   counterArray(): any[] {
@@ -122,10 +116,7 @@ export class OrganizationListComponent implements OnInit{
 
   private calculateDynamicSize(): number {
     const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    console.log(screenHeight);
-  
+    const screenHeight = window.innerHeight;  
     if (screenWidth >= 1280) {  // XL screen (Large screens)
       return 24;  // Load 18 items for large screens
     } else if (screenWidth >= 1024) {  // LG screen (Large screens)
@@ -143,7 +134,6 @@ export class OrganizationListComponent implements OnInit{
     this.loading = true; 
     this.organizationService.getOrganizations(page, size, this.searchName, this.selectedCountry, this.selectedCity).subscribe(
       (res) => {
-        console.log(res);
         const newOrganizations = res.content.filter(org => !this.organizations.some(existingOrg => existingOrg.organizationId === org.organizationId));
         this.organizations = [...this.organizations, ...newOrganizations];
         this.loading = false;

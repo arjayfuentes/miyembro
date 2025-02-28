@@ -83,7 +83,6 @@ export class MemberPendingRequestComponent {
       });
       this.ref.onClose.subscribe((data: any) => {
           if (data?.membership) {
-              console.log(data.membership);
               this.alertService.success(this.router.url, 'Success', "Succesfully approve request");
               this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
             }
@@ -160,7 +159,6 @@ export class MemberPendingRequestComponent {
   
       this.membershipService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
         (res) => {
-          console.log(res);
           this.memberships = res.content;
           this.totalRecords = res.totalElements;
           this.first = pageNo * res.pageable.pageSize;
@@ -169,7 +167,6 @@ export class MemberPendingRequestComponent {
           this.loaderService.hideLoader(this.router.url);
         },
         (err: any) => {
-          console.log(err);
           this.loading = false;
           this.loaderService.hideLoader(this.router.url);
         }

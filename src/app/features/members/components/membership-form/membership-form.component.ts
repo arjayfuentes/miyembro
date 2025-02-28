@@ -20,7 +20,7 @@ import { MembershipStatusResponse } from '../../../../core/models/membership-sta
   templateUrl: './membership-form.component.html',
   styleUrl: './membership-form.component.scss'
 })
-export class MembershipFormComponent implements OnInit, OnChanges {
+export class MembershipFormComponent implements OnChanges {
 
   MembershipFormType = MembershipFormType;
   @Input() formType: MembershipFormType = MembershipFormType.UPDATE_MEMBERSHIP;
@@ -37,10 +37,6 @@ export class MembershipFormComponent implements OnInit, OnChanges {
 
   get fgErrors(): { [key: string]: ValidationErrors } | null {
     return this.membershipForm.errors;
-  }
-
-  ngOnInit(): void {
-    console.log('dasdad');
   }
 
   ngOnChanges(changes: SimpleChanges): void {

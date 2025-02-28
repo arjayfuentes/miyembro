@@ -35,20 +35,14 @@ export class GoogleLoginComponent implements OnInit {
       this.oauthService.tryLogin().then(() => {
         const accessToken = this.oauthService.getAccessToken();
         const idToken = this.oauthService.getIdToken();
-        console.log('Access Token:', accessToken);
-        console.log('ID Token:', idToken);
-
         this.onTokenCaptured(accessToken, idToken);
       }).catch((error) => {
-        console.error('OAuth Error:', error);
-        alert('error');
         this.router.navigate(['/login']);
       });
     });
   }
 
   onTokenCaptured(accessToken: string, idToken: string) {
-    console.log('Captured Tokens:', { accessToken, idToken });
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('id_token', idToken);
     if (idToken) {
@@ -57,7 +51,6 @@ export class GoogleLoginComponent implements OnInit {
   }
     
   onClickLoginGoogleContinue(googleToken: string) {
-    console.log('Sending Google token to backend...');
     const googleLoginRequest: GoogleRequest = {
       googleToken: googleToken
     };
@@ -76,7 +69,6 @@ export class GoogleLoginComponent implements OnInit {
 
 
   successFulLogin() {
-    console.log(this.sessionService.getSession());
     const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length;
     if (numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
       this.router.navigate(['/choose-organization']);

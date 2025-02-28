@@ -50,14 +50,12 @@ export class ChooseOrganizationComponent implements OnInit{
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
-        console.log(err);
       }
     );
   }
 
 
   onSelectOrganization(event: any) {
-    console.log(this.selectedOrganization);
     const memberId = this.sessionService.getSession()?.member.memberId;
     const selectOrganizationLoginRequest: SelectOrganizationLoginRequest = {
         organizationId: this.selectedOrganization?.organizationId ?? null,
@@ -66,8 +64,6 @@ export class ChooseOrganizationComponent implements OnInit{
     this.authenticationService.selectLoginOrganization(selectOrganizationLoginRequest).subscribe(
       (res) => {
         this.sessionService.setSession(res);
-        console.log(this.sessionService.getSession());
-
         const session = this.sessionService.getSession();
         if(session) {
           localStorage.setItem('authToken', session.accessToken);
@@ -79,7 +75,6 @@ export class ChooseOrganizationComponent implements OnInit{
         this.loginErrorMessage = err.error.message;
       }
     );
-    console.log(event);
   }
 
 

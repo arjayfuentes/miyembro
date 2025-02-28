@@ -84,14 +84,12 @@ export class OrganizationCollapsingHeaderComponent implements OnInit, OnChanges 
     this.loaderService.showLoader(this.router.url, false);
     this.organizationService.updateOrganizationPhoto(this.organization?.organizationId, formData).subscribe(
       (res) => {
-        console.log(res);
         this.backgroundImageUrl = `${res.backgroundImageUrl}?v=${new Date().getTime()}`;
         this.logoUrl = `${res.logoUrl}?v=${new Date().getTime()}`;
         this.loaderService.hideLoader(this.router.url);
         this.alertService.success('/login', 'Success', 'Succefully updated image');
       },
       (err: any) => {
-        console.log(err);
         this.loaderService.hideLoader(this.router.url);
         this.alertService.error('/login', 'Error', err);
       }

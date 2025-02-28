@@ -80,7 +80,6 @@ export class EditMembershipComponent implements OnInit {
       this.membershipService.updateMembership(membershipRequest).subscribe(
         (res) => {
           this.membership = res;
-          console.log(this.membership);
           this.ref.close({
             membership: this.membership
           });

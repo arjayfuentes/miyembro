@@ -86,16 +86,10 @@ export class PhotoControlCropperComponent {
       this.ref.close({ croppedImageFile: this.croppedFile }); // Send the cropped file to the parent
     }
   }
-
-  reset() {
-    console.log('asdsa');
-  }
-
+  
   save() {
     if (this.croppedImage) {
       this.closeDialog(); 
-    } else {
-      console.log('No image cropped yet.');
-    }
+    } 
   }
 }

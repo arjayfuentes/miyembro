@@ -55,7 +55,6 @@ export class ApproveJoinOrganizationRequestComponent {
     this.membershipService.approveMembershipRequest(membershipRequest).subscribe(
       (res) => {
         this.membership = res;
-        console.log(this.membership);
         this.ref.close({
           membership: this.membership
         });
@@ -82,7 +81,6 @@ export class ApproveJoinOrganizationRequestComponent {
     this.membershipService.denyMembershipRequest(membershipRequest).subscribe(
       (res) => {
         this.membership = res;
-        console.log(this.membership);
         this.ref.close({
           membership: this.membership
         });

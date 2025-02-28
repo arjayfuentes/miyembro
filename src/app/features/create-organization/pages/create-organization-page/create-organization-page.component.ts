@@ -122,9 +122,6 @@ export class CreateOrganizationPageComponent implements OnInit{
       membershipTypes: membershipTypes
     }
 
-    console.log(createOrganizationRequest);
-
-
     const formData = new FormData();
 
     if(logoImage) {
@@ -141,17 +138,14 @@ export class CreateOrganizationPageComponent implements OnInit{
     })], { type: 'application/json' });
 
     formData.append('createOrganizationRequest', jsonBlob);
-    console.log(formData);
     this.organizationService.createOrganization(formData).subscribe(
       (res) => {
-        console.log(res);
         this.loading = false;
         this.loaderService.hideLoader(this.router.url);
         this.router.navigate(['/home/explore']);
         this.alertService.success('/login', 'Success', 'Succefully Created Organization');
       },
       (err: any) => {
-        console.log(err);
         this.loading = false;
         this.loaderService.hideLoader(this.router.url);
         this.alertService.error('/login', 'Error', err);

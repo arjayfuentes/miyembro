@@ -10,13 +10,7 @@ import { MemberPendingRequestComponent } from "../member-pending-request/member-
   templateUrl: './member-page.component.html',
   styleUrl: './member-page.component.scss'
 })
-export class MemberPageComponent implements OnInit {
+export class MemberPageComponent {
 
-  ngOnInit(): void {
-    console.log('sasa');
-  }
-
-
-  
 
 }

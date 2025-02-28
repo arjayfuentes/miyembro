@@ -84,7 +84,6 @@ export class OrganizationDetailsPageComponent implements OnInit {
   private getOrganization() {
     this.organizationService.getMyOrganizationById(this.organizationId).subscribe(
       (res) => {
-        console.log(res);
         this.organization = res;
         this.getMembershipByMemberIdAndOrganizationId(this.organization);
       },
