@@ -17,7 +17,7 @@ declare const google: any;
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule],
+  imports: [ButtonModule, CardModule, CommonModule, IftaLabelModule, InputTextModule, FormsModule, PasswordModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

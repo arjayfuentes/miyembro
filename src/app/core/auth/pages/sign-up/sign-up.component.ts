@@ -21,7 +21,19 @@ declare const google: any;
 
 @Component({
   selector: 'app-sign-up',
-  imports: [FormsModule, ReactiveFormsModule, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule],
+  imports: [
+    ButtonModule, 
+    CardModule,
+    CommonModule,
+    FormErrorsFilterPipe, 
+    FormErrorsPipe, 
+    FormsModule, 
+    IftaLabelModule, 
+    InputTextModule,
+    PasswordModule,
+    ReactiveFormsModule, 
+    TooltipModule
+  ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })

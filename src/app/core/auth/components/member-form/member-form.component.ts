@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ReactiveFormsModule, FormsModule, AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -11,13 +10,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
 import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pipe';
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
-import { AlertService } from 'src/app/core/services/alert.service';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { SessionService } from '../../../services/session.service';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FileUploadModule } from 'primeng/fileupload';
 import { NgxMaterialIntlTelInputComponent } from 'ngx-material-intl-tel-input';
@@ -27,7 +22,6 @@ import { Country } from 'src/app/core/models/country';
 import { SelectModule } from 'primeng/select';
 import { State } from 'src/app/core/models/state';
 import { City } from 'src/app/core/models/city';
-import { LoginType } from 'src/app/core/models/login-type.enum';
 import { DatePipe } from '@angular/common';
 import { Member } from 'src/app/core/models/member';
 import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
@@ -35,7 +29,29 @@ import { AvatarComponent } from 'src/app/shared/components/avatar/avatar.compone
 
 @Component({
   selector: 'app-member-form',
-  imports: [BackgroundComponent, InputNumberModule, SelectModule, ToastModule, DatePickerModule, FloatLabelModule, FileUploadModule, NgxMaterialIntlTelInputComponent, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent, AvatarComponent],
+  imports: [
+    AvatarComponent,
+    BackgroundComponent, 
+    ButtonModule, 
+    CardModule, 
+    CommonModule, 
+    DatePickerModule,
+    DividerModule, 
+    FileUploadModule, 
+    FloatLabelModule, 
+    FormErrorsFilterPipe, 
+    FormErrorsPipe, 
+    FormsModule, 
+    IftaLabelModule, 
+    InputTextModule, 
+    InputNumberModule,
+    NgxMaterialIntlTelInputComponent,  
+    PasswordModule, 
+    ReactiveFormsModule, 
+    SelectModule, 
+    ToastModule,  
+    TooltipModule, 
+    ],
   templateUrl: './member-form.component.html',
   styleUrl: './member-form.component.scss',
   providers: [DatePipe]

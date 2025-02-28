@@ -15,7 +15,7 @@ import { OrganizationService } from 'src/app/core/services/organization.service'
 
 @Component({
   selector: 'app-choose-organization',
-  imports: [BackgroundComponent, CardModule, ListboxModule, FormsModule, CommonModule ],
+  imports: [BackgroundComponent, CardModule,  CommonModule, FormsModule, ListboxModule],
   templateUrl: './choose-organization.component.html',
   styleUrl: './choose-organization.component.scss'
 })

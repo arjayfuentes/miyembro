@@ -4,7 +4,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-page-not-found',
-  imports: [SelectModule, DatePickerModule],
+  imports: [DatePickerModule, SelectModule],
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.scss'
 })
