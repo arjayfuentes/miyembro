@@ -40,7 +40,7 @@ export class OrganizationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isEditAllowed = this.isMyOrganization && this.sessionService.getSession()?.role.name === 'Admin';
+    this.isEditAllowed = this.isMyOrganization && this.sessionService.getSession()?.role.name === 'Admin' || this.sessionService.getSession()?.role.name === 'Super Admin';
   }
 
 }
