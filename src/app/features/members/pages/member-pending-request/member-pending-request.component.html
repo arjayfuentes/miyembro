@@ -43,7 +43,8 @@
           size="small"
           [raised]="true"
           [rounded]="true"
-          styleClass="mr-2 mb-2"
+          styleClass="mr-2 mb-2 py-1"
+          *ngIf="row['membershipStatus']['name'] === 'Pending'"
           (onClick)="approveJoinRequest(row)"
         />
         <p-button
@@ -53,7 +54,19 @@
           severity="danger"
           [raised]="true"
           [rounded]="true"
+          styleClass="py-1"
+          *ngIf="row['membershipStatus']['name'] === 'Pending'"
           (onClick)="denyJoinRequest(row)"
+        />
+        <p-button
+          label="Edit"
+          icon="pi pi-pencil"
+          size="small"
+          severity="secondary"
+          [raised]="true"
+          [rounded]="true"
+          styleClass="py-1"
+          *ngIf="row['membershipStatus']['name'] === 'Denied'"
         />
       </ng-template>
     </app-table>

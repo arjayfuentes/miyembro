@@ -161,7 +161,7 @@ export class MemberPendingRequestComponent implements OnInit {
     const filters = this.membershipFilters ?? {} as MembershipFilters
 
 
-    this.membershipService.getPendingMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
+    this.membershipService.getRequestsMembershipsByOrganization(organizationId, pageNo, pageSize, sortField, order, filters).subscribe(
       (res) => {
         this.memberships = res.content;
         this.totalRecords = res.totalElements;
@@ -201,6 +201,13 @@ export class MemberPendingRequestComponent implements OnInit {
           dataType: 'string',
           colTemplateRefName: 'userFullnameColumn',
           headerText: 'Mobile Number',
+          sortable: true
+        },
+        {
+          dataField: 'membershipStatus.name',
+          dataType: 'string',
+          colTemplateRefName: 'membershipStatusColumn',
+          headerText: 'Status',
           sortable: true
         },
         {
