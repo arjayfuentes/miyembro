@@ -13,9 +13,10 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
   styleUrl: './membership-card.component.scss'
 })
 export class MembershipCardComponent {
-
-  @Input() organization: OrganizationResponse | null = null;
-  @Input() membership: MembershipResponse | null = null;
+  
   @Input() member: Member | undefined;
+  @Input() membership: MembershipResponse | null = null;
+  @Input() organization: OrganizationResponse | null = null;
+ 
 
 }

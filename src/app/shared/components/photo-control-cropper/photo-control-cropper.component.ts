@@ -12,16 +12,15 @@ import { CommonModule } from '@angular/common';
 })
 export class PhotoControlCropperComponent {
 
-  imageChangedEvent: Event | null = null;
-  croppedImage: SafeUrl  = '';
   croppedFile: File | null = null;
-  imageBase64: string | undefined; // Store Base64 of the passed image
-  width = 200;
+  croppedImage: SafeUrl  = '';
   height = 200;
+  imageBase64: string | undefined;
+  imageChangedEvent: Event | null = null;
   isRound = false;
+  width = 200;
 
   constructor(
-    private dialogService: DialogService, 
     private ref: DynamicDialogRef, 
     public config: DynamicDialogConfig,      
     private sanitizer: DomSanitizer
@@ -34,15 +33,9 @@ export class PhotoControlCropperComponent {
     }
   }
 
-  imageCropped(event: ImageCroppedEvent) {
-    if (event.base64) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.base64);
-      this.createFileFromBase64(event.base64, 'cropped-image.png'); // Create and store the File
-    } else if (event.objectUrl) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
-      this.createFileFromObjectUrl(event.objectUrl, 'cropped-image.png'); // Create and store the File
-    } else {
-      console.error("No image data available (both base64 and objectUrl are null).");
+  closeDialog() {
+    if (this.croppedFile) {
+      this.ref.close({ croppedImageFile: this.croppedFile }); // Send the cropped file to the parent
     }
   }
 
@@ -67,29 +60,35 @@ export class PhotoControlCropperComponent {
       })
       .catch(error => console.error('Error converting object URL to file:', error));
   }
-  
+
+  cropperReady() {
+    // cropper ready
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    if (event.base64) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.base64);
+      this.createFileFromBase64(event.base64, 'cropped-image.png'); // Create and store the File
+    } else if (event.objectUrl) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+      this.createFileFromObjectUrl(event.objectUrl, 'cropped-image.png'); // Create and store the File
+    } else {
+      console.error("No image data available (both base64 and objectUrl are null).");
+    }
+  }
 
   imageLoaded(image: LoadedImage) {
     console.log(image);
-  }
-
-  cropperReady() {
-      // cropper ready
   }
 
   loadImageFailed() {
       // show message
   }
 
-  closeDialog() {
-    if (this.croppedFile) {
-      this.ref.close({ croppedImageFile: this.croppedFile }); // Send the cropped file to the parent
-    }
-  }
-  
   save() {
     if (this.croppedImage) {
       this.closeDialog(); 
     } 
   }
+  
 }

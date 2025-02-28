@@ -21,19 +21,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class PhotoControlComponent implements OnDestroy, ControlValueAccessor{
 
+    @Input() buttonLabel = "Update Photo";
     @Input() height  = "200";
     @Input() isEditable = true;
     @Input() isRound = false;
     @Input() isIconButtonOnly = true;
-    @Input() buttonLabel = "Update Photo";
-    @Input() width = "200";;
     @Input() styleClass = '';
+    @Input() width = "200";;
     @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+
+    disabled = false;
     file: File | null = null;  // Store File object when a new image is cropped
     fileUrl = '';      // Store preview URL (initial value or after cropping)
-          
-    disabled = false;
-
     ref: DynamicDialogRef | undefined;
 
     private onChange = (value: File | string | null) => {console.log('Image changed');};
@@ -77,11 +76,24 @@ export class PhotoControlComponent implements OnDestroy, ControlValueAccessor{
         this.disabled = isDisabled;
     }
 
-    private resetInput() {
-        if (this.fileInput) {
-            this.fileInput.nativeElement.value = '';
-            this.fileInput.nativeElement.click();
+    onFileSelected(event: Event) {
+        const fileInput = event.target as HTMLInputElement;
+        const file = fileInput.files?.[0];
+
+        if (file) {
+            this.resetInput();
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onload = () => {
+                this.show(reader.result as string); // Show cropper with Base64
+            };
         }
+    }
+
+    openFilePicker() {
+        this.fileInput.nativeElement.click();
     }
 
     show(selectedImage?: string) {
@@ -103,25 +115,11 @@ export class PhotoControlComponent implements OnDestroy, ControlValueAccessor{
         });
     }
 
-    onFileSelected(event: Event) {
-        const fileInput = event.target as HTMLInputElement;
-        const file = fileInput.files?.[0];
-
-        if (file) {
-            this.resetInput();
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-
-            reader.onload = () => {
-                this.show(reader.result as string); // Show cropper with Base64
-            };
+    private resetInput() {
+        if (this.fileInput) {
+            this.fileInput.nativeElement.value = '';
+            this.fileInput.nativeElement.click();
         }
-    }
-
-
-    openFilePicker() {
-        this.fileInput.nativeElement.click();
     }
 
 }

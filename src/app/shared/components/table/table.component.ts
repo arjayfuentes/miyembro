@@ -44,31 +44,12 @@ export class TableComponent implements AfterContentInit, OnChanges{
   @Output() sortOrderChange = new EventEmitter<number>();
   @Output() totalRecordsChange = new EventEmitter<number>();  
 
-  selectedValuesDateMap: { [key: string]: Date | Date[] | null } = {}; // Map to store date values for each column
   selectedItems: any [] = [];
   selectedValuesComboInputValueMap: { [key: string]: string } = {};
   selectedValuesComboSelectValueMap: { [key: string]: any[] } = {};
+  selectedValuesDateMap: { [key: string]: Date | Date[] | null } = {}; 
   selectedValuesMultiSelectMap: { [key: string]: any[] } = {}; 
   templateList!: TemplateRef<any>[];
-
-
-  clearDateColumnFilter(col: any, filterCallback: any) {
-    const key = col.dataField ?? 'default'; 
-    this.selectedValuesDateMap[key] = null;
-  
-    if (typeof filterCallback === 'function') {
-      filterCallback(null); 
-    }
-  }
-  
-  applyDateColumnFilter(col: any, filterCallback: any) {
-    const key = col.dataField ?? 'default'; 
-    const selectedDate = this.selectedValuesDateMap[key];
-  
-    if (typeof filterCallback === 'function') {
-      filterCallback(selectedDate); 
-    }
-  }
  
   ngAfterContentInit(): void {
     this.templateList = this.tempList.toArray();
@@ -80,7 +61,16 @@ export class TableComponent implements AfterContentInit, OnChanges{
       this.initializeSelectedValuesComboSelectValueMap(); 
     }
   }
+
+  applyDateColumnFilter(col: any, filterCallback: any) {
+    const key = col.dataField ?? 'default'; 
+    const selectedDate = this.selectedValuesDateMap[key];
   
+    if (typeof filterCallback === 'function') {
+      filterCallback(selectedDate); 
+    }
+  }
+
   clear(table: PrimeTable) {
     table.clear();
     Object.keys(this.selectedValuesMultiSelectMap).forEach((key) => {
@@ -96,6 +86,15 @@ export class TableComponent implements AfterContentInit, OnChanges{
       this.selectedValuesDateMap[key] = null; 
     });
     this.clearFilterChangeTable.emit();
+  }
+
+  clearDateColumnFilter(col: any, filterCallback: any) {
+    const key = col.dataField ?? 'default'; 
+    this.selectedValuesDateMap[key] = null;
+  
+    if (typeof filterCallback === 'function') {
+      filterCallback(null); 
+    }
   }
 
   getNestedProperty(obj: any, path: string): any {
@@ -144,6 +143,17 @@ export class TableComponent implements AfterContentInit, OnChanges{
     this.filterChangeTable.emit(event);
   }
 
+  onMultiSelectChange(value: any[], dataField: string | undefined, filterCallback: (value: any) => void) {
+    const key = dataField ?? 'default'; 
+    this.selectedValuesMultiSelectMap[key] = value;
+  
+    if (typeof filterCallback === 'function') {
+      filterCallback(value); // Apply the filter
+    } else {
+      console.error('filterCallback is not a function');
+    }
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.rowsPerPage = event.rows;
@@ -175,17 +185,6 @@ export class TableComponent implements AfterContentInit, OnChanges{
     });
   }
 
-  onMultiSelectChange(value: any[], dataField: string | undefined, filterCallback: (value: any) => void) {
-    const key = dataField ?? 'default'; 
-    this.selectedValuesMultiSelectMap[key] = value;
-  
-    if (typeof filterCallback === 'function') {
-      filterCallback(value); // Apply the filter
-    } else {
-      console.error('filterCallback is not a function');
-    }
-  }
-
   private initializeSelectedValuesComboSelectValueMap(): void {
     this.selectedValuesComboSelectValueMap = {}; 
     this.table.columns.forEach((col) => {
@@ -207,12 +206,6 @@ export class TableComponent implements AfterContentInit, OnChanges{
       });
     }
    
-  }
-
-
-
-
-
-  
+  }  
 
 }

@@ -33,7 +33,6 @@ export class CollapsibleHeaderComponent implements OnInit{
 
   constructor(
     private homeService: HomeService,
-    private organizationService: OrganizationService,
   ) {
 
   }
@@ -50,16 +49,14 @@ export class CollapsibleHeaderComponent implements OnInit{
     );
   }
 
-  
-  
-  onLogoChange(newLogoUrl: string) {
-    this.logoUrl = newLogoUrl;
-    this.logoUrlChange.emit(newLogoUrl); 
-  }
-
   onBackgroundImageChange(newBackgroundImageUrl: string) {
     this.backgroundImageUrl = newBackgroundImageUrl;
     this.backgroundImageUrlChange.emit(newBackgroundImageUrl); 
+  }
+
+  onLogoChange(newLogoUrl: string) {
+    this.logoUrl = newLogoUrl;
+    this.logoUrlChange.emit(newLogoUrl); 
   }
   
 }

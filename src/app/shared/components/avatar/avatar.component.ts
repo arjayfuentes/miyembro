@@ -21,14 +21,14 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AvatarComponent implements OnInit, ControlValueAccessor {
 
-  @Input() isCoverPhoto = false;
   @Input() avatarSize = 'normal';
   @Input() isButtonEdit = false;
+  @Input() isCoverPhoto = false;
   @ViewChild('fileInput') fileInput: any;
 
-  file = '';          
   dialogVisible = false; 
   disabled = false;
+  file = '';          
   image = '';          
   uniqueId = '';
 

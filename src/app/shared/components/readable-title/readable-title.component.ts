@@ -10,11 +10,12 @@ import { AfterViewInit, Component, ElementRef, Input, Renderer2, OnDestroy } fro
 })
 export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
 
-  @Input() text: string | undefined = '';
-  @Input() styleClass: string | undefined = '';
   @Input() imageId: string | undefined = ''; // Pass the imageId here
+  @Input() styleClass: string | undefined = '';
+  @Input() text: string | undefined = '';
 
   textColor = 'black';
+  
   private observer: MutationObserver | undefined;
   private debounceTimeout: any;
 
@@ -49,19 +50,26 @@ export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
     this.debounceTimeout = setTimeout(() => this.updateTextColor(), 100); // Adjust the delay as needed
   }
 
-  private updateTextColor() {
-    const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
-
-    if (imageElement && imageElement.src) {
-      // Delay the color update until the image is fully loaded
-      this.getImageAverageColor(imageElement.src).then(avgColor => {
-        // If average color calculation is successful, update text color
-        if (avgColor) {
-          this.textColor = this.getContrastColor(avgColor);
-          this.renderer.setStyle(this.el.nativeElement, 'color', this.textColor);
-        }
-      });
+  private extractRGB(color: string): number[] | null {
+    if (color.startsWith('rgb')) {
+      const match = color.match(/\d+/g);
+      return match ? match.slice(0, 3).map(Number) : null;
     }
+    return null;
+  }
+
+  private getContrastColor(bgColor: string): string {
+    const rgb = this.extractRGB(bgColor);
+    if (!rgb) return 'black';
+
+    // Check if the color is white (or near-white)
+    if (rgb[0] === 255 && rgb[1] === 255 && rgb[2] === 255) {
+      return 'black'; // Special handling for white backgrounds
+    }
+
+    // Standard luminance calculation for other colors
+    const luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
+    return luminance > 0.5 ? 'black' : 'white';
   }
 
   private async getImageAverageColor(imageUrl: string): Promise<string> {
@@ -93,25 +101,19 @@ export class ReadableTitleComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private getContrastColor(bgColor: string): string {
-    const rgb = this.extractRGB(bgColor);
-    if (!rgb) return 'black';
+  private updateTextColor() {
+    const imageElement = document.getElementById(this.imageId!) as HTMLImageElement;
 
-    // Check if the color is white (or near-white)
-    if (rgb[0] === 255 && rgb[1] === 255 && rgb[2] === 255) {
-      return 'black'; // Special handling for white backgrounds
+    if (imageElement && imageElement.src) {
+      // Delay the color update until the image is fully loaded
+      this.getImageAverageColor(imageElement.src).then(avgColor => {
+        // If average color calculation is successful, update text color
+        if (avgColor) {
+          this.textColor = this.getContrastColor(avgColor);
+          this.renderer.setStyle(this.el.nativeElement, 'color', this.textColor);
+        }
+      });
     }
-
-    // Standard luminance calculation for other colors
-    const luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
-    return luminance > 0.5 ? 'black' : 'white';
   }
-
-  private extractRGB(color: string): number[] | null {
-    if (color.startsWith('rgb')) {
-      const match = color.match(/\d+/g);
-      return match ? match.slice(0, 3).map(Number) : null;
-    }
-    return null;
-  }
+ 
 }

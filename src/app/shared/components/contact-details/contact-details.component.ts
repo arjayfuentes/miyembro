@@ -15,9 +15,9 @@ export class ContactDetailsComponent {
   @Input() address: Address | undefined;
   @Input() email: string | undefined;
   @Input() phoneNumber: string | undefined;
-  @Input() websiteUrl: string | undefined;
   @Input() showEmail = false;
   @Input() showTitleHeader = false;
   @Input() textSize = 'normal';
+  @Input() websiteUrl: string | undefined;
 
 }

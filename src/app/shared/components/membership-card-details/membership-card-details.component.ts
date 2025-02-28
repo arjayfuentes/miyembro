@@ -13,7 +13,7 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class MembershipCardDetailsComponent {
 
-  @Input() organization: OrganizationResponse | undefined;
   @Input() membership: MembershipResponse | undefined;
+  @Input() organization: OrganizationResponse | undefined;
 
 }

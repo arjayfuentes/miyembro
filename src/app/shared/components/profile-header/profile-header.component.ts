@@ -19,9 +19,9 @@ import { ProfileHeaderService } from '../../../core/services/profile-header.serv
 export class ProfileHeaderComponent {
 
   @Input() backgroundImageUrl: string | undefined;
+  @Input() isEditAllowed = false;
   @Input() logoUrl: string | undefined;
   @Input() title: string | undefined;
-  @Input() isEditAllowed = false;
 
   @Output() backgroundImageUrlChange = new EventEmitter<string>(); 
   @Output() logoUrlChange = new EventEmitter<string>(); 
@@ -32,15 +32,15 @@ export class ProfileHeaderComponent {
     
   }
 
-  onLogoChange(newLogoUrl: string) {
-    if(this.logoUrl != newLogoUrl) {
-      this.profileHeaderService.setLogoImage(newLogoUrl);
-    }
-  }
-
   onBackgroundImageChange(newBackgroundImageUrl: string) {
     if(this.backgroundImageUrl != newBackgroundImageUrl) {
       this.profileHeaderService.setBackgroundImage(newBackgroundImageUrl);
+    }
+  }
+
+  onLogoChange(newLogoUrl: string) {
+    if(this.logoUrl != newLogoUrl) {
+      this.profileHeaderService.setLogoImage(newLogoUrl);
     }
   }
 

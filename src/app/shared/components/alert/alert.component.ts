@@ -14,6 +14,7 @@ import { Toast } from 'primeng/toast';
   imports: [Toast]
 })
 export class AlertComponent implements OnInit, OnDestroy {
+  
   @Input() alertKey?: string;
 
   private unsubscribe: Subject<any> = new Subject();

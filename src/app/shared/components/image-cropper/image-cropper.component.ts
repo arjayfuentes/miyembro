@@ -56,7 +56,6 @@ export class ImageCropperComponent implements OnInit, OnChanges, AfterViewInit {
   }
   
   reset() {
-    // Reset the cropper to its original state
     if (this.cropper) {
       this.cropper.clear();
       this.cropper.crop();
@@ -80,8 +79,6 @@ export class ImageCropperComponent implements OnInit, OnChanges, AfterViewInit {
         cropBoxMovable: true, 
         checkOrientation: true 
       };
-
-      // Initialize the Cropper with the options
       this.cropper = new Cropper(imageElement, cropperOptions);
     } else {
       console.error('Image element not found.');
@@ -89,7 +86,6 @@ export class ImageCropperComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private sanitizeImage() {
-    // Sanitize the image URL so it's safe for binding
     this.sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(this.image);
   }
 

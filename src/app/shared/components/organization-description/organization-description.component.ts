@@ -12,8 +12,8 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 export class OrganizationDescriptionComponent implements OnChanges{
 
   @Input() organization: OrganizationResponse | null = null;
+  
   safeDescription: SafeHtml | null = null;
-
 
   constructor(
     private sanitizer: DomSanitizer,
