@@ -85,7 +85,7 @@ export class EditMembershipComponent implements OnInit {
     const key = this.router.url;
     this.confirmDialogService.warning(
       key,
-      "Are you sure you want to remove this member from the group", 
+      "Are you sure you want to remove this member from the organization", 
       "Remove Member", 
       true,
       "Remove Member",
