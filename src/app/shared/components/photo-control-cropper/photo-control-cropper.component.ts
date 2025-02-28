@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImageCropperComponent, ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-photo-control-cropper',
-  imports: [ImageCropperComponent, CommonModule],
+  imports: [CommonModule, ImageCropperComponent],
   templateUrl: './photo-control-cropper.component.html',
   styleUrl: './photo-control-cropper.component.scss'
 })

@@ -7,7 +7,7 @@ import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-membership-card-details',
-  imports: [CardModule, CommonModule, AvatarModule],
+  imports: [AvatarModule, CardModule, CommonModule],
   templateUrl: './membership-card-details.component.html',
   styleUrl: './membership-card-details.component.scss'
 })

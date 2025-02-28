@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Table } from '../../../core/models/table';
@@ -14,7 +14,19 @@ import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-table',
-  imports: [TableModule, ButtonModule, FormsModule, DatePickerModule, ReactiveFormsModule, CommonModule, IconFieldModule, InputIconModule, SelectModule, MultiSelectModule, InputTextModule],
+  imports: [
+    ButtonModule, 
+    CommonModule, 
+    DatePickerModule, 
+    FormsModule, 
+    IconFieldModule, 
+    InputIconModule, 
+    InputTextModule, 
+    MultiSelectModule, 
+    ReactiveFormsModule, 
+    SelectModule, 
+    TableModule
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })

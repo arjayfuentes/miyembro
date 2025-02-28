@@ -2,7 +2,6 @@ import { Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild 
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ImageCropperComponent } from '../image-cropper/image-cropper.component';
 import { ToastModule } from 'primeng/toast';
 import { PhotoControlCropperComponent } from '../photo-control-cropper/photo-control-cropper.component';
 import { CommonModule } from '@angular/common';
@@ -10,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-photo-control',
-  imports: [DynamicDialogModule, ButtonModule, ToastModule, CommonModule],
+  imports: [ButtonModule, CommonModule, DynamicDialogModule, ToastModule],
   templateUrl: './photo-control.component.html',
   styleUrl: './photo-control.component.scss',
   providers: [DialogService, MessageService, {

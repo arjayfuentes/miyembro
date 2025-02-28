@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-loader',
-  imports: [ProgressBarModule, ToastModule, CommonModule],
+  imports: [CommonModule, ProgressBarModule, ToastModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.scss'
 })

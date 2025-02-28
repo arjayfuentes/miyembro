@@ -1,12 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Address } from '../../../core/models/address';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-details',
-  imports: [CommonModule, ButtonModule],
+  imports: [ButtonModule, CommonModule],
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.scss'
 })

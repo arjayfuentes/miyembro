@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [DialogModule, CommonModule, ImageCropperComponent, FormsModule, ButtonModule],
+  imports: [ButtonModule, CommonModule, DialogModule, FormsModule, ImageCropperComponent],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
   providers: [

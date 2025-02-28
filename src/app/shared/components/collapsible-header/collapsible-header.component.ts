@@ -1,4 +1,4 @@
-import {  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {  Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ShrinkedHeaderComponent } from '../shrinked-header/shrinked-header.component';
 import { ProfileHeaderComponent } from '../profile-header/profile-header.component';
 import { HomeService } from 'src/app/core/services/home.service';
@@ -6,14 +6,11 @@ import { Subscription } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MenuItem } from 'primeng/api';
-import { AvatarComponent } from '../avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
-import { OrganizationService } from '../../../core/services/organization.service';
 
 @Component({
   selector: 'app-collapsible-header',
-  imports: [ShrinkedHeaderComponent, ProfileHeaderComponent, ButtonModule, CommonModule, SplitButtonModule, FormsModule, AvatarComponent],
+  imports: [ButtonModule, CommonModule, FormsModule, ProfileHeaderComponent, ShrinkedHeaderComponent, SplitButtonModule],
   templateUrl: './collapsible-header.component.html',
   styleUrl: './collapsible-header.component.scss'
 })

@@ -8,7 +8,7 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 
 @Component({
   selector: 'app-membership-card',
-  imports: [CardModule, CommonModule, AvatarModule],
+  imports: [AvatarModule, CardModule, CommonModule],
   templateUrl: './membership-card.component.html',
   styleUrl: './membership-card.component.scss'
 })

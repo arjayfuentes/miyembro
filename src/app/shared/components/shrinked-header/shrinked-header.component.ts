@@ -5,7 +5,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @Component({
   selector: 'app-shrinked-header',
-  imports: [CommonModule, AvatarModule, AvatarGroupModule],
+  imports: [AvatarGroupModule, AvatarModule, CommonModule],
   templateUrl: './shrinked-header.component.html',
   styleUrl: './shrinked-header.component.scss'
 })
