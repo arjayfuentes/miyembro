@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from 'src/app/core/services/session.service';
 import { Table } from 'src/app/core/models/table';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { MemberService } from '../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
 import { MembershipResponse } from 'src/app/core/models/membership-response';

@@ -22,7 +22,26 @@ import { SelectModule } from 'primeng/select';
   selector: 'app-organization-membership-type-form',
   templateUrl: './organization-membership-type-form.component.html',
   styleUrls: ['./organization-membership-type-form.component.scss'],
-  imports: [InputNumberModule, ToastModule, TextareaModule, FormErrorsFilterPipe, SelectModule, RadioButtonModule, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent],
+  imports: [
+    AlertComponent,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DividerModule,
+    FormErrorsFilterPipe,
+    FormErrorsPipe,
+    FormsModule,
+    IftaLabelModule,
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule,
+    RadioButtonModule,
+    ReactiveFormsModule,
+    SelectModule,
+    TextareaModule,
+    ToastModule,
+    TooltipModule
+  ],
 })
 export class OrganizationMembershipTypeFormComponent {
   

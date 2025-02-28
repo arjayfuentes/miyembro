@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, AbstractControl, ValidationErrors, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -25,7 +25,25 @@ import { OrganizationAddressResponse } from 'src/app/core/models/organization-ad
 
 @Component({
   selector: 'app-organization-address-form',
-  imports: [SelectModule, InputNumberModule, FloatLabelModule, ToastModule, TextareaModule, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent],
+  imports: [
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DividerModule,
+    FloatLabelModule,
+    FormErrorsFilterPipe,
+    FormErrorsPipe,
+    FormsModule,
+    IftaLabelModule,
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule,
+    ReactiveFormsModule,
+    SelectModule,
+    TextareaModule,
+    ToastModule,
+    TooltipModule
+  ],
   templateUrl: './organization-address-form.component.html',
   styleUrl: './organization-address-form.component.scss'
 })

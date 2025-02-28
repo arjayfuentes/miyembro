@@ -26,7 +26,18 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-create-organization-page',
-  imports: [ProgressBarModule, ToastModule, BackgroundComponent, ButtonModule, StepperModule, OrganizationFormComponent, OrganizationUploadImageComponent, CommonModule, OrganizationAddressFormComponent, OrganizationMembershipTypeFormComponent, OrganizationUploadImageComponent],
+  imports: [
+    BackgroundComponent,
+    ButtonModule,
+    CommonModule,
+    OrganizationAddressFormComponent,
+    OrganizationFormComponent,
+    OrganizationMembershipTypeFormComponent,
+    OrganizationUploadImageComponent,
+    ProgressBarModule,
+    StepperModule,
+    ToastModule
+  ],
   templateUrl: './create-organization-page.component.html',
   styleUrl: './create-organization-page.component.scss'
 })

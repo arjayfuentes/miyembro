@@ -19,7 +19,25 @@ import { OrganizationFormType } from 'src/app/core/models/organization-form-type
 
 @Component({
   selector: 'app-organization-form',
-  imports: [InputNumberModule, ToastModule, TextareaModule, EditorModule, FormErrorsFilterPipe, FormErrorsPipe, TooltipModule, ReactiveFormsModule, FormsModule, DividerModule, ReactiveFormsModule, CommonModule, PasswordModule, ButtonModule, CardModule, IftaLabelModule, InputTextModule, AlertComponent],
+  imports: [
+    AlertComponent,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DividerModule,
+    EditorModule,
+    FormErrorsFilterPipe,
+    FormErrorsPipe,
+    FormsModule,
+    IftaLabelModule,
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule,
+    ReactiveFormsModule,
+    TextareaModule,
+    ToastModule,
+    TooltipModule
+  ],
   templateUrl: './organization-form.component.html',
   styleUrl: './organization-form.component.scss'
 })

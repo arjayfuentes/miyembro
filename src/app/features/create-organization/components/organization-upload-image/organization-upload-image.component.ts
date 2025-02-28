@@ -6,7 +6,13 @@ import { AvatarComponent } from 'src/app/shared/components/avatar/avatar.compone
 
 @Component({
   selector: 'app-organization-upload-image',
-  imports: [FileUploadModule, CommonModule, ReactiveFormsModule, FormsModule, AvatarComponent],
+  imports: [
+    AvatarComponent,
+    CommonModule,
+    FileUploadModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './organization-upload-image.component.html',
   styleUrl: './organization-upload-image.component.scss'
 })

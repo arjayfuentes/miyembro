@@ -8,8 +8,8 @@ import { SessionService } from 'src/app/core/services/session.service';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { Member } from 'src/app/core/models/member';
 import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
-import { MemberService } from 'src/app/features/members/services/member.service';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { MemberService } from 'src/app/core/services/member.service';
 
 
 @Component({
