@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AlertService } from '../../services/alert.service';
-import { GLOBAL_ALERTS } from '../../constants/global-alerts';
+import { AlertService } from '../../../core/services/alert.service';
+import { GLOBAL_ALERTS } from '../../../core/constants/global-alerts';
 import { Toast } from 'primeng/toast';
 
 @Component({

@@ -3,13 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { OrganizationAddressFormComponent } from 'src/app/features/create-organization/components/organization-address-form/organization-address-form.component';
-import { MembershipTypeService } from 'src/app/features/create-organization/services/membership-type.service';
+import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { Location } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 

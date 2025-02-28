@@ -4,8 +4,8 @@ import { environment as env } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { Member } from 'src/app/core/models/member';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
-import { Page } from 'src/app/shared/model/page';
-import { MembershipFilters } from '../models/membership-filters';
+import { Page } from 'src/app/core/models/page';
+import { MembershipFilters } from '../../../core/models/membership-filters';
 
 @Injectable({
   providedIn: 'root'

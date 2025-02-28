@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MembershipType } from 'src/app/core/models/membership-type';
-import { MembershipTypeService } from 'src/app/features/create-organization/services/membership-type.service';
-import { MembershipService } from 'src/app/shared/services/membership.service';
+import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
+import { MembershipService } from 'src/app/core/services/membership.service';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MemberDetailsComponent } from 'src/app/features/home/components/member-details/member-details.component';

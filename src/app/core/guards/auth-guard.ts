@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from '../auth/services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { SessionService } from '../auth/services/session.service';
+import { SessionService } from '../services/session.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { inject } from "@angular/core";
 

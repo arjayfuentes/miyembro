@@ -4,12 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MemberFormComponent } from 'src/app/core/auth/components/member-form/member-form.component';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { Member } from 'src/app/core/models/member';
 import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
 import { MemberService } from 'src/app/features/members/services/member.service';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 
 @Component({

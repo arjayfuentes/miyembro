@@ -1,6 +1,6 @@
 export interface MembershipTypeValidity {
-    membershipTypeValidityId: string; // UUID as a string
+    membershipTypeValidityId: string; 
     name: string;
-    duration: number | null; // Nullable duration
+    duration: number | null;  
     description: string;
-}
+  }

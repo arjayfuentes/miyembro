@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Session } from '../../models/session';
+import { Session } from '../models/session';
 import { Observable } from 'rxjs';
 import { environment as env } from '@environments/environment';
-import { LoginRequest } from '../../models/login-request';
-import { SelectOrganizationLoginRequest } from '../../models/select-login-organization-request';
-import { MemberRequest } from '../../models/member-request';
-import { Member } from '../../models/member';
-import { GoogleRequest } from '../../models/google-request';
+import { LoginRequest } from '../models/login-request';
+import { SelectOrganizationLoginRequest } from '../models/select-login-organization-request';
+import { MemberRequest } from '../models/member-request';
+import { Member } from '../models/member';
+import { GoogleRequest } from '../models/google-request';
 
 
 @Injectable({

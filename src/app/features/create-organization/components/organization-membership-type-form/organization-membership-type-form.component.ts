@@ -16,8 +16,8 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pipe';
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { MembershipTypeService } from '../../services/membership-type.service';
-import { MembershipTypeValidity } from '../../models/membership-type-validity';
+import { MembershipTypeService } from '../../../../core/services/membership-type.service';
+import { MembershipTypeValidity } from '../../../../core/models/membership-type-validity';
 import { SelectModule } from 'primeng/select';
 
 @Component({

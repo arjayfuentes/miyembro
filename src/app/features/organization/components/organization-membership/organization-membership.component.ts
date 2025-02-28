@@ -5,7 +5,7 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CommonModule } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { MembershipCardComponent } from 'src/app/shared/components/membership-card/membership-card.component';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { Member } from 'src/app/core/models/member';
 
 @Component({

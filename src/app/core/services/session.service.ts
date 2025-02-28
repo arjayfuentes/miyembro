@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Session } from '../../models/session';
-import { Member } from '../../models/member';
+import { Session } from '../models/session';
+import { Member } from '../models/member';
 
 @Injectable({
   providedIn: 'root'

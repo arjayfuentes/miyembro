@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from 'src/app/core/auth/services/session.service';
-import { Table } from 'src/app/shared/model/table';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { SessionService } from 'src/app/core/services/session.service';
+import { Table } from 'src/app/core/models/table';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { MemberService } from '../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
@@ -19,17 +19,17 @@ import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MembershipTypeService } from 'src/app/features/create-organization/services/membership-type.service';
+import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
 import { MembershipType } from 'src/app/core/models/membership-type';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { MembershipStatusResponse } from '../../models/membership-status-response';
+import { MembershipStatusResponse } from '../../../../core/models/membership-status-response';
 import { Role } from 'src/app/core/models/role';
-import { RoleService } from 'src/app/shared/services/role.service';
-import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
-import { MembershipFilters } from '../../models/membership-filters';
-import { MembershipService } from 'src/app/shared/services/membership.service';
+import { RoleService } from 'src/app/core/services/role.service';
+import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
+import { MembershipFilters } from '../../../../core/models/membership-filters';
+import { MembershipService } from 'src/app/core/services/membership.service';
 import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-member-list',

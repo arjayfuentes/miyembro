@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LoaderService } from '../../services/loader.service';
+import { LoaderService } from '../../../core/services/loader.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';

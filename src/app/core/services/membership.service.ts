@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrganizationResponse } from '../../core/models/organization-reponse';
+import { OrganizationResponse } from '../models/organization-reponse';
 import { environment as env } from '@environments/environment';
-import { MembershipResponse } from '../../core/models/membership-response';
-import { JoinOrganizationRequest } from '../../core/models/join-membership-request';
-import { GetMembershipRequest } from '../../core/models/get-membership-request';
+import { MembershipResponse } from '../models/membership-response';
+import { JoinOrganizationRequest } from '../models/join-membership-request';
+import { GetMembershipRequest } from '../models/get-membership-request';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
-import { MembershipFilters } from 'src/app/features/members/models/membership-filters';
-import { Page } from '../model/page';
+import { MembershipFilters } from 'src/app/core/models/membership-filters';
+import { Page } from '../models/page';
 
 @Injectable({
   providedIn: 'root'

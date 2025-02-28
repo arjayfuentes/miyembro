@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Address } from '../../model/address';
+import { Address } from '../../../core/models/address';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { FormGroup } from '@angular/forms';

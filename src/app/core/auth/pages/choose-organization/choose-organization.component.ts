@@ -4,15 +4,15 @@ import { CardModule } from 'primeng/card';
 import { ListboxModule } from 'primeng/listbox';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { FormsModule } from '@angular/forms';
-import { MembershipService } from '../../../../shared/services/membership.service';
-import { SessionService } from '../../services/session.service';
+import { MembershipService } from '../../../services/membership.service';
+import { SessionService } from '../../../services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { SelectOrganizationLoginRequest } from 'src/app/core/models/select-login-organization-request';
 import { Session } from 'src/app/core/models/session';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 
 @Component({
   selector: 'app-choose-organization',

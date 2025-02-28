@@ -1,4 +1,4 @@
-import { ImageType } from "src/app/shared/model/image-type.enum";
+import { ImageType } from "src/app/core/models/image-type.enum";
 
 export interface UpdateOrganizationPhotoRequest {
     imageType: ImageType;

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';  // Import FormsModule here
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { CommonModule } from '@angular/common';
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { OrganizationListComponent } from '../../components/organization-list/organization-list.component';
 
 @Component({

@@ -7,11 +7,11 @@ import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { JwtTokenInterceptor } from './core/auth/interceptors/jwt-token.interceptor';
-import { SessionService } from './core/auth/services/session.service';
+import { SessionService } from './core/services/session.service';
 import { MessageService } from 'primeng/api';
-import { AlertService } from './shared/services/alert.service';
+import { AlertService } from './core/services/alert.service';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { JwtTokenInterceptor } from './core/interceptors/jwt-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

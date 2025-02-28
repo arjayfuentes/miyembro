@@ -1,4 +1,4 @@
-import { MembershipStatusResponse } from "src/app/features/members/models/membership-status-response";
+import { MembershipStatusResponse } from "src/app/core/models/membership-status-response";
 import { Member } from "./member";
 import { MembershipType } from "./membership-type";
 import { Role } from "./role";

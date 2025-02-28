@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { CollapsibleHeaderComponent } from "../../../../shared/components/collapsible-header/collapsible-header.component";
-import { OrganizationService } from 'src/app/shared/services/organization.service';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { Router } from '@angular/router';
-import { ImageType } from 'src/app/shared/model/image-type.enum';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { UpdateOrganizationPhotoRequest } from '../../model/update-organization-photo-request';
-import { ProfileHeaderService } from 'src/app/shared/services/profile-header.service';
+import { ImageType } from 'src/app/core/models/image-type.enum';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { UpdateOrganizationPhotoRequest } from '../../../../core/models/update-organization-photo-request';
+import { ProfileHeaderService } from 'src/app/core/services/profile-header.service';
 
 @Component({
   selector: 'app-organization-collapsing-header',

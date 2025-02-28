@@ -1,4 +1,4 @@
-import { MembershipStatusRequest } from "src/app/features/members/models/membership-status-request";
+import { MembershipStatusRequest } from "src/app/core/models/membership-status-request";
 import { Member } from "./member";
 import { MembershipType } from "./membership-type";
 import { Role } from "./role";

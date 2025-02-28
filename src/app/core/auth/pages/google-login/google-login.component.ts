@@ -4,9 +4,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OAuthService, OAuthSuccessEvent, OAuthErrorEvent } from 'angular-oauth2-oidc';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { AuthenticationService } from '../../services/authentication.service';
-import { SessionService } from '../../services/session.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { SessionService } from '../../../services/session.service';
 import { GoogleRequest } from 'src/app/core/models/google-request';
 
 @Component({

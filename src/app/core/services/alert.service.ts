@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
-import { AlertOptions } from '../model/alert-options';
+import { AlertOptions } from '../models/alert-options';
 import { ErrorResponse } from 'src/app/core/models/error-response';
 
 @Injectable({

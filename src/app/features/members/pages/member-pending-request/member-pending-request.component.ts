@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { Member } from 'src/app/core/models/member';
-import { Table } from 'src/app/shared/model/table';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { Table } from 'src/app/core/models/table';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { MemberService } from '../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Session } from 'src/app/core/models/session';
@@ -16,10 +16,10 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
 import { MessageService } from 'primeng/api';
 import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organization-request/approve-join-organization-request.component';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
-import { MembershipService } from 'src/app/shared/services/membership.service';
-import { MembershipFilters } from '../../models/membership-filters';
+import { MembershipService } from 'src/app/core/services/membership.service';
+import { MembershipFilters } from '../../../../core/models/membership-filters';
 import { Router } from '@angular/router';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({

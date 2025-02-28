@@ -7,22 +7,22 @@ import { OrganizationMembershipTypeFormComponent } from "../../components/organi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { emptyEditorValidator } from 'src/app/core/validators/empty-editor-validator';
-import { MembershipTypeService } from '../../services/membership-type.service';
-import { MembershipTypeValidity } from '../../models/membership-type-validity';
+import { MembershipTypeService } from '../../../../core/services/membership-type.service';
+import { MembershipTypeValidity } from '../../../../core/models/membership-type-validity';
 import { OrganizationUploadImageComponent } from "../../components/organization-upload-image/organization-upload-image.component";
 import { OrganizationRequest } from 'src/app/core/models/organization-request';
 import { CreateOrganizationRequest } from 'src/app/core/models/create-organization-request';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { MembershipTypeRequest } from 'src/app/core/models/membership-type-request';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
 import { Location } from '@angular/common';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-create-organization-page',

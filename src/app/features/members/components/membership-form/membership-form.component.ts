@@ -12,7 +12,7 @@ import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pi
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { Role } from 'src/app/core/models/role';
 import { DatePickerModule } from 'primeng/datepicker';
-import { MembershipStatusResponse } from '../../models/membership-status-response';
+import { MembershipStatusResponse } from '../../../../core/models/membership-status-response';
 
 @Component({
   selector: 'app-membership-form',

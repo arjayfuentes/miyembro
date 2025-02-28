@@ -5,16 +5,16 @@ import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dy
 import { SelectModule } from 'primeng/select';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipType } from 'src/app/core/models/membership-type';
-import { MembershipTypeService } from 'src/app/features/create-organization/services/membership-type.service';
+import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
 import { MemberDetailsComponent } from 'src/app/features/home/components/member-details/member-details.component';
-import { MembershipService } from 'src/app/shared/services/membership.service';
+import { MembershipService } from 'src/app/core/services/membership.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MemberFormComponent } from "../../../../core/auth/components/member-form/member-form.component";
 import { MembershipFormComponent } from "../../components/membership-form/membership-form.component";
-import { RoleService } from 'src/app/shared/services/role.service';
+import { RoleService } from 'src/app/core/services/role.service';
 import { Role } from 'src/app/core/models/role';
-import { MembershipStatusResponse } from '../../models/membership-status-response';
-import { MembershipStatusService } from 'src/app/shared/services/membership-status.service';
+import { MembershipStatusResponse } from '../../../../core/models/membership-status-response';
+import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
 
 @Component({

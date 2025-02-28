@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { environment as env } from '@environments/environment';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
-import { Page } from 'src/app/shared/model/page';
+import { Page } from 'src/app/core/models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class OrganizationService {
 
     private organizationSubject = new Subject<OrganizationResponse>();
     
-    baseUrl = '/organization';
+    baseUrl = '/organizations';
 
     constructor(
       private http: HttpClient,

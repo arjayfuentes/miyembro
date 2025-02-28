@@ -4,18 +4,18 @@ import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
 import { CommonModule } from '@angular/common';
 import {  Router } from '@angular/router';
-import { SessionService } from 'src/app/core/auth/services/session.service';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { SessionService } from 'src/app/core/services/session.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
-import { MembershipService } from 'src/app/shared/services/membership.service';
+import { MembershipService } from 'src/app/core/services/membership.service';
 import { OrganizationItemGridComponent } from '../organization-item-grid/organization-item-grid.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { FormsModule } from '@angular/forms';
 import { OrganizationItemGridSkeletonComponent } from "../organization-item-grid-skeleton/organization-item-grid-skeleton.component";  // Import FormsModule here
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({

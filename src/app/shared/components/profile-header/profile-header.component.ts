@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { PhotoControlComponent } from '../photo-control/photo-control.component';
 import { ReadableTitleComponent } from '../readable-title/readable-title.component';
 import { ChipModule } from 'primeng/chip';
-import { ProfileHeaderService } from '../../services/profile-header.service';
+import { ProfileHeaderService } from '../../../core/services/profile-header.service';
 
 @Component({
   selector: 'app-profile-header',

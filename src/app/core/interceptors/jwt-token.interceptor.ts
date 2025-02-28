@@ -1,6 +1,6 @@
 import { HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest, HttpXsrfTokenExtractor } from "@angular/common/http";
-import { SessionService } from "../services/session.service";
 import { inject, Injectable } from "@angular/core";
+import { SessionService } from "../services/session.service";
 
 export const JwtTokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const tokenService = inject(SessionService);

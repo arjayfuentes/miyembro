@@ -6,9 +6,9 @@ import { OrganizationFormType } from 'src/app/core/models/organization-form-type
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { OrganizationFormComponent } from 'src/app/features/create-organization/components/organization-form/organization-form.component';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { LoaderService } from 'src/app/shared/services/loader.service';
-import { OrganizationService } from 'src/app/shared/services/organization.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { Location } from '@angular/common';
 
 @Component({

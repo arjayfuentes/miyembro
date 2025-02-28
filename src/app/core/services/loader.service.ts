@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoaderOptions } from '../model/loader-options';
+import { LoaderOptions } from '../models/loader-options';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
 

@@ -13,14 +13,14 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { Session } from 'src/app/core/models/session';
 import { PopoverModule } from 'primeng/popover';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ButtonGroupModule } from 'primeng/buttongroup';
-import { AuthenticationService } from 'src/app/core/auth/services/authentication.service';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { MemberCardComponent } from "../member-card/member-card.component";
 
 import {

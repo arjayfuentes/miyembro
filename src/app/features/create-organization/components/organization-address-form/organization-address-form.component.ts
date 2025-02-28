@@ -17,7 +17,7 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pipe';
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { SelectModule } from 'primeng/select';
-import { CountryService } from 'src/app/core/auth/services/country.service';
+import { CountryService } from 'src/app/core/services/country.service';
 import { OrganizationFormType } from 'src/app/core/models/organization-form-type';
 import { Country } from 'src/app/core/models/country';
 import { FloatLabelModule } from 'primeng/floatlabel';

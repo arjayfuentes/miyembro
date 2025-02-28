@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment as env } from '@environments/environment';
 import { Observable } from "rxjs";
-import { MembershipStatusResponse } from "src/app/features/members/models/membership-status-response";
+import { MembershipStatusResponse } from "src/app/core/models/membership-status-response";
 
 
 @Injectable({

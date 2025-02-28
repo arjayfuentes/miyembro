@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MembershipService } from 'src/app/shared/services/membership.service';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { MembershipService } from 'src/app/core/services/membership.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-request';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { OrganizationService } from '../../../../shared/services/organization.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { OrganizationService } from '../../../../core/services/organization.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';

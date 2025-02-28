@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { OrganizationDescriptionComponent } from "../../../../shared/components/organization-description/organization-description.component";
 
 @Component({

@@ -4,10 +4,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { SessionService } from 'src/app/core/auth/services/session.service';
+import { SessionService } from 'src/app/core/services/session.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { HomeService } from '../../services/home.service';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { HomeService } from '../../../../core/services/home.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-home',
