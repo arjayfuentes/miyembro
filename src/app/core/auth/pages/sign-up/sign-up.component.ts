@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { IftaLabelModule } from 'primeng/iftalabel';
@@ -9,8 +9,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { GoogleAuthService } from '../../../services/google-auth.service';
-import { SessionService } from '../../../services/session.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { passwordValidator } from 'src/app/shared/directives/password-validator.directive';
 import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pipe';
@@ -29,8 +27,9 @@ declare const google: any;
 })
 export class SignUpComponent implements OnInit {
 
-  signupForm: FormGroup;
   loginErrorMessage: string | null = null;
+  signupForm: FormGroup;
+
   private client: any;
 
   get f(): { [key: string]: AbstractControl } {
@@ -42,12 +41,10 @@ export class SignUpComponent implements OnInit {
   }
     
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private sessionService: SessionService,
-    private alertService: AlertService,
   ) {
     this.signupForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -67,35 +64,15 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
   }
-
-  buildForm() {
-    this.signupForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      phontNumber: [null],
-      profilePicUrl: [null],
-      loginType: [LoginType.NORMAL],
-      confirmPassword: ['', Validators.required],
-      memberAddress: [null]
-    }, {
-      validators: [
-        passwordValidator('password', 'confirmPassword')
-      ],
-    });
-    this.signupForm.reset();
-  }
-
-
-  onClickLogin() {
-    this.router.navigate(['/login']);
-  }
-
+ 
   handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
       this.onClickLogin();
     }
+  }
+
+  onClickLogin() {
+    this.router.navigate(['/login']);
   }
 
   onClickSignup() {
@@ -118,6 +95,30 @@ export class SignUpComponent implements OnInit {
     } 
   }
 
+  private buildForm() {
+    this.signupForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      phontNumber: [null],
+      profilePicUrl: [null],
+      loginType: [LoginType.NORMAL],
+      confirmPassword: ['', Validators.required],
+      memberAddress: [null]
+    }, {
+      validators: [
+        passwordValidator('password', 'confirmPassword')
+      ],
+    });
+    this.signupForm.reset();
+  }
+  
+  private errorSignup(error: any) {
+    this.loginErrorMessage = error.error.message;
+    this.alertService.error('/signup', 'Error', error.error.message);
+  }
+
   private signupWithGoogle(response: any) {
     const googleToken = response.code;
     
@@ -133,11 +134,6 @@ export class SignUpComponent implements OnInit {
         this.errorSignup(err);
       }
     );
-  }
-
-  private errorSignup(error: any) {
-    this.loginErrorMessage = error.error.message;
-    this.alertService.error('/signup', 'Error', error.error.message);
   }
 
   private successfulSignup(member: Member) {

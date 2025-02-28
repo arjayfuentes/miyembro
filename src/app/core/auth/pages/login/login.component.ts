@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessionService } from '../../../services/session.service';
@@ -21,20 +21,20 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  loginForm: FormGroup;
   loginErrorMessage: string | null = null;
-  private redirectURL: string | null = null;
+  loginForm: FormGroup;
+
   private unsubscribe: Subject<any> = new Subject();
   private client: any;
   
   constructor(
     private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private sessionService: SessionService,
-    private alertService: AlertService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -68,6 +68,12 @@ export class LoginComponent implements OnInit {
     this.unsubscribe.complete();
   }
 
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.onClickRegister();
+    }
+  }
+
   onClickLogin() {
     const loginFormVal = this.loginForm.value;
     this.loginErrorMessage = null;
@@ -91,14 +97,9 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register']);
   }
 
-  onClickTestAdditionalInfoSignup() {
-    this.router.navigate(['/additional-info-signup']);
-  }
-
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      this.onClickRegister();
-    }
+  private errorLogin(error: any) {
+    this.loginErrorMessage = error.error.message;
+    this.alertService.error('/login', 'Error', error.error.message);
   }
 
   private loginWithGoogle(response: any) {
@@ -118,11 +119,6 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private errorLogin(error: any) {
-    this.loginErrorMessage = error.error.message;
-    this.alertService.error('/login', 'Error', error.error.message);
-  }
-
   private successFulLogin(session: Session) {
     this.sessionService.setSession(session);  
     const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length;
@@ -137,13 +133,5 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home/explore']);  
     }
   }
-
-
-  onshowForm() {
-    this.router.navigate(['/additional-info-signup']);
-
-  }
-
-
 
 }

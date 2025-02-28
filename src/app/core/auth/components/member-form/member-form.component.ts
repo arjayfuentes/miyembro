@@ -42,26 +42,23 @@ import { AvatarComponent } from 'src/app/shared/components/avatar/avatar.compone
 })
 export class MemberFormComponent implements OnInit, OnChanges{
 
-  MemberFormType = MemberFormType;
   @Input() formType: MemberFormType = MemberFormType.ADDITIONAL_INFO_MEMBER;
   @Input() member: Member | undefined;
-
-
   @Input() memberForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
   @Output() memberFormChange = new EventEmitter<FormGroup>(); // Emit form changes
 
+  MemberFormType = MemberFormType;
+ 
+  cities: City [] = [];
+  countries: Country [] = [];
+  loginErrorMessage: string | null = null;
+  selectedCity: string | null = null;
+  selectedCountry: string | undefined;
   selectedProfileImageFile: File | null = null; 
   selectedProfileImageFiles: File [] = [];
-  loginErrorMessage: string | null = null;
-  selectedCountry: string | undefined;
   selectedState: string | null = null;
-  selectedCity: string | null = null;
-
-  countries: Country [] = [];
   states: State [] = [];
-  cities: City [] = [];
 
-  
   get f(): { [key: string]: AbstractControl } {
     return this.memberForm.controls;
   }
@@ -73,19 +70,6 @@ export class MemberFormComponent implements OnInit, OnChanges{
   constructor(
     private countrySevice: CountryService,
   ) {
-  }
-
-  getControlErrors(groupName: string, controlName: string): ValidationErrors | null {
-    const group = this.memberForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.errors : null;
-
-  }
-
-  isControlInvalidAndTouched(groupName: string, controlName: string): boolean {
-    const group = this.memberForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.invalid && control.touched : false;
   }
 
   ngOnInit(): void {
@@ -115,30 +99,109 @@ export class MemberFormComponent implements OnInit, OnChanges{
       this.emitForm();
     });
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['member'] && this.member) {
       this.patchForm();
     }
   }
 
-  emitForm(): void {
+  getControlErrors(groupName: string, controlName: string): ValidationErrors | null {
+    const group = this.memberForm.get(groupName) as FormGroup;
+    const control = group ? group.get(controlName) : null;
+    return control ? control.errors : null;
+
+  }
+
+  isControlInvalidAndTouched(groupName: string, controlName: string): boolean {
+    const group = this.memberForm.get(groupName) as FormGroup;
+    const control = group ? group.get(controlName) : null;
+    return control ? control.invalid && control.touched : false;
+  }
+
+  private emitForm(): void {
     this.memberFormChange.emit(this.memberForm);
   }
 
-  patchCountry() {
+  private getCities() {
+    const country = this.countries.find((country) => country.name === this.selectedCountry);
+    const state = this.states.find((state) => state.name === this.selectedState);
+    this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
+      (res) => {
+        
+        if(res.length == 0) {
+          this.getCitiesByCountry();
+        } else {
+          this.cities = res;
+        }
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCity();
+        }
+        this.setFormToPristine();
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+  }
+
+  private getCitiesByCountry() {
+    const country = this.countries.find((country) => country.name === this.selectedCountry);
+    this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
+      (res) => {
+        this.cities = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCity();
+        }
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+  }
+
+  private getCountries() {
+    this.countrySevice.getCountries().subscribe(
+      (res) => {
+        this.countries = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchCountry();
+          this.getStates();
+        }
+        this.setFormToPristine();
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+  }
+
+  private getStates() {
+    const iso2CountryCode = this.countries.find((country) => country.name === this.selectedCountry);
+    this.countrySevice.getStatesByCountry(iso2CountryCode?.iso2).subscribe(
+      (res) => {
+        this.states = res;
+        if(this.formType === MemberFormType.UPDATE_MEMBER) {
+          this.patchState();
+          this.getCities();
+        }
+        this.setFormToPristine();
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
+  }
+
+  private patchCity() {
+    this.memberForm.get('member.memberAddress.city')?.setValue(this.member?.memberAddress.city);
+  }
+
+  private patchCountry() {
     this.memberForm.get('member.memberAddress.country')?.setValue(this.member?.memberAddress.country);
   }
 
-  patchState() {
-    this.memberForm.get('member.memberAddress.provinceState')?.setValue(this.member?.memberAddress.provinceState);
-  }
-
-  patchCity() {
-    this.memberForm.get('member.memberAddress.city')?.setValue(this.member?.memberAddress.city);
-  }
-  
-  patchForm() {
+  private patchForm() {
     if (this.member) {
       this.memberForm.patchValue({
         memberId: this.member.memberId,
@@ -163,89 +226,14 @@ export class MemberFormComponent implements OnInit, OnChanges{
     }
   }
 
-
-  getCountries() {
-    this.countrySevice.getCountries().subscribe(
-      (res) => {
-        this.countries = res;
-        if(this.formType === MemberFormType.UPDATE_MEMBER) {
-          this.patchCountry();
-          this.getStates();
-        }
-        this.setFormToPristine();
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
+  private patchState() {
+    this.memberForm.get('member.memberAddress.provinceState')?.setValue(this.member?.memberAddress.provinceState);
   }
 
-  getStates() {
-    const iso2CountryCode = this.countries.find((country) => country.name === this.selectedCountry);
-    this.countrySevice.getStatesByCountry(iso2CountryCode?.iso2).subscribe(
-      (res) => {
-        this.states = res;
-        if(this.formType === MemberFormType.UPDATE_MEMBER) {
-          this.patchState();
-          this.getCities();
-        }
-        this.setFormToPristine();
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
-  }
-
-  getCities() {
-    const country = this.countries.find((country) => country.name === this.selectedCountry);
-    const state = this.states.find((state) => state.name === this.selectedState);
-    this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
-      (res) => {
-        
-        if(res.length == 0) {
-          this.getCitiesByCountry();
-        } else {
-          this.cities = res;
-        }
-        if(this.formType === MemberFormType.UPDATE_MEMBER) {
-          this.patchCity();
-        }
-        this.setFormToPristine();
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
-  }
-
-  getCitiesByCountry() {
-    const country = this.countries.find((country) => country.name === this.selectedCountry);
-    this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
-      (res) => {
-        this.cities = res;
-        if(this.formType === MemberFormType.UPDATE_MEMBER) {
-          this.patchCity();
-        }
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
-  }
-
-
-  setFormToPristine() {
+  private setFormToPristine() {
     if(this.formType === MemberFormType.UPDATE_MEMBER) {
       this.memberForm.markAsPristine();
     }
   }
-
-  onProfileImageFileSelect(event: any) {
-    this.selectedProfileImageFile = event.files[0]; 
-    this.memberForm.controls['selectedProfilePicImage'].setValue(this.selectedProfileImageFile) ;
-  }
-
-
 
 }

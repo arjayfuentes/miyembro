@@ -4,9 +4,8 @@ import { CardModule } from 'primeng/card';
 import { ListboxModule } from 'primeng/listbox';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { FormsModule } from '@angular/forms';
-import { MembershipService } from '../../../services/membership.service';
 import { SessionService } from '../../../services/session.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { SelectOrganizationLoginRequest } from 'src/app/core/models/select-login-organization-request';
@@ -21,23 +20,18 @@ import { OrganizationService } from 'src/app/core/services/organization.service'
   styleUrl: './choose-organization.component.scss'
 })
 export class ChooseOrganizationComponent implements OnInit{
-[x: string]: any;
 
+  loginErrorMessage: string | null = null;
   organizations: OrganizationResponse [] = [];
   selectedOrganization: OrganizationResponse | undefined;
-  private redirectURL: string | undefined ;
-  loginErrorMessage: string | null = null;
   session: Session | null = null;
 
-
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private membershipService: MembershipService,
     private organizationService: OrganizationService,
     private router: Router,
     private sessionService: SessionService,
-    private alertService: AlertService
   ) {
     
   }
@@ -53,7 +47,6 @@ export class ChooseOrganizationComponent implements OnInit{
       }
     );
   }
-
 
   onSelectOrganization(event: any) {
     const memberId = this.sessionService.getSession()?.member.memberId;
@@ -76,6 +69,5 @@ export class ChooseOrganizationComponent implements OnInit{
       }
     );
   }
-
 
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BackgroundComponent } from "../../../../shared/components/background/background.component";
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OAuthService, OAuthSuccessEvent, OAuthErrorEvent } from 'angular-oauth2-oidc';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { SessionService } from '../../../services/session.service';
@@ -11,26 +9,24 @@ import { GoogleRequest } from 'src/app/core/models/google-request';
 
 @Component({
   selector: 'app-google-login',
-  imports: [BackgroundComponent, ProgressSpinnerModule],
+  imports: [ProgressSpinnerModule],
   templateUrl: './google-login.component.html',
   styleUrl: './google-login.component.scss'
 })
 export class GoogleLoginComponent implements OnInit {
 
-    loginErrorMessage: string | null = null;
+  loginErrorMessage: string | null = null;
 
-    constructor(
-      private authenticationService: AuthenticationService,
-      private router: Router,
-      private sessionService: SessionService,
-      private alertService: AlertService,
-      private oauthService: OAuthService
-    ) {
-    }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private sessionService: SessionService,
+    private alertService: AlertService,
+    private oauthService: OAuthService
+  ) {
+  }
 
-
-
- ngOnInit() {
+  ngOnInit() {
     this.oauthService.loadDiscoveryDocument().then(() => {
       this.oauthService.tryLogin().then(() => {
         const accessToken = this.oauthService.getAccessToken();
@@ -42,15 +38,7 @@ export class GoogleLoginComponent implements OnInit {
     });
   }
 
-  onTokenCaptured(accessToken: string, idToken: string) {
-    localStorage.setItem('access_token', accessToken);
-    localStorage.setItem('id_token', idToken);
-    if (idToken) {
-      this.onClickLoginGoogleContinue(idToken);  // Send the ID token to the backend for processing
-    }
-  }
-    
-  onClickLoginGoogleContinue(googleToken: string) {
+  private onClickLoginGoogleContinue(googleToken: string) {
     const googleLoginRequest: GoogleRequest = {
       googleToken: googleToken
     };
@@ -67,8 +55,15 @@ export class GoogleLoginComponent implements OnInit {
     );
   }
 
-
-  successFulLogin() {
+  private onTokenCaptured(accessToken: string, idToken: string) {
+    localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('id_token', idToken);
+    if (idToken) {
+      this.onClickLoginGoogleContinue(idToken);  // Send the ID token to the backend for processing
+    }
+  }
+ 
+  private successFulLogin() {
     const numberOfJoinedOrganizations: number | undefined = this.sessionService.getSession()?.organizationIdsOfMember?.length;
     if (numberOfJoinedOrganizations && numberOfJoinedOrganizations > 1) {
       this.router.navigate(['/choose-organization']);

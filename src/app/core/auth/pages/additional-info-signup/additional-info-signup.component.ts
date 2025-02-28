@@ -4,13 +4,9 @@ import { Member } from 'src/app/core/models/member';
 import { DatePipe, Location } from '@angular/common';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberFormType } from 'src/app/core/models/member-form-type.enum';
-import { SessionService } from '../../../services/session.service';
-import { LoginType } from 'src/app/core/models/login-type.enum';
-import { MemberAddress } from 'src/app/core/models/member-address';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { Router } from '@angular/router';
 import { dataURLToFile } from 'src/app/core/helpers/data-url-to-file';
 import { MemberService } from 'src/app/features/members/services/member.service';
 
@@ -24,17 +20,17 @@ import { MemberService } from 'src/app/features/members/services/member.service'
 export class AdditionalInfoSignupComponent {
 
   member: Member | undefined;
-  MemberFormType = MemberFormType;
   memberForm: FormGroup; 
+  MemberFormType = MemberFormType;
 
   constructor(
-    private location: Location, 
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private router: Router,
     private alertService: AlertService,
+    private datePipe: DatePipe,
+    private formBuilder: FormBuilder,
+    private location: Location, 
     private memberService: MemberService,
-    private datePipe: DatePipe
+
+    private router: Router,
   ) {
     this.memberForm = this.formBuilder.group({
       memberId: [null],
