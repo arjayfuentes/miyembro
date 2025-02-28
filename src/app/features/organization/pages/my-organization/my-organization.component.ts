@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/core/services/session.service';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { OrganizationService } from '../../../../core/services/organization.service';
 import { CommonModule } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { OrganizationInformationComponent } from '../../components/organization-information/organization-information.component';
 import { OrganizationComponent } from '../../components/organization/organization.component';
 import { GetMembershipRequest } from 'src/app/core/models/get-membership-request';
 import { MembershipService } from 'src/app/core/services/membership.service';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
-import { PhotoControlComponent } from 'src/app/shared/components/photo-control/photo-control.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-organization',
-  imports: [PhotoControlComponent, CardModule, ButtonModule, AvatarGroupModule, AvatarModule, FormsModule, CommonModule, OrganizationInformationComponent, OrganizationComponent],
+  imports: [
+    AvatarGroupModule,
+    AvatarModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    FormsModule,
+    OrganizationComponent
+  ],
   templateUrl: './my-organization.component.html',
   styleUrl: './my-organization.component.scss'
 })

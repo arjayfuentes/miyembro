@@ -12,14 +12,17 @@ import { JoinOrganizationRequest } from 'src/app/core/models/join-membership-req
 import { AlertService } from 'src/app/core/services/alert.service';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'primeng/tabs';
-import { OrganizationAboutUsComponent } from "../../components/organization-about-us/organization-about-us.component";
-import { OrganizationEventsComponent } from "../../components/organization-events/organization-events.component";
-import { OrganizationPhotosComponent } from "../../components/organization-photos/organization-photos.component";
 import { OrganizationComponent } from '../../components/organization/organization.component';
 
 @Component({
   selector: 'app-organization-details-page',
-  imports: [CommonModule, ButtonModule, TabsModule, FormsModule, OrganizationAboutUsComponent, OrganizationEventsComponent, OrganizationPhotosComponent, OrganizationComponent],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    FormsModule,
+    OrganizationComponent,
+    TabsModule
+  ],
   templateUrl: './organization-details-page.component.html',
   styleUrl: './organization-details-page.component.scss',
 })

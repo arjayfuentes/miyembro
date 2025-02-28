@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 import { OrganizationAddressFormComponent } from 'src/app/features/create-organization/components/organization-address-form/organization-address-form.component';
-import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
 import { BackgroundComponent } from 'src/app/shared/components/background/background.component';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { Location } from '@angular/common';
@@ -15,7 +14,13 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-edit-organization-address',
-  imports: [OrganizationAddressFormComponent, BackgroundComponent, ButtonModule, ProgressBarModule, ToastModule],
+  imports: [
+    BackgroundComponent,
+    ButtonModule,
+    OrganizationAddressFormComponent,
+    ProgressBarModule,
+    ToastModule
+  ],
   templateUrl: './edit-organization-address.component.html',
   styleUrl: './edit-organization-address.component.scss'
 })

@@ -10,7 +10,12 @@ import { Member } from 'src/app/core/models/member';
 
 @Component({
   selector: 'app-organization-membership',
-  imports: [CardModule, CommonModule, AvatarModule, MembershipCardComponent],
+  imports: [
+    AvatarModule,
+    CardModule,
+    CommonModule,
+    MembershipCardComponent
+  ],
   templateUrl: './organization-membership.component.html',
   styleUrl: './organization-membership.component.scss'
 })

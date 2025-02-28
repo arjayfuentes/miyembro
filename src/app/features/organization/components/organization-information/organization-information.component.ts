@@ -8,7 +8,13 @@ import { OrganizationResponse } from 'src/app/core/models/organization-reponse';
 
 @Component({
   selector: 'app-organization-information',
-  imports: [CardModule, ButtonModule, AvatarGroupModule, AvatarModule, CommonModule],
+  imports: [
+    AvatarGroupModule,
+    AvatarModule,
+    ButtonModule,
+    CardModule,
+    CommonModule
+  ],
   templateUrl: './organization-information.component.html',
   styleUrl: './organization-information.component.scss'
 })

@@ -13,7 +13,11 @@ import { OrganizationFormType } from 'src/app/core/models/organization-form-type
 
 @Component({
   selector: 'app-edit-organization-contact-details',
-  imports: [BackgroundComponent, OrganizationFormComponent, ButtonModule],
+  imports: [
+    BackgroundComponent,
+    ButtonModule,
+    OrganizationFormComponent
+  ],
   templateUrl: './edit-organization-contact-details.component.html',
   styleUrl: './edit-organization-contact-details.component.scss'
 })
