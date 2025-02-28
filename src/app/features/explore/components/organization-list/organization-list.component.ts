@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
@@ -20,7 +20,18 @@ import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({
   selector: 'app-organization-list',
-  imports: [DataViewModule, ButtonModule, Tag, FormsModule, InfiniteScrollDirective, CommonModule, DialogModule, SelectButtonModule, OrganizationItemGridComponent, OrganizationItemGridSkeletonComponent],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DataViewModule,
+    DialogModule,
+    FormsModule,
+    InfiniteScrollDirective,
+    OrganizationItemGridComponent,
+    OrganizationItemGridSkeletonComponent,
+    SelectButtonModule,
+    Tag
+  ],
   templateUrl: './organization-list.component.html',
   styleUrl: './organization-list.component.scss'
 })

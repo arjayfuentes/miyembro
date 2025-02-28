@@ -8,7 +8,13 @@ import { OrganizationListComponent } from '../../components/organization-list/or
 
 @Component({
   selector: 'app-explore-page',
-  imports: [OrganizationListComponent, FormsModule, InputTextModule, SelectModule, CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    OrganizationListComponent,
+    SelectModule
+  ],
   templateUrl: './explore-page.component.html',
   styleUrl: './explore-page.component.scss'
 })

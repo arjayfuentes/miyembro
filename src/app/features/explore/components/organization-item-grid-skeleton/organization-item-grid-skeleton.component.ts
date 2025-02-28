@@ -4,7 +4,7 @@ import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-organization-item-grid-skeleton',
-  imports: [Skeleton, CommonModule],
+  imports: [CommonModule, Skeleton],
   templateUrl: './organization-item-grid-skeleton.component.html',
   styleUrl: './organization-item-grid-skeleton.component.scss'
 })
