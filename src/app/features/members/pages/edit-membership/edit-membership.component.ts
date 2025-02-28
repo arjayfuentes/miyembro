@@ -25,101 +25,97 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 })
 export class EditMembershipComponent implements OnInit {
 
-    membership: MembershipResponse | undefined;
-    membershipTypes: MembershipType [] = [];
-    membershipStatuses: MembershipStatusResponse [] = [];
+  membership: MembershipResponse | undefined;
+  membershipForm: FormGroup; 
+  membershipTypes: MembershipType [] = [];
+  membershipStatuses: MembershipStatusResponse [] = [];
+  organizationId: string | null = null;
+  roles: Role [] = [];
+  selectedMembership: MembershipType | undefined;
 
-    roles: Role [] = [];
-    organizationId: string | null = null;
-    selectedMembership: MembershipType | undefined;
-    membershipForm: FormGroup; 
-    
+  constructor(
+    public config: DynamicDialogConfig,    
+    private formBuilder: FormBuilder,
+    private membershipService: MembershipService,
+    private membershipStatusService: MembershipStatusService,
+    private membershipTypeService: MembershipTypeService,
+    private ref: DynamicDialogRef,
+    private roleService: RoleService
+  ) {
+    if (config.data) {
+      this.organizationId = config.data.organizationId;
+      this.membership = config.data.membership;
+    }
+    this.membershipForm = this.formBuilder.group({
+      membershipId: [null],
+      organizationId: [null],
+      member: [null],
+      membershipType: [null, Validators.required],
+      membershipStatus: [null, Validators.required],
+      role: [null, Validators.required],
+      startDate: [null, Validators.required],
+      endDate: [null]
+    });
+  }
 
-    constructor(
-      public config: DynamicDialogConfig,    
-      private dialogService: DialogService, 
-      private formBuilder: FormBuilder,
-      private membershipService: MembershipService,
-      private membershipStatusService: MembershipStatusService,
-      private membershipTypeService: MembershipTypeService,
-      private ref: DynamicDialogRef,
-      private roleService: RoleService
-    ) {
-      if (config.data) {
-        this.organizationId = config.data.organizationId;
-        this.membership = config.data.membership;
+  ngOnInit(): void {
+    this.getMembershipTypes();
+    this.getRoles();
+    this.getMembershipStatuses();
+  }
+
+  cancelEditMembership() {
+    this.ref.close();
+  }
+
+  onUpdateMembership() {
+    const membership = this.membershipForm.value;
+  
+    const membershipRequest: MembershipRequest = membership as MembershipRequest;
+  
+    this.membershipService.updateMembership(membershipRequest).subscribe(
+      (res) => {
+        this.membership = res;
+        this.ref.close({
+          membership: this.membership
+        });
+      },
+      (err: any) => {
+        console.log(err);
       }
-      this.membershipForm = this.formBuilder.group({
-        membershipId: [null],
-        organizationId: [null],
-        member: [null],
-        membershipType: [null, Validators.required],
-        membershipStatus: [null, Validators.required],
-        role: [null, Validators.required],
-        startDate: [null, Validators.required],
-        endDate: [null]
-      });
-    }
+    );
+  }
 
-    ngOnInit(): void {
-      this.getMembershipTypes();
-      this.getRoles();
-      this.getMembershipStatuses();
-    }
+  private getMembershipTypes() {
+    this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId).subscribe(
+      (res) => {
+        this.membershipTypes = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 
-    cancelEditMembership() {
-      this.ref.close();
-    }
+  private getRoles() {
+    this.roleService.getVisibleRoles().subscribe(
+      (res) => {
+        this.roles = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 
-    onUpdateMembership() {
-
-      const membership = this.membershipForm.value;
-    
-      const membershipRequest: MembershipRequest = membership as MembershipRequest;
-    
-      this.membershipService.updateMembership(membershipRequest).subscribe(
-        (res) => {
-          this.membership = res;
-          this.ref.close({
-            membership: this.membership
-          });
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
-
-    private getMembershipTypes() {
-      this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId).subscribe(
-        (res) => {
-          this.membershipTypes = res;
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
-
-    private getRoles() {
-      this.roleService.getVisibleRoles().subscribe(
-        (res) => {
-          this.roles = res;
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
-
-    private getMembershipStatuses() {
-      this.membershipStatusService.getApprovedMembershipStatuses().subscribe(
-        (res) => {
-          this.membershipStatuses = res;
-        },
-        (err: any) => {
-          console.log(err);
-        }
-      );
-    }
+  private getMembershipStatuses() {
+    this.membershipStatusService.getApprovedMembershipStatuses().subscribe(
+      (res) => {
+        this.membershipStatuses = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 }

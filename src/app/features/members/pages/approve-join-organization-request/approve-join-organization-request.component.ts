@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MembershipType } from 'src/app/core/models/membership-type';
 import { MembershipTypeService } from 'src/app/core/services/membership-type.service';
@@ -19,7 +19,7 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
   templateUrl: './approve-join-organization-request.component.html',
   styleUrl: './approve-join-organization-request.component.scss'
 })
-export class ApproveJoinOrganizationRequestComponent {
+export class ApproveJoinOrganizationRequestComponent implements OnInit {
 
   membership: MembershipResponse | undefined;
   membershipTypes: MembershipType [] = [];
@@ -28,7 +28,6 @@ export class ApproveJoinOrganizationRequestComponent {
 
   constructor(
     public config: DynamicDialogConfig,    
-    private dialogService: DialogService, 
     private membershipService: MembershipService,
     private membershipTypeService: MembershipTypeService,
     private ref: DynamicDialogRef
@@ -91,7 +90,6 @@ export class ApproveJoinOrganizationRequestComponent {
     );
   }
     
-
   private getMembershipTypes() {
     this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId).subscribe(
       (res) => {

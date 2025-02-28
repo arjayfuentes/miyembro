@@ -22,7 +22,6 @@ import { MembershipStatusResponse } from '../../../../core/models/membership-sta
 })
 export class MembershipFormComponent implements OnChanges {
 
-  MembershipFormType = MembershipFormType;
   @Input() formType: MembershipFormType = MembershipFormType.UPDATE_MEMBERSHIP;
   @Input() membership: MembershipResponse | undefined;
   @Input() membershipForm: FormGroup = new FormGroup({}); 
@@ -30,6 +29,8 @@ export class MembershipFormComponent implements OnChanges {
   @Input() membershipTypes: MembershipType  [] = [];
   @Input() membershipStatuses: MembershipStatusResponse  [] = [];
   @Input() roles: Role  [] = [];
+
+  MembershipFormType = MembershipFormType;
 
   get f(): { [key: string]: AbstractControl } {
     return this.membershipForm.controls;
@@ -53,22 +54,8 @@ export class MembershipFormComponent implements OnChanges {
       this.patchMembershipStatuses();
     }
   }
-
-  getControlErrors(groupName: string, controlName: string): ValidationErrors | null {
-    const group = this.membershipForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.errors : null;
-
-  }
-
-  isControlInvalidAndTouched(groupName: string, controlName: string): boolean {
-    const group = this.membershipForm.get(groupName) as FormGroup;
-    const control = group ? group.get(controlName) : null;
-    return control ? control.invalid && control.touched : false;
-  }
-
-
-  patchForm() {
+ 
+  private patchForm() {
     if (this.membershipForm) {
       this.membershipForm.patchValue({
         membershipId: this.membership?.membershipId,
@@ -84,28 +71,7 @@ export class MembershipFormComponent implements OnChanges {
     }
   }
 
-  patchMembershipType() {
-    if(this.membershipTypes) {
-      const membershipType = this.membershipTypes.find( membershipType => membershipType.membershipTypeId === this.membership?.membershipType?.membershipTypeId);
-      this.membershipForm.patchValue({
-        membershipType : membershipType
-      });
-      this.setFormToPristine();
-    }
-  }
-
-  patchRole() {
-    if(this.roles) {
-      const role = this.roles.find( role => role.roleId === this.membership?.role?.roleId);
-      this.membershipForm.patchValue({
-        role : role
-      });
-      this.setFormToPristine();
-    }
-  }
-
-
-  patchMembershipStatuses() {
+  private patchMembershipStatuses() {
     if(this.membershipStatuses) {
       const membershipStatus = this.membershipStatuses.find( membershipStatus => membershipStatus.membershipStatusId === this.membership?.membershipStatus?.membershipStatusId);
       this.membershipForm.patchValue({
@@ -115,9 +81,29 @@ export class MembershipFormComponent implements OnChanges {
     }
   }
 
-  setFormToPristine() {
+  private patchMembershipType() {
+    if(this.membershipTypes) {
+      const membershipType = this.membershipTypes.find( membershipType => membershipType.membershipTypeId === this.membership?.membershipType?.membershipTypeId);
+      this.membershipForm.patchValue({
+        membershipType : membershipType
+      });
+      this.setFormToPristine();
+    }
+  }
+
+
+  private patchRole() {
+    if(this.roles) {
+      const role = this.roles.find( role => role.roleId === this.membership?.role?.roleId);
+      this.membershipForm.patchValue({
+        role : role
+      });
+      this.setFormToPristine();
+    }
+  }
+
+  private setFormToPristine() {
     this.membershipForm.markAsPristine();
   }
   
-
 }
