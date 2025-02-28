@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -11,12 +11,10 @@ import { PasswordModule } from 'primeng/password';
 import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { MembershipType } from 'src/app/core/models/membership-type';  // If you have this model
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { FormErrorsFilterPipe } from 'src/app/shared/pipes/form-errors-filter.pipe';
 import { FormErrorsPipe } from 'src/app/shared/pipes/form-errors.pipe';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { MembershipTypeService } from '../../../../core/services/membership-type.service';
 import { MembershipTypeValidity } from '../../../../core/models/membership-type-validity';
 import { SelectModule } from 'primeng/select';
 
@@ -28,8 +26,8 @@ import { SelectModule } from 'primeng/select';
 })
 export class OrganizationMembershipTypeFormComponent {
   
-  @Input() organizationMembershipTypesForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
   @Input() membershipTypeValidities: MembershipTypeValidity [] = [];
+  @Input() organizationMembershipTypesForm: FormGroup = new FormGroup({});
    
   constructor(
     private formBuilder: FormBuilder,
@@ -40,15 +38,12 @@ export class OrganizationMembershipTypeFormComponent {
     return this.organizationMembershipTypesForm.get('membershipTypes') as FormArray;
   }
 
-  private createMembershipType(isDefault= false): FormGroup {
-    return this.formBuilder.group({
-      membershipTypeId: [null],
-      organizationId: [null],
-      membershipTypeValidity: [null, Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      isDefault: [isDefault]
-    });
+  get f(): { [key: string]: AbstractControl } {
+    return this.organizationMembershipTypesForm.controls;
+  }
+
+  get fgErrors(): { [key: string]: ValidationErrors } | null {
+    return this.organizationMembershipTypesForm.errors;
   }
 
   addMembershipType(): void {
@@ -74,12 +69,15 @@ export class OrganizationMembershipTypeFormComponent {
       control.get('isDefault')?.setValue(i === index);
     });
   }
-
-   get f(): { [key: string]: AbstractControl } {
-      return this.organizationMembershipTypesForm.controls;
-    }
   
-    get fgErrors(): { [key: string]: ValidationErrors } | null {
-      return this.organizationMembershipTypesForm.errors;
-    }
+  private createMembershipType(isDefault= false): FormGroup {
+    return this.formBuilder.group({
+      membershipTypeId: [null],
+      organizationId: [null],
+      membershipTypeValidity: [null, Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      isDefault: [isDefault]
+    });
+  }
 }

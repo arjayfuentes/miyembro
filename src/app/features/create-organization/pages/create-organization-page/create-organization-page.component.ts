@@ -33,13 +33,12 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 export class CreateOrganizationPageComponent implements OnInit{
   
   loading = false;
-  organizationForm: FormGroup;
-  organizationAddressForm: FormGroup;
-  organizationMembershipTypesForm: FormGroup;
-  organizationImageFileForm: FormGroup;
-  OrganizationFormType = OrganizationFormType;
-
   membershipTypeValidities: MembershipTypeValidity [] = [];
+  organizationAddressForm: FormGroup;
+  organizationForm: FormGroup;
+  OrganizationFormType = OrganizationFormType;
+  organizationImageFileForm: FormGroup;
+  organizationMembershipTypesForm: FormGroup;
 
   constructor(
     private alertService: AlertService,
@@ -78,19 +77,6 @@ export class CreateOrganizationPageComponent implements OnInit{
       backgroundImage: [null, Validators.required]
     })
   }
-
-
-  private createMembershipType(isDefault= false): FormGroup {
-    return this.formBuilder.group({
-      membershipTypeId: [null],
-      organizationId: [null],
-      membershipTypeValidity: [null, Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      isDefault: [isDefault]
-    });
-  }
-
   
   ngOnInit(): void {
     this.membershipTypeService.getAllMembershipTypeValidity().subscribe(
@@ -103,6 +89,9 @@ export class CreateOrganizationPageComponent implements OnInit{
     );
   }
 
+  cancelCreateOrganization(){
+    this.location.back();
+  }
 
   createOrganization() {
     this.loading = true;
@@ -153,13 +142,15 @@ export class CreateOrganizationPageComponent implements OnInit{
     );
   }
 
-
-  cancelCreateOrganization(){
-    this.location.back();
+  private createMembershipType(isDefault= false): FormGroup {
+    return this.formBuilder.group({
+      membershipTypeId: [null],
+      organizationId: [null],
+      membershipTypeValidity: [null, Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      isDefault: [isDefault]
+    });
   }
-
-
-  
-
 
 }

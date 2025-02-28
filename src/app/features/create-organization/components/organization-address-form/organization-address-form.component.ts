@@ -31,18 +31,18 @@ import { OrganizationAddressResponse } from 'src/app/core/models/organization-ad
 })
 export class OrganizationAddressFormComponent implements OnInit, OnChanges {
 
-  @Input() organizationAddress : OrganizationAddressResponse | undefined;
   @Input() formType: OrganizationFormType = OrganizationFormType.ADD_ORGANIZATION;
+  @Input() organizationAddress : OrganizationAddressResponse | undefined;
   @Input() organizationAddressForm: FormGroup = new FormGroup({}); 
   @Output() organizationAddressFormChange = new EventEmitter<FormGroup>();
 
-  countries: Country [] = [];
-  states: State [] = [];
   cities: City [] = [];
+  countries: Country [] = [];
   loginErrorMessage: string | null = null;
+  selectedCity: string | null = null;
   selectedCountry: string | undefined;
   selectedState: string | null = null;
-  selectedCity: string | null = null;
+  states: State [] = [];
 
   constructor(
     private countrySevice: CountryService,
@@ -50,12 +50,6 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
     
   }
 
-   ngOnChanges(changes: SimpleChanges): void {
-      if (changes['organizationAddress'] && this.organizationAddress) {
-        this.patchForm();
-      }
-    }
-      
   ngOnInit() {
     this.patchForm();
     this.getCountries();
@@ -81,9 +75,11 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
       this.selectedCity = null;
     });
   }
-  
-  emitForm() {
-    this.organizationAddressFormChange.emit(this.organizationAddressForm);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['organizationAddress'] && this.organizationAddress) {
+      this.patchForm();
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -93,18 +89,47 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
   get fgErrors(): { [key: string]: ValidationErrors } | null {
     return this.organizationAddressForm.errors;
   }
-
-
-  patchCountry() {
-    this.organizationAddressForm.get('country')?.setValue(this.organizationAddress?.country);
+  
+  emitForm() {
+    this.organizationAddressFormChange.emit(this.organizationAddressForm);
   }
 
-  patchState() {
-    this.organizationAddressForm.get('provinceState')?.setValue(this.organizationAddress?.provinceState);
+  getCities() {
+    const country = this.countries.find((country) => country.name === this.organizationAddressForm.get('country')?.value);
+    const state = this.states.find((state) => state.name === this.organizationAddressForm.get('provinceState')?.value);
+    this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
+      (res) => {
+        if(res.length == 0) {
+          this.getCitiesByCountry();
+        } else {
+          this.cities = res;
+        }
+        if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
+          this.patchCity();
+        }
+        this.setFormToPristine();
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
   }
 
-  patchCity() {
-    this.organizationAddressForm.get('city')?.setValue(this.organizationAddress?.city);
+  getCitiesByCountry() {
+    const country = this.countries.find((country) => country.name === this.organizationAddressForm.get('country')?.value);
+    this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
+      (res) => {
+        this.cities = res;
+        if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
+          this.patchCity();
+        }
+        this.setFormToPristine();
+
+      },
+      (err: any) => {
+        this.loginErrorMessage = err.error.message;
+      }
+    );
   }
 
   getCountries() {
@@ -148,44 +173,17 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
     );
   }
 
-  getCities() {
-    const country = this.countries.find((country) => country.name === this.organizationAddressForm.get('country')?.value);
-    const state = this.states.find((state) => state.name === this.organizationAddressForm.get('provinceState')?.value);
-    this.countrySevice.getCitiesByStateAndCountry(country?.iso2, state?.iso2 ).subscribe(
-      (res) => {
-        if(res.length == 0) {
-          this.getCitiesByCountry();
-        } else {
-          this.cities = res;
-        }
-        if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
-          this.patchCity();
-        }
-        this.setFormToPristine();
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
+  patchCity() {
+    this.organizationAddressForm.get('city')?.setValue(this.organizationAddress?.city);
   }
 
-  getCitiesByCountry() {
-    const country = this.countries.find((country) => country.name === this.organizationAddressForm.get('country')?.value);
-    this.countrySevice.getCitiesByCountry(country?.iso2).subscribe(
-      (res) => {
-        this.cities = res;
-        if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
-          this.patchCity();
-        }
-        this.setFormToPristine();
-
-      },
-      (err: any) => {
-        this.loginErrorMessage = err.error.message;
-      }
-    );
+  patchCountry() {
+    this.organizationAddressForm.get('country')?.setValue(this.organizationAddress?.country);
   }
 
+  patchState() {
+    this.organizationAddressForm.get('provinceState')?.setValue(this.organizationAddress?.provinceState);
+  }
 
   setFormToPristine() {
     if(this.formType === OrganizationFormType.UPDATE_ORGANIZATION) {
@@ -205,6 +203,5 @@ export class OrganizationAddressFormComponent implements OnInit, OnChanges {
       });
     }
   }
-
 
 }

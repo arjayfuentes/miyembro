@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -28,16 +28,13 @@ export class OrganizationFormComponent implements OnInit {
   @Input() formType: OrganizationFormType = OrganizationFormType.ADD_ORGANIZATION;
   @Input() organizationForm: FormGroup = new FormGroup({}); // Input for the parent to provide the form
   @Output() organizationFormChange = new EventEmitter<FormGroup>(); // Emit form changes
+  
   OrganizationFormType = OrganizationFormType;
   
   ngOnInit(): void {
     this.organizationForm.valueChanges.subscribe(() => {
       this.emitForm();
     });
-  }
-
-  emitForm(): void {
-    this.organizationFormChange.emit(this.organizationForm);
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -47,4 +44,9 @@ export class OrganizationFormComponent implements OnInit {
   get fgErrors(): { [key: string]: ValidationErrors } | null {
     return this.organizationForm.errors;
   }
+
+  emitForm(): void {
+    this.organizationFormChange.emit(this.organizationForm);
+  }
+
 }

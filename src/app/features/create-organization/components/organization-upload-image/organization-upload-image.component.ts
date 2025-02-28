@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CommonModule } from '@angular/common';
-import { Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from 'src/app/shared/components/avatar/avatar.component';
 
 @Component({
