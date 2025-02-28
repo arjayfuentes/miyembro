@@ -30,7 +30,24 @@ import {
 
 @Component({
   selector: 'app-header',
-  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule, MemberCardComponent],
+  imports: [
+    AvatarModule,
+    BadgeModule,
+    ButtonGroupModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DividerModule,
+    FloatLabelModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    InputTextModule,
+    Menubar,
+    MemberCardComponent,
+    PopoverModule,
+    Ripple,
+    RouterModule
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   providers: [

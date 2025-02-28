@@ -21,7 +21,26 @@ import { MembershipCardDetailsComponent } from "../../../../shared/components/me
 
 @Component({
   selector: 'app-member-card',
-  imports: [Menubar, BadgeModule, CardModule, ButtonGroupModule, DividerModule, PopoverModule, RouterModule, AvatarModule, ButtonModule, FloatLabelModule, InputTextModule, Ripple, CommonModule, InputGroupModule, InputGroupAddonModule, MemberOtherDetailsComponent, MemberDetailsComponent, MembershipCardDetailsComponent],
+  imports: [
+    AvatarModule,
+    BadgeModule,
+    ButtonGroupModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    DividerModule,
+    FloatLabelModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    InputTextModule,
+    Menubar,
+    MemberDetailsComponent,
+    MemberOtherDetailsComponent,
+    MembershipCardDetailsComponent,
+    PopoverModule,
+    Ripple,
+    RouterModule
+  ],
   templateUrl: './member-card.component.html',
   styleUrl: './member-card.component.scss'
 })

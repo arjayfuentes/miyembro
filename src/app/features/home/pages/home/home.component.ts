@@ -9,7 +9,13 @@ import { HomeService } from '../../../../core/services/home.service';
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, RouterModule, FooterComponent, CommonModule, InfiniteScrollDirective],
+  imports: [
+    CommonModule,
+    FooterComponent,
+    HeaderComponent,
+    InfiniteScrollDirective,
+    RouterModule
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [
