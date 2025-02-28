@@ -21,19 +21,17 @@ import { AlertService } from 'src/app/core/services/alert.service';
 })
 export class EditMemberDetailsPageComponent implements OnInit {
 
-
   member: Member | undefined;
-  MemberFormType = MemberFormType;
   memberForm: FormGroup; 
-
+  MemberFormType = MemberFormType;
 
   constructor(
+    private alertService: AlertService,
+    private datePipe: DatePipe,
     private formBuilder: FormBuilder,
-    private sessionService: SessionService,
     private memberService: MemberService,
     private router: Router,
-    private alertService: AlertService,
-    private datePipe: DatePipe
+    private sessionService: SessionService,
   ) {
     this.memberForm = this.formBuilder.group({
       memberId: [null, Validators.required],
@@ -59,6 +57,9 @@ export class EditMemberDetailsPageComponent implements OnInit {
     this.member = this.sessionService.getSession()?.member;
   }
 
+  onCancelEditMemberDetails() {
+    this.router.navigate(['/home/explore']);
+  }
 
   onClickRegisterAdditionalInfo() {
     const birthDate: Date = this.memberForm.controls['birthDate'].value;
@@ -95,7 +96,4 @@ export class EditMemberDetailsPageComponent implements OnInit {
     );
   }
 
-  onCancelEditMemberDetails() {
-    this.router.navigate(['/home/explore']);
-  }
 }
