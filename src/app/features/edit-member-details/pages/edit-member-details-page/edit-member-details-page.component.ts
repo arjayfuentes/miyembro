@@ -14,7 +14,7 @@ import { MemberService } from 'src/app/core/services/member.service';
 
 @Component({
   selector: 'app-edit-member-details-page',
-  imports: [MemberFormComponent, ButtonModule],
+  imports: [ButtonModule, MemberFormComponent],
   templateUrl: './edit-member-details-page.component.html',
   styleUrl: './edit-member-details-page.component.scss',
   providers: [DatePipe]
