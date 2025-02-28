@@ -27,28 +27,28 @@ import { MembershipCardDetailsComponent } from "../../../../shared/components/me
 })
 export class MemberCardComponent {
 
-  @ViewChild('op') popover!: Popover;
   @Input() session: Session | null = null;
   @Output() logout = new EventEmitter<void>();
+  @ViewChild('op') popover!: Popover;
 
-
-   constructor(
-      private router: Router
-    ) {
-      
-    }
+  constructor(
+    private router: Router
+  ) {
+    
+  }
 
   onClickLogout() {
     this.logout.emit(); // Emit event when logout is clicked
     this.popover.hide(); // Close the popover after logout
   }
 
-  togglePopover(event: Event) {
-    this.popover.toggle(event);
-  }
-
   editDetails() {
     this.router.navigate(['/edit-member-details']);
   }
+
+  togglePopover(event: Event) {
+    this.popover.toggle(event);
+  }
+ 
 }
 

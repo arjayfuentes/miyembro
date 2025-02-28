@@ -22,9 +22,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { MemberCardComponent } from "../member-card/member-card.component";
-
 import {
-    SocialLoginModule,
     SocialAuthServiceConfig,
     SocialAuthService,
     GoogleLoginProvider,
@@ -60,22 +58,15 @@ export class HeaderComponent implements OnInit{
 
 
     items: MenuItem[] | undefined;
-    session: Session | null = null;
     profilePicUrl: string | undefined;
-
-    members = [
-        { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
-        { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
-        { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
-    ];
+    session: Session | null = null;
 
     constructor(
+        private alertService: AlertService,
         private authenticationService: AuthenticationService,
         private router: Router,
         private sessionService: SessionService,
-        private alertService: AlertService,
         private socialAuthService: SocialAuthService
-        
     ) {
 
     }
@@ -121,9 +112,7 @@ export class HeaderComponent implements OnInit{
     }
 
     goToCreateOrganization() {
-
         const exists = this.items?.some(item => item.label === 'Create Organization');
-        
         if (!exists) {
             this.items = [...this.items || [], {
                 label: 'Create Organization',
@@ -131,9 +120,7 @@ export class HeaderComponent implements OnInit{
                 route: '/create-organization'
             }];
         }
-    
-        this.router.navigate(['/create-organization']);
-        
+        this.router.navigate(['/create-organization']);  
     }
 
     removeCreateOrganization() {

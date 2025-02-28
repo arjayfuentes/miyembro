@@ -11,20 +11,15 @@ import { Role } from 'src/app/core/models/role';
 })
 export class MemberDetailsComponent implements OnChanges{
  
-    @Input() member: Member | undefined;
-    @Input() role: Role | undefined;
+  @Input() member: Member | undefined;
+  @Input() role: Role | undefined;
 
-    profilePicUrl: string | undefined;
+  profilePicUrl: string | undefined;
 
-
-    ngOnChanges(changes: SimpleChanges): void {
-      if (changes['member'] && this.member) {
-        this.profilePicUrl = `${this.member.profilePicUrl}?v=${new Date().getTime()}`;
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['member'] && this.member) {
+      this.profilePicUrl = `${this.member.profilePicUrl}?v=${new Date().getTime()}`;
     }
-
-
-
-
+  }
 
 }

@@ -1,13 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { SessionService } from 'src/app/core/services/session.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { HomeService } from '../../../../core/services/home.service';
-import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +23,9 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 })
 export class HomeComponent {
 
-  constructor(private homeService: HomeService, private loaderService: LoaderService) {}
+  constructor(
+    private homeService: HomeService
+  ) {}
 
   onNativeScroll(event: Event): void {
     const target = event.target as HTMLElement;
