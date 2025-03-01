@@ -11,7 +11,7 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { ButtonModule } from 'primeng/button';
 import { EditMembershipComponent } from '../edit-membership/edit-membership.component';
 import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
@@ -28,6 +28,7 @@ import { MembershipFilters } from '../../../../core/models/membership-filters';
 import { MembershipService } from 'src/app/core/services/membership.service';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader.service';
+import { EditMultipleMembershipsComponent } from '../edit-multiple-memberships/edit-multiple-memberships.component';
 
 @Component({
   selector: 'app-member-list',
@@ -59,6 +60,7 @@ export class MemberListComponent implements OnInit {
   membershipFilters: MembershipFilters | undefined;
   membershipStatuses: MembershipStatusResponse [] = [];
   membershipTypes: MembershipType [] = [];
+  multiSelectButtonItems: MenuItem[] = [];
   organizationId: string | undefined | null = null;
   ref: DynamicDialogRef | undefined;
   roles: Role [] = [];  
@@ -69,6 +71,7 @@ export class MemberListComponent implements OnInit {
   tableFooterCountTitle = 'Member'
   title = 'Members';
   totalRecords = 0; 
+  selectedMemberships: MembershipResponse [] = [];
   session: Session | null = null;
 
   constructor(
@@ -94,6 +97,20 @@ export class MemberListComponent implements OnInit {
       name: 'Country',
       value: 'member.memberAddress.country',
     }];
+    this.multiSelectButtonItems = [
+      {
+          label: 'Edit Memberships',
+          command: () => {
+            this.editMemberships();
+          }
+      },
+      {
+          label: 'Delete Memberships',
+          command: () => {
+            this.deleteMemberships();
+          }
+      },
+    ];
     const pageNo = this.first;
     this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
     this.session = this.sessionService.getSession();
@@ -152,8 +169,8 @@ export class MemberListComponent implements OnInit {
 
     this.ref.onClose.subscribe((data: any) => {
         if (data?.membership) {
-            this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
-          }
+          this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+        }
     });
   }
 
@@ -166,6 +183,30 @@ export class MemberListComponent implements OnInit {
     const pageNo = event.first / event.rowsPerPage;
     this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
   } 
+
+  private deleteMemberships() {
+    console.log('edit memberships');
+  }
+
+  private editMemberships() {
+    const organizationId = this.sessionService.organizationId;
+    this.ref = this.dialogService.open(EditMultipleMembershipsComponent, {
+      header: 'Edit Memberships',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: { '960px': '75vw', '640px': '90vw' },
+      data: { organizationId: organizationId , memberships: this.selectedMemberships },
+      closable: true
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+        if (data?.memberships) {
+          this.selectedMemberships = [];
+          this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+        }
+    });
+  }
+  
   
   private getMembershipStatuses() {
     this.membershipStatusService.getApprovedMembershipStatuses().subscribe(

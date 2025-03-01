@@ -11,6 +11,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Table as PrimeTable} from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-table',
@@ -24,7 +26,8 @@ import { DatePickerModule } from 'primeng/datepicker';
     InputTextModule, 
     MultiSelectModule, 
     ReactiveFormsModule, 
-    SelectModule, 
+    SelectModule,
+    SplitButtonModule, 
     TableModule
   ],
   templateUrl: './table.component.html',
@@ -35,10 +38,14 @@ export class TableComponent implements AfterContentInit, OnChanges{
   @ContentChildren(TemplateRef) tempList!: QueryList<TemplateRef<any>>;
 
   @Input() dataKey = "id";
+  @Input() enableMultiSelectButton = false;
   @Input() first = 0; 
   @Input() loading = false;
+  @Input() multiSelectButtonItems: MenuItem[] = [];
+  @Input() multiSelectButtonLabel: string | undefined;
   @Input() paginator = false;
   @Input() rowsPerPage = 10;  
+  @Input() selectedItems: any [] = [];
   @Input() sortField : string | undefined;
   @Input() sortOrder = 1;  
   @Input() table: Table<any> = { rows: [], columns: [] };
@@ -50,13 +57,13 @@ export class TableComponent implements AfterContentInit, OnChanges{
   @Output() filterChangeTable = new EventEmitter<any>(); 
   @Output() firstChange = new EventEmitter<number>();
   @Output() pageChangeTable = new EventEmitter<any>(); 
-  @Output() rowsPerPageChange = new EventEmitter<number>();  
+  @Output() rowsPerPageChange = new EventEmitter<number>(); 
+  @Output() selectedItemsChange = new EventEmitter<any[]>();   
   @Output() sortChangeTable = new EventEmitter<any>(); 
   @Output() sortFieldChange = new EventEmitter<string>();
   @Output() sortOrderChange = new EventEmitter<number>();
   @Output() totalRecordsChange = new EventEmitter<number>();  
 
-  selectedItems: any [] = [];
   selectedValuesComboInputValueMap: { [key: string]: string } = {};
   selectedValuesComboSelectValueMap: { [key: string]: any[] } = {};
   selectedValuesDateMap: { [key: string]: Date | Date[] | null } = {}; 
@@ -180,6 +187,10 @@ export class TableComponent implements AfterContentInit, OnChanges{
       "sortField": this.sortField,
       "sortOrder": this.sortOrder
     });
+  }
+
+  onSelect(event: any) {
+    this.selectedItemsChange.emit(this.selectedItems);
   }
 
   onSort(event: any) {

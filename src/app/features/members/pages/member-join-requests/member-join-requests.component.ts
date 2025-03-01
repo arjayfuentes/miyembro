@@ -10,7 +10,6 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { ApproveJoinOrganizationRequestComponent } from '../approve-join-organization-request/approve-join-organization-request.component';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipService } from 'src/app/core/services/membership.service';
@@ -18,9 +17,12 @@ import { MembershipFilters } from '../../../../core/models/membership-filters';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
+import { MessageService } from 'primeng/api';
+import { MembershipStatusResponse } from 'src/app/core/models/membership-status-response';
+import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
 
 @Component({
-  selector: 'app-member-pending-request',
+  selector: 'app-member-join-requests',
   imports: [
     AvatarGroupModule,
     AvatarModule,
@@ -30,14 +32,15 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
     DynamicDialogModule,
     TableComponent
   ],
-  templateUrl: './member-pending-request.component.html',
-  styleUrl: './member-pending-request.component.scss',
+  templateUrl: './member-join-requests.component.html',
+  styleUrl: './member-join-requests.component.scss',
   providers: [DialogService, MessageService]
 })
-export class MemberPendingRequestComponent implements OnInit {
+export class MemberJoinRequestsComponent implements OnInit {
 
   addressOptions: any [] = [];
   first = 0; 
+  joinRequestsMembershipStatuses: MembershipStatusResponse [] = [];
   loading = false;
   memberships: MembershipResponse [] = [];
   membershipFilters: MembershipFilters | undefined;
@@ -56,6 +59,7 @@ export class MemberPendingRequestComponent implements OnInit {
     private dialogService: DialogService,
     private loaderService: LoaderService,
     private membershipService: MembershipService, 
+    private membershipStatusService: MembershipStatusService,
     private router: Router,
     private sessionService: SessionService,
   ) {}
@@ -72,6 +76,7 @@ export class MemberPendingRequestComponent implements OnInit {
       value: 'member.memberAddress.country',
     }];
     const pageNo = this.first;
+    this.getMembershipStatuses();
     this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
     this.session = this.sessionService.getSession();
   }
@@ -124,12 +129,14 @@ export class MemberPendingRequestComponent implements OnInit {
     const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
     const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
         
+    const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+
     const filters = {
       memberFirstName: eventFilters['member.firstName'][0].value,
       memberEmail: eventFilters['member.email'][0].value,
       memberMemberAddressCity: memberMemberAddressCity,
       memberMemberAddressCountry: memberMemberAddressCountry,
-      membershipStatusNames: null,
+      membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
       membershipTypeNames: null,
       roleNames:  null,
       startDates:  null,
@@ -149,6 +156,17 @@ export class MemberPendingRequestComponent implements OnInit {
   sortChangeTable(event: any) {
     const pageNo = event.first / event.rowsPerPage;
     this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+  }
+
+  private getMembershipStatuses() {
+    this.membershipStatusService.getJoinReqqestsMembershipStatuses().subscribe(
+      (res) => {
+        this.joinRequestsMembershipStatuses = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
   private populateTable(pageNo: number, pageSize: number, sortField: string, sortOrder: number) {
@@ -206,8 +224,9 @@ export class MemberPendingRequestComponent implements OnInit {
         {
           dataField: 'membershipStatus.name',
           dataType: 'string',
-          colTemplateRefName: 'membershipStatusColumn',
+          headerFilterType: 'select',
           headerText: 'Status',
+          options: this.joinRequestsMembershipStatuses,
           sortable: true
         },
         {
@@ -218,13 +237,12 @@ export class MemberPendingRequestComponent implements OnInit {
           headerFilterType: 'combo',
           options: this.addressOptions,
           sortable: true
-
         },
         {
           dataField: 'approveDeny',
           dataType: 'templateRef',
           colTemplateRefName: 'approveDenyColumn',
-          headerText: 'Approve or Deny'
+          headerText: 'Approval'
         },
       ],
       rows: this.memberships,

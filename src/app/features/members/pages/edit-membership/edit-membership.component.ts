@@ -42,7 +42,6 @@ export class EditMembershipComponent implements OnInit {
   membershipStatuses: MembershipStatusResponse [] = [];
   organizationId: string | null = null;
   roles: Role [] = [];
-  selectedMembership: MembershipType | undefined;
 
   constructor(
     private config: DynamicDialogConfig, 
@@ -125,7 +124,7 @@ export class EditMembershipComponent implements OnInit {
   
     this.membershipService.deletMembershipFromOrganization(membershipRequest).subscribe(
       (res) => {
-        this.membership = res;
+        //this.membership = res;
         this.ref.close({
           membership: this.membership
         });

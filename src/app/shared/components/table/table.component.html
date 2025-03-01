@@ -7,6 +7,7 @@
   [rowsPerPageOptions]="[5, 10, 20]"
   [first]="first"
   [(selection)]="selectedItems"
+  (selectionChange)="onSelect($event)"
   [showCurrentPageReport]="true"
   (onPage)="onPageChange($event)"
   [dataKey]="dataKey"
@@ -25,12 +26,23 @@
         [outlined]="true"
         icon="pi pi-filter-slash"
         (click)="clear(dt1)"
+        size="small"
+      />
+      <p-splitbutton
+        *ngIf="enableMultiSelectButton && selectedItems.length !== 0"
+        [label]="multiSelectButtonLabel"
+        [model]="multiSelectButtonItems"
+        styleClass="ml-3"
+        size="small"
+        outlined
       />
     </div>
   </ng-template>
   <ng-template #header>
     <tr>
-      <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+      <th style="width: 4rem">
+        <p-tableHeaderCheckbox />
+      </th>
       <th
         *ngFor="let col of table.columns"
         [pSortableColumn]="col.dataField ?? ''"

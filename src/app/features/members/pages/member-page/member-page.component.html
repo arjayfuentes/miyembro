@@ -1,16 +1,14 @@
-<div class="card">
-  <p-tabs value="0">
-    <p-tablist>
-      <p-tab value="0">Members</p-tab>
-      <p-tab value="1">Member Requests</p-tab>
-    </p-tablist>
-    <p-tabpanels>
-      <p-tabpanel value="0">
-        <app-member-list></app-member-list>
-      </p-tabpanel>
-      <p-tabpanel value="1">
-        <app-member-pending-request></app-member-pending-request>
-      </p-tabpanel>
-    </p-tabpanels>
-  </p-tabs>
-</div>
+<p-tabs value="0" [lazy]="true" class="mt-1">
+  <p-tablist>
+    <p-tab value="0">Members</p-tab>
+    <p-tab value="1">Join Requests</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="0">
+      <app-member-list></app-member-list>
+    </p-tabpanel>
+    <p-tabpanel value="1">
+      <app-member-join-requests></app-member-join-requests>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

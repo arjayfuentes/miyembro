@@ -22,4 +22,8 @@ export class MembershipStatusService {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/approved`, {}) as Observable<MembershipStatusResponse[]>;
   }
 
+  getJoinReqqestsMembershipStatuses(): Observable<MembershipStatusResponse[]> {
+    return this.http.get(`${env.apiUrl}${this.baseUrl}/join-requests`, {}) as Observable<MembershipStatusResponse[]>;
+  }
+
 }

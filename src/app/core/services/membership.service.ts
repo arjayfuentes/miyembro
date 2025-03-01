@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as env } from '@environments/environment';
@@ -7,6 +7,7 @@ import { JoinOrganizationRequest } from '../models/join-membership-request';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
 import { MembershipFilters } from 'src/app/core/models/membership-filters';
 import { Page } from '../models/page';
+import { UpdateMembershipRequests } from '../models/update-membership-requests';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,18 @@ export class MembershipService {
   }
 
   deletMembershipFromOrganization(membership: MembershipRequest | undefined ) {
-    return this.http.delete(`${env.apiUrl}${this.baseUrl}/organizations/` +  membership?.organizationId + '/memberships/' + membership?.membershipId) as Observable<MembershipResponse>;
+    return this.http.delete(`${env.apiUrl}${this.baseUrl}/organizations/` +  membership?.organizationId + '/memberships/' + membership?.membershipId) as Observable<string>;
+  }
+
+  deleteMembershipsFromOrganization(organizationId: string | null, memberships: MembershipRequest[]): Observable<string[]> {
+    const url = `${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId + '/memberships/bulk';
+
+    return this.http.delete<string[]>(url, {
+      body: memberships,
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 
   denyMembershipRequest(membership: MembershipRequest | undefined ) {
@@ -65,6 +77,10 @@ export class MembershipService {
 
   updateMembership(membership: MembershipRequest | undefined ) {
     return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+  }
+
+  updateMemberships(updateMembershipRequests: UpdateMembershipRequests) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/bulk`, updateMembershipRequests) as Observable<MembershipResponse[]>;
   }
 
 }
