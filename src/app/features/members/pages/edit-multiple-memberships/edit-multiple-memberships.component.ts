@@ -120,7 +120,7 @@ export class EditMultipleMembershipsComponent {
       membershipRequests: membershipRequests
     }
 
-    this.membershipService.updateMemberships(updateMembershipRequests).subscribe(
+    this.membershipService.updateMembershipsFromOrganization(organizationId, updateMembershipRequests).subscribe(
       (res) => {
         this.memberships = res;
         this.alertService.success(this.router.url, 'Success', "Succesfully updated memberships");

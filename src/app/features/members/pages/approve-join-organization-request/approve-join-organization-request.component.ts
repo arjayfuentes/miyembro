@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { MembershipResponse } from 'src/app/core/models/membership-response';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
+import { SessionService } from 'src/app/core/services/session.service';
 
 @Component({
   selector: 'app-approve-join-organization-request',
@@ -39,7 +40,8 @@ export class ApproveJoinOrganizationRequestComponent implements OnInit {
     public config: DynamicDialogConfig,    
     private membershipService: MembershipService,
     private membershipTypeService: MembershipTypeService,
-    private ref: DynamicDialogRef
+    private ref: DynamicDialogRef,
+    private sessionService: SessionService
   ) {
     if (config.data) {
       this.organizationId = config.data.organizationId;
@@ -59,8 +61,9 @@ export class ApproveJoinOrganizationRequestComponent implements OnInit {
     const { role, ...membershipToUpdate } = { ...this.membership };
   
     const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
+    const organizationId = this.sessionService.organizationId;
   
-    this.membershipService.approveMembershipRequest(membershipRequest).subscribe(
+    this.membershipService.approveMembershipRequest(organizationId, membershipRequest).subscribe(
       (res) => {
         this.membership = res;
         this.ref.close({
@@ -85,8 +88,10 @@ export class ApproveJoinOrganizationRequestComponent implements OnInit {
     const { role, ...membershipToUpdate } = { ...this.membership };
   
     const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
+    const organizationId = this.sessionService.organizationId;
+
   
-    this.membershipService.denyMembershipRequest(membershipRequest).subscribe(
+    this.membershipService.denyMembershipRequest(organizationId, membershipRequest).subscribe(
       (res) => {
         this.membership = res;
         this.ref.close({

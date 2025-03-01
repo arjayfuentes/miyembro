@@ -8,6 +8,8 @@ import { MembershipRequest } from 'src/app/core/models/membership-request';
 import { MembershipFilters } from 'src/app/core/models/membership-filters';
 import { Page } from '../models/page';
 import { UpdateMembershipRequests } from '../models/update-membership-requests';
+import { ApproveMembershipsRequest } from '../models/approve-memberships-request';
+import { DenyMembershipsRequest } from '../models/deny-memberships-request';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +24,12 @@ export class MembershipService {
     
   }
 
-  approveMembershipRequest(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId + '/approve', membership) as Observable<MembershipResponse>;
+  approveMembershipRequest(organizationId: string | null, membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/' + membership?.membershipId + '/approve', membership) as Observable<MembershipResponse>;
+  }
+
+  approveMembershipRequests(organizationId: string | null, approveMembershipsRequest: ApproveMembershipsRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/approve', approveMembershipsRequest) as Observable<MembershipResponse[]>;
   }
 
   deletMembershipFromOrganization(membership: MembershipRequest | undefined ) {
@@ -31,7 +37,7 @@ export class MembershipService {
   }
 
   deleteMembershipsFromOrganization(organizationId: string | null, memberships: MembershipRequest[]): Observable<string[]> {
-    const url = `${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId + '/memberships/bulk';
+    const url = `${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId + '/memberships/delete';
 
     return this.http.delete<string[]>(url, {
       body: memberships,
@@ -41,10 +47,25 @@ export class MembershipService {
     });
   }
 
-  denyMembershipRequest(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId + '/deny', membership) as Observable<MembershipResponse>;
+  deleteMembershipRequests(organizationId: string | null, memberships: MembershipRequest[]): Observable<string[]> {
+    const url = `${env.apiUrl}${this.baseUrl}/organizations/`+ organizationId + '/memberships/delete-requests';
+
+    return this.http.delete<string[]>(url, {
+      body: memberships,
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 
+  denyMembershipRequest(organizationId: string | null, membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/' + membership?.membershipId + '/deny', membership) as Observable<MembershipResponse>;
+  }
+
+  denyMembershipRequests(organizationId: string | null, denyMembershipsRequest: DenyMembershipsRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/deny', denyMembershipsRequest) as Observable<MembershipResponse[]>;
+  }
+  
   getMembershipByMemberIdAndOrganizationId(organizationId: string | undefined, memberId: string | undefined): Observable<MembershipResponse> {
     return this.http.get(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/members/' + memberId) as Observable<MembershipResponse>;
   }
@@ -75,12 +96,12 @@ export class MembershipService {
       return this.http.post(`${env.apiUrl}${this.baseUrl}/request`, joinOrganizationRequest) as Observable<MembershipResponse>;
   }
 
-  updateMembership(membership: MembershipRequest | undefined ) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/` + membership?.membershipId, membership) as Observable<MembershipResponse>;
+  updateMembershipFromOrganization(organizationId: string | null, membership: MembershipRequest | undefined ) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/' + membership?.membershipId, membership) as Observable<MembershipResponse>;
   }
 
-  updateMemberships(updateMembershipRequests: UpdateMembershipRequests) {
-    return this.http.put(`${env.apiUrl}${this.baseUrl}/bulk`, updateMembershipRequests) as Observable<MembershipResponse[]>;
+  updateMembershipsFromOrganization(organizationId: string | null, updateMembershipRequests: UpdateMembershipRequests) {
+    return this.http.put(`${env.apiUrl}${this.baseUrl}/organizations/` + organizationId + '/memberships/update', updateMembershipRequests) as Observable<MembershipResponse[]>;
   }
 
 }

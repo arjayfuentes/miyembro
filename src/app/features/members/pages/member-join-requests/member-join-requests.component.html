@@ -15,6 +15,10 @@
     [(sortField)]="sortField"
     [(sortOrder)]="sortOrder"
     dataKey="membershipId"
+    multiSelectButtonLabel="Multiple Requests"
+    [enableMultiSelectButton]="true"
+    [multiSelectButtonItems]="multiSelectButtonItems"
+    [(selectedItems)]="selectedMemberships"
   >
     <!-- template for review button -->
     <ng-template #nameColumn let-row>

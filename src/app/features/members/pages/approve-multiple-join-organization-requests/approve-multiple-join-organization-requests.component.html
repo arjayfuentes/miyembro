@@ -3,17 +3,25 @@
 >
   <!-- Member Details -->
   <div class="w-full max-w-lg flex justify-center">
-    <app-member-details [member]="membership?.member"></app-member-details>
+    <div>
+      <p-listbox [options]="memberships" [group]="true" class="w-full md:w-56">
+        <ng-template let-group #group>
+          <div class="flex items-center">
+            <app-member-details [member]="group?.member"></app-member-details>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
   </div>
 
   <!-- Membership Type Dropdown -->
   <div class="text-center">
-    <p>Choose a type of membership for {{ membership?.member?.email }}</p>
+    <p>Choose a type of membership for these requests</p>
   </div>
   <div class="w-full max-w-xs flex justify-center">
     <p-select
       [options]="membershipTypes"
-      [(ngModel)]="selectedMembership"
+      [(ngModel)]="selectedMembershipType"
       optionLabel="name"
       placeholder="Choose membership"
       [showClear]="true"
@@ -30,8 +38,8 @@
       [raised]="true"
       [rounded]="true"
       class="mb-2"
-      [disabled]="!selectedMembership"
-      (onClick)="approveJoinRequest()"
+      [disabled]="!selectedMembershipType"
+      (onClick)="onApproveJoinRequests()"
     />
     <p-button
       label="Deny"
@@ -41,7 +49,7 @@
       [rounded]="true"
       severity="danger"
       class="mb-2"
-      (onClick)="denyJoinRequest()"
+      (onClick)="onDenyJoinRequests()"
     />
     <p-button
       label="Cancel"
@@ -49,12 +57,12 @@
       severity="secondary"
       [raised]="true"
       [rounded]="true"
-      (onClick)="cancelApproveJoinRequest()"
+      (onClick)="onCancelApproveJoinRequests()"
     />
   </div>
-  <!-- <div class="w-full max-w-lg flex justify-center space-x-4">
+  <div class="w-full max-w-lg flex justify-center space-x-4">
     <p-button
-      label="Remove this member from the organization"
+      label="Delete these requests?"
       size="small"
       [raised]="true"
       [rounded]="true"
@@ -62,7 +70,7 @@
       class="mb-2"
       variant="text"
       styleClass="text-xs"
-      (onClick)="deleteRequests($event)"
+      (onClick)="onDeleteJoinRequests($event)"
     />
-  </div> -->
+  </div>
 </div>

@@ -18,6 +18,7 @@ import { MembershipStatusService } from 'src/app/core/services/membership-status
 import { MembershipRequest } from 'src/app/core/models/membership-request';
 import { ConfirmDialogService } from 'src/app/core/services/confirm-dialog.service';
 import { Router } from '@angular/router';
+import { SessionService } from 'src/app/core/services/session.service';
 
 @Component({
   selector: 'app-edit-membership',
@@ -53,6 +54,7 @@ export class EditMembershipComponent implements OnInit {
     private ref: DynamicDialogRef,
     private roleService: RoleService,
     private router: Router,
+    private sessionService: SessionService
   ) {
     if (config.data) {
       this.organizationId = config.data.organizationId;
@@ -102,8 +104,10 @@ export class EditMembershipComponent implements OnInit {
     const membership = this.membershipForm.value;
   
     const membershipRequest: MembershipRequest = membership as MembershipRequest;
+
+    const organizationId = this.sessionService.organizationId;
   
-    this.membershipService.updateMembership(membershipRequest).subscribe(
+    this.membershipService.updateMembershipFromOrganization(organizationId, membershipRequest).subscribe(
       (res) => {
         this.membership = res;
         this.ref.close({

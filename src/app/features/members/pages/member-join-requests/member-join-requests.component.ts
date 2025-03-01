@@ -17,9 +17,10 @@ import { MembershipFilters } from '../../../../core/models/membership-filters';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { MembershipRequest } from 'src/app/core/models/membership-request';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { MembershipStatusResponse } from 'src/app/core/models/membership-status-response';
 import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
+import { ApproveMultipleJoinOrganizationRequestsComponent } from '../approve-multiple-join-organization-requests/approve-multiple-join-organization-requests.component';
 
 @Component({
   selector: 'app-member-join-requests',
@@ -44,8 +45,10 @@ export class MemberJoinRequestsComponent implements OnInit {
   loading = false;
   memberships: MembershipResponse [] = [];
   membershipFilters: MembershipFilters | undefined;
+  multiSelectButtonItems: MenuItem[] = [];
   ref: DynamicDialogRef | undefined;
   rowsPerPage = 10;
+  selectedMemberships: MembershipResponse [] = [];
   session: Session | null = null;
   sortField = "member.firstName";
   sortOrder = 1;  
@@ -75,6 +78,14 @@ export class MemberJoinRequestsComponent implements OnInit {
       name: 'Country',
       value: 'member.memberAddress.country',
     }];
+    this.multiSelectButtonItems = [
+      {
+          label: 'Edit Requests',
+          command: () => {
+            this.editRequests();
+          }
+      }
+    ];
     const pageNo = this.first;
     this.getMembershipStatuses();
     this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
@@ -110,8 +121,9 @@ export class MemberJoinRequestsComponent implements OnInit {
     const { role, ...membershipToUpdate } = { ...membership };
   
     const membershipRequest: MembershipRequest = membershipToUpdate as MembershipRequest;
-  
-    this.membershipService.denyMembershipRequest(membershipRequest).subscribe(
+    const organizationId = this.sessionService.organizationId;
+
+    this.membershipService.denyMembershipRequest(organizationId, membershipRequest).subscribe(
       (res) => {
         this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
         this.alertService.success(this.router.url, 'Success', "Succesfully denied request");
@@ -156,6 +168,26 @@ export class MemberJoinRequestsComponent implements OnInit {
   sortChangeTable(event: any) {
     const pageNo = event.first / event.rowsPerPage;
     this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+  }
+
+
+  private editRequests() {
+    const organizationId = this.sessionService.organizationId;
+    this.ref = this.dialogService.open(ApproveMultipleJoinOrganizationRequestsComponent, {
+      header: 'Edit Requests',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: { '960px': '75vw', '640px': '90vw' },
+      data: { organizationId: organizationId , memberships: this.selectedMemberships },
+      closable: true
+    });
+
+    this.ref.onClose.subscribe((data: any) => {
+        if (data?.memberships) {
+          this.selectedMemberships = [];
+          this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+        }
+    });
   }
 
   private getMembershipStatuses() {

@@ -103,13 +103,7 @@ export class MemberListComponent implements OnInit {
           command: () => {
             this.editMemberships();
           }
-      },
-      {
-          label: 'Delete Memberships',
-          command: () => {
-            this.deleteMemberships();
-          }
-      },
+      }
     ];
     const pageNo = this.first;
     this.populateTable(pageNo, this.rowsPerPage, this.sortField, this.sortOrder);
@@ -183,10 +177,6 @@ export class MemberListComponent implements OnInit {
     const pageNo = event.first / event.rowsPerPage;
     this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
   } 
-
-  private deleteMemberships() {
-    console.log('edit memberships');
-  }
 
   private editMemberships() {
     const organizationId = this.sessionService.organizationId;
