@@ -1,4 +1,4 @@
-<p-tabs value="0" [lazy]="true" class="mt-1">
+<!-- <p-tabs value="0" [lazy]="true" class="mt-1">
   <p-tablist>
     <p-tab value="0">Members</p-tab>
     <p-tab value="1">Join Requests</p-tab>
@@ -11,4 +11,24 @@
       <app-member-join-requests></app-member-join-requests>
     </p-tabpanel>
   </p-tabpanels>
-</p-tabs>
+</p-tabs> -->
+<div class="mt-6 border-b">
+  <p-selectbutton
+    [options]="tabOptions"
+    [(ngModel)]="selectedTab"
+    optionLabel="label"
+    optionValue="value"
+    aria-labelledby="basic"
+  >
+    <ng-template #item let-item>
+      <i [class]="item.icon"></i>
+      <p>{{ item.label }}</p>
+    </ng-template>
+  </p-selectbutton>
+</div>
+<div *ngIf="selectedTab === 'members'">
+  <app-member-list></app-member-list>
+</div>
+<div *ngIf="selectedTab === 'requests'">
+  <app-member-join-requests></app-member-join-requests>
+</div>

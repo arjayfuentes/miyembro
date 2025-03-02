@@ -28,7 +28,24 @@
           size="large"
           shape="circle"
         />
-        {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+        <div>
+          {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+
+          <div class="mt-0">
+            <p-tag
+              styleClass="py-0"
+              [rounded]="true"
+              [severity]="
+                row['membershipStatus']['name'] === 'Active'
+                  ? 'success'
+                  : row['membershipStatus']['name'] === 'Expired'
+                  ? 'danger'
+                  : 'info'
+              "
+              [value]="row['membershipStatus']['name']"
+            />
+          </div>
+        </div>
       </div>
     </ng-template>
     <ng-template #addressColumn let-row>
@@ -44,12 +61,22 @@
     <ng-template #endDateColumn let-row>
       {{ row['endDate'] | date : 'MMMM d, y' }}
     </ng-template>
+    <ng-template #moreDetailsColumn let-row> </ng-template>
     <ng-template #editMembershipColumn let-row>
+      <p-button
+        label="Details"
+        size="small"
+        icon="pi pi-user"
+        severity="info"
+        [raised]="true"
+        [rounded]="true"
+        styleClass="py-1 mr-2 mb-2"
+      />
       <p-button
         label="Edit"
         icon="pi pi-pencil"
         size="small"
-        severity="secondary"
+        severity="help"
         [raised]="true"
         [rounded]="true"
         styleClass="py-1"

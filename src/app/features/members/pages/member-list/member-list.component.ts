@@ -29,6 +29,7 @@ import { MembershipService } from 'src/app/core/services/membership.service';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { EditMultipleMembershipsComponent } from '../edit-multiple-memberships/edit-multiple-memberships.component';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-member-list',
@@ -45,7 +46,8 @@ import { EditMultipleMembershipsComponent } from '../edit-multiple-memberships/e
     MultiSelectModule,
     ReactiveFormsModule,
     TableComponent,
-    TableModule
+    TableModule,
+    TagModule
   ],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.scss',
@@ -125,7 +127,7 @@ export class MemberListComponent implements OnInit {
 
   filterChangeTable(event:any) {
     const eventFilters = event.filters;
-    const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+    //const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
     const membershipTypes = eventFilters['membershipType.name'][0].value;
     const membershipRoles = eventFilters['role.name'][0].value;
 
@@ -139,7 +141,7 @@ export class MemberListComponent implements OnInit {
       memberEmail: eventFilters['member.email'][0].value,
       memberMemberAddressCity: memberMemberAddressCity,
       memberMemberAddressCountry: memberMemberAddressCountry,
-      membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
+     // membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
       membershipTypeNames: membershipTypes ? membershipTypes.map((filter: any) => filter.name) : null,
       roleNames:  membershipRoles ? membershipRoles.map((filter: any) => filter.name) : null,
       startDates:  eventFilters['startDate'][0].value,
@@ -175,7 +177,7 @@ export class MemberListComponent implements OnInit {
 
   sortChangeTable(event: any) {
     const pageNo = event.first / event.rowsPerPage;
-    this.populateTable(pageNo, event.rowsPerPage, event.sortField, event.sortOrder);
+    this.populateTable(0, event.rowsPerPage, event.sortField, event.sortOrder);
   } 
 
   private editMemberships() {
@@ -265,24 +267,24 @@ export class MemberListComponent implements OnInit {
           dataType: 'templateRef',
           colTemplateRefName: 'nameColumn',
           headerFilterType: 'text',
-          headerText: 'Name',
+          headerText: 'Name (status)',
           sortable: true
         },
-        {
-          dataField: 'member.email',
-          dataType: 'string',
-          colTemplateRefName: 'userFullnameColumn',
-          headerFilterType: 'text',
-          headerText: 'Email',
-          sortable: true
-        },
-        {
-          dataField: 'member.phoneNumber',
-          dataType: 'string',
-          colTemplateRefName: 'userFullnameColumn',
-          headerText: 'Mobile Number',
-          sortable: true
-        },
+        // {
+        //   dataField: 'member.email',
+        //   dataType: 'string',
+        //   colTemplateRefName: 'userFullnameColumn',
+        //   headerFilterType: 'text',
+        //   headerText: 'Email',
+        //   sortable: true
+        // },
+        // {
+        //   dataField: 'member.phoneNumber',
+        //   dataType: 'string',
+        //   colTemplateRefName: 'userFullnameColumn',
+        //   headerText: 'Mobile Number',
+        //   sortable: true
+        // },
         {
           dataField: 'member.memberAddress.city',
           dataType: 'templateRef',
@@ -292,14 +294,14 @@ export class MemberListComponent implements OnInit {
           options: this.addressOptions,
           sortable: true
         },
-        {
-          dataField: 'membershipStatus.name',
-          dataType: 'string',
-          headerFilterType: 'select',
-          headerText: 'Membership Status',
-          options: this.membershipStatuses,
-          sortable: true
-        },
+        // {
+        //   dataField: 'membershipStatus.name',
+        //   dataType: 'string',
+        //   headerFilterType: 'select',
+        //   headerText: 'Membership Status',
+        //   options: this.membershipStatuses,
+        //   sortable: true
+        // },
         {
           dataField: 'membershipType.name',
           dataType: 'string',
@@ -314,8 +316,6 @@ export class MemberListComponent implements OnInit {
           headerFilterType: 'select',
           headerText: 'Role',
           options: this.roles,
-          sortable: true
-
         },
         {
           dataField: 'startDate',
@@ -337,7 +337,7 @@ export class MemberListComponent implements OnInit {
           dataField: 'editMembership',
           dataType: 'templateRef',
           colTemplateRefName: 'editMembershipColumn',
-          headerText: 'Edit'
+          headerText: 'Details/Edit Membership'
         },
       ],
       rows: this.memberships,
