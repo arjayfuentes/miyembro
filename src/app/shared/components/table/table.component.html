@@ -20,27 +20,33 @@
   #dt1
 >
   <ng-template #caption>
-    <div class="flex">
-      <p-button
-        label="Clear Filters"
-        [outlined]="true"
-        icon="pi pi-filter-slash"
-        (click)="clear(dt1)"
-        size="small"
-      />
-      <div class="general-filter-button px-2">
+    <div class="flex flex-col md:flex-row gap-2 md:gap-4">
+      <div>
+        <p-button
+          label="Clear Filters"
+          [outlined]="true"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+          size="small"
+        />
+      </div>
+
+      <div class="general-filter-button">
         <ng-container *ngIf="customFilterButton">
           <ng-container *ngTemplateOutlet="customFilterButton"></ng-container>
         </ng-container>
       </div>
-      <p-splitbutton
-        *ngIf="enableMultiSelectButton && selectedItems.length !== 0"
-        [label]="multiSelectButtonLabel"
-        [model]="multiSelectButtonItems"
-        size="small"
-        severity="info"
-        outlined
-      />
+
+      <div>
+        <p-splitbutton
+          *ngIf="enableMultiSelectButton && selectedItems.length !== 0"
+          [label]="multiSelectButtonLabel"
+          [model]="multiSelectButtonItems"
+          size="small"
+          severity="info"
+          outlined
+        />
+      </div>
     </div>
   </ng-template>
   <ng-template #header>
