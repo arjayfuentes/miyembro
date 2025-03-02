@@ -21,20 +21,19 @@
 >
   <ng-template #caption>
     <div class="flex flex-col md:flex-row gap-2 md:gap-4">
+      <div class="general-filter-button">
+        <ng-container *ngIf="customFilterButton">
+          <ng-container *ngTemplateOutlet="customFilterButton"></ng-container>
+        </ng-container>
+      </div>
       <div>
         <p-button
-          label="Clear Filters"
+          label="Clear Column Filters"
           [outlined]="true"
           icon="pi pi-filter-slash"
           (click)="clear(dt1)"
           size="small"
         />
-      </div>
-
-      <div class="general-filter-button">
-        <ng-container *ngIf="customFilterButton">
-          <ng-container *ngTemplateOutlet="customFilterButton"></ng-container>
-        </ng-container>
       </div>
 
       <div>

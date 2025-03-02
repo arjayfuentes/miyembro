@@ -120,8 +120,8 @@ export class MemberListComponent implements OnInit {
   }
 
   clearFilterChangeTable() {
-    this.selectedMembershipStatuses = [];
     this.membershipFilters = {} as MembershipFilters;
+    this.membershipFilters.membershipStatusNames = this.selectedMembershipStatuses.map((filter: any) => filter.name);
     this.sortField = "member.firstName";
     this.sortOrder = 1;
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
@@ -311,14 +311,6 @@ export class MemberListComponent implements OnInit {
           options: this.addressOptions,
           sortable: true
         },
-        // {
-        //   dataField: 'membershipStatus.name',
-        //   dataType: 'string',
-        //   headerFilterType: 'select',
-        //   headerText: 'Membership Status',
-        //   options: this.membershipStatuses,
-        //   sortable: true
-        // },
         {
           dataField: 'membershipType.name',
           dataType: 'string',

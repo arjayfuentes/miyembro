@@ -21,6 +21,9 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { MembershipStatusResponse } from 'src/app/core/models/membership-status-response';
 import { MembershipStatusService } from 'src/app/core/services/membership-status.service';
 import { ApproveMultipleJoinOrganizationRequestsComponent } from '../approve-multiple-join-organization-requests/approve-multiple-join-organization-requests.component';
+import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-member-join-requests',
@@ -31,7 +34,10 @@ import { ApproveMultipleJoinOrganizationRequestsComponent } from '../approve-mul
     CardModule,
     CommonModule,
     DynamicDialogModule,
-    TableComponent
+    FormsModule,
+    MultiSelectModule,
+    TableComponent,
+    TagModule
   ],
   templateUrl: './member-join-requests.component.html',
   styleUrl: './member-join-requests.component.scss',
@@ -49,6 +55,7 @@ export class MemberJoinRequestsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   rowsPerPage = 10;
   selectedMemberships: MembershipResponse [] = [];
+  selectedJoinRequestsMembershipStatuses: MembershipStatusResponse [] =[];
   session: Session | null = null;
   sortField = "member.firstName";
   sortOrder = 1;  
@@ -111,6 +118,7 @@ export class MemberJoinRequestsComponent implements OnInit {
   
   clearFilterChangeTable() {
       this.membershipFilters = {} as MembershipFilters;
+      this.membershipFilters.membershipStatusNames = this.selectedJoinRequestsMembershipStatuses.map((filter: any) => filter.name);
       this.sortField = "member.firstName";
       this.sortOrder = 1;
       this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
@@ -141,20 +149,32 @@ export class MemberJoinRequestsComponent implements OnInit {
     const memberMemberAddressCity = memberAddress && memberAddress.dataField !== 'member.memberAddress.country' ? memberAddress.value : null;
     const memberMemberAddressCountry = memberAddress && memberAddress.dataField === 'member.memberAddress.country' ? memberAddress.value : null;
         
-    const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+    //const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+    const membershipStatuses = this.selectedJoinRequestsMembershipStatuses.map((filter: any) => filter.name);
 
     const filters = {
       memberFirstName: eventFilters['member.firstName'][0].value,
       memberEmail: eventFilters['member.email'][0].value,
       memberMemberAddressCity: memberMemberAddressCity,
       memberMemberAddressCountry: memberMemberAddressCountry,
-      membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
+      membershipStatusNames: membershipStatuses,
+      //membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
       membershipTypeNames: null,
       roleNames:  null,
       startDates:  null,
       endDates:  null,
     }
     this.membershipFilters = filters;
+    this.sortField = "member.firstName";
+    this.sortOrder = 1;
+    this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+  }
+
+  onMembershipStatusChange(event: any) {
+    if (!this.membershipFilters) {
+      this.membershipFilters = {} as MembershipFilters;
+    }
+    this.membershipFilters.membershipStatusNames = this.selectedJoinRequestsMembershipStatuses.map((filter: any) => filter.name);
     this.sortField = "member.firstName";
     this.sortOrder = 1;
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
@@ -253,14 +273,14 @@ export class MemberJoinRequestsComponent implements OnInit {
           headerText: 'Mobile Number',
           sortable: true
         },
-        {
-          dataField: 'membershipStatus.name',
-          dataType: 'string',
-          headerFilterType: 'select',
-          headerText: 'Status',
-          options: this.joinRequestsMembershipStatuses,
-          sortable: true
-        },
+        // {
+        //   dataField: 'membershipStatus.name',
+        //   dataType: 'string',
+        //   headerFilterType: 'select',
+        //   headerText: 'Status',
+        //   options: this.joinRequestsMembershipStatuses,
+        //   sortable: true
+        // },
         {
           dataField: 'member.memberAddress.city',
           dataType: 'templateRef',

@@ -21,6 +21,32 @@
     [(selectedItems)]="selectedMemberships"
   >
     <!-- template for review button -->
+    <ng-template #customFilterButton>
+      <p-multiselect
+        [options]="joinRequestsMembershipStatuses"
+        [(ngModel)]="selectedJoinRequestsMembershipStatuses"
+        placeholder="Filter by status"
+        optionLabel="name"
+        display="chip"
+        (onChange)="onMembershipStatusChange($event)"
+        styleClass="w-full md:min-w-[350px] multiselect-status"
+        size="small"
+      >
+        <ng-template #header>
+          <div class="font-medium px-3 py-2">Membership Status</div>
+        </ng-template>
+        <ng-template let-status #item>
+          <div class="flex items-center">
+            <p-tag
+              styleClass="py-0 mt-1"
+              [rounded]="true"
+              [severity]="status.name === 'Pending' ? 'warn' : 'secondary'"
+              [value]="status.name"
+            />
+          </div>
+        </ng-template>
+      </p-multiselect>
+    </ng-template>
     <ng-template #nameColumn let-row>
       <div style="display: flex; align-items: center">
         <p-avatar
@@ -29,7 +55,22 @@
           size="large"
           shape="circle"
         />
-        {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+        <div>
+          {{ row['member']['firstName'] + ' ' + row['member']['lastName'] }}
+
+          <div class="mt-0">
+            <p-tag
+              styleClass="py-0"
+              [rounded]="true"
+              [severity]="
+                row['membershipStatus']['name'] === 'Pending'
+                  ? 'warn'
+                  : 'secondary'
+              "
+              [value]="row['membershipStatus']['name']"
+            />
+          </div>
+        </div>
       </div>
     </ng-template>
     <ng-template #addressColumn let-row>
