@@ -4,11 +4,13 @@ import { TabsModule } from 'primeng/tabs';
 import { MemberJoinRequestsComponent } from '../member-join-requests/member-join-requests.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-member-page',
   imports: [
+    CommonModule,
     MemberListComponent,
     MemberJoinRequestsComponent,
     FormsModule,
