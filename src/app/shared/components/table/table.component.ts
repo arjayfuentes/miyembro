@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Table } from '../../../core/models/table';
@@ -36,6 +36,7 @@ import { MenuItem } from 'primeng/api';
 export class TableComponent implements AfterContentInit, OnChanges{
 
   @ContentChildren(TemplateRef) tempList!: QueryList<TemplateRef<any>>;
+  @ContentChild('customFilterButton') customFilterButton!: TemplateRef<any>;
 
   @Input() dataKey = "id";
   @Input() enableMultiSelectButton = false;

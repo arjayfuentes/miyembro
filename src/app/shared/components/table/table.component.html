@@ -12,7 +12,7 @@
   (onPage)="onPageChange($event)"
   [dataKey]="dataKey"
   [scrollable]="true"
-  [tableStyle]="{ 'min-width': '50rem' }"
+  [tableStyle]="{ 'min-width': '85rem' }"
   [lazy]="true"
   [loading]="false"
   (onSort)="onSort($event)"
@@ -28,24 +28,30 @@
         (click)="clear(dt1)"
         size="small"
       />
+      <div class="general-filter-button px-2">
+        <ng-container *ngIf="customFilterButton">
+          <ng-container *ngTemplateOutlet="customFilterButton"></ng-container>
+        </ng-container>
+      </div>
       <p-splitbutton
         *ngIf="enableMultiSelectButton && selectedItems.length !== 0"
         [label]="multiSelectButtonLabel"
         [model]="multiSelectButtonItems"
-        styleClass="ml-3"
         size="small"
+        severity="info"
         outlined
       />
     </div>
   </ng-template>
   <ng-template #header>
     <tr>
-      <th style="width: 4rem">
+      <th style="width: 0.5% !important">
         <p-tableHeaderCheckbox />
       </th>
       <th
         *ngFor="let col of table.columns"
         [pSortableColumn]="col.dataField ?? ''"
+        [ngStyle]="col.columnWidth ? { width: col.columnWidth } : {}"
       >
         <div class="flex items-center">
           {{ col.headerText }}
@@ -226,7 +232,7 @@
 
   <ng-template #body let-rowData>
     <tr *ngIf="rowData">
-      <td>
+      <td style="width: 0.5% !important">
         <p-tableCheckbox [value]="rowData" />
       </td>
       <td

@@ -20,8 +20,42 @@
     dataKey="membershipId"
     [(selectedItems)]="selectedMemberships"
   >
+    <ng-template #customFilterButton>
+      <p-multiselect
+        [options]="membershipStatuses"
+        [(ngModel)]="selectedMembershipStatuses"
+        (onChange)="onMembershipStatusChange($event)"
+        placeholder="Filter by status"
+        optionLabel="name"
+        display="chip"
+        styleClass="w-full md:min-w-[350px] multiselect-status"
+        size="small"
+      >
+        <ng-template #header>
+          <div class="font-medium px-3 py-2">Membership Status</div>
+        </ng-template>
+        <ng-template let-status #item>
+          <div class="flex items-center">
+            <p-tag
+              styleClass="py-0 mt-1"
+              [rounded]="true"
+              [severity]="
+                status.name === 'Active'
+                  ? 'success'
+                  : status.name === 'Expired'
+                  ? 'danger'
+                  : status.name === 'Cancelled'
+                  ? 'info'
+                  : 'secondary'
+              "
+              [value]="status.name"
+            />
+          </div>
+        </ng-template>
+      </p-multiselect>
+    </ng-template>
     <ng-template #nameColumn let-row>
-      <div style="display: flex; align-items: center">
+      <div style="display: flex; align-items: center; width: '500px'">
         <p-avatar
           [image]="row['member']['profilePicUrl']"
           class="mr-2"

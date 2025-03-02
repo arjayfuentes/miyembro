@@ -74,6 +74,7 @@ export class MemberListComponent implements OnInit {
   title = 'Members';
   totalRecords = 0; 
   selectedMemberships: MembershipResponse [] = [];
+  selectedMembershipStatuses: MembershipStatusResponse [] = [];
   session: Session | null = null;
 
   constructor(
@@ -119,6 +120,7 @@ export class MemberListComponent implements OnInit {
   }
 
   clearFilterChangeTable() {
+    this.selectedMembershipStatuses = [];
     this.membershipFilters = {} as MembershipFilters;
     this.sortField = "member.firstName";
     this.sortOrder = 1;
@@ -127,7 +129,8 @@ export class MemberListComponent implements OnInit {
 
   filterChangeTable(event:any) {
     const eventFilters = event.filters;
-    //const membershipStatuses = eventFilters['membershipStatus.name'][0].value;
+    //const memberEmail = eventFilters['member.email'][0].value;
+    const membershipStatuses = this.selectedMembershipStatuses.map((filter: any) => filter.name);
     const membershipTypes = eventFilters['membershipType.name'][0].value;
     const membershipRoles = eventFilters['role.name'][0].value;
 
@@ -138,9 +141,11 @@ export class MemberListComponent implements OnInit {
         
     const filters = {
       memberFirstName: eventFilters['member.firstName'][0].value,
-      memberEmail: eventFilters['member.email'][0].value,
+      memberEmail: null,
+     // memberEmail: memberEmail,
       memberMemberAddressCity: memberMemberAddressCity,
       memberMemberAddressCountry: memberMemberAddressCountry,
+      membershipStatusNames: membershipStatuses,
      // membershipStatusNames: membershipStatuses? membershipStatuses.map((filter: any) => filter.name) : null,
       membershipTypeNames: membershipTypes ? membershipTypes.map((filter: any) => filter.name) : null,
       roleNames:  membershipRoles ? membershipRoles.map((filter: any) => filter.name) : null,
@@ -169,6 +174,17 @@ export class MemberListComponent implements OnInit {
         }
     });
   }
+
+  onMembershipStatusChange(event: any) {
+    if (!this.membershipFilters) {
+      this.membershipFilters = {} as MembershipFilters;
+    }
+    this.membershipFilters.membershipStatusNames = this.selectedMembershipStatuses.map((filter: any) => filter.name);
+    this.sortField = "member.firstName";
+    this.sortOrder = 1;
+    this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
+  }
+  
 
   pageChangeTable(event: any) {
     const pageNo = event.first / event.rowsPerPage;
@@ -268,7 +284,8 @@ export class MemberListComponent implements OnInit {
           colTemplateRefName: 'nameColumn',
           headerFilterType: 'text',
           headerText: 'Name (status)',
-          sortable: true
+          sortable: true,
+          columnWidth: '15%'
         },
         // {
         //   dataField: 'member.email',
