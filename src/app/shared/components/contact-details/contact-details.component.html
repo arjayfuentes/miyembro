@@ -32,7 +32,7 @@
 
   <div>
     <h2
-      class="text-lg font-medium text-purple-700 mb-6"
+      class="text-lg font-medium text-purple-700 mb-3"
       *ngIf="showTitleHeader"
     >
       Contact Details:
@@ -54,6 +54,43 @@
       <span class="pi pi-globe mr-2"></span>
       <span class="text-muted-color">
         {{ websiteUrl }}
+      </span>
+    </div>
+  </div>
+  <div *ngIf="showMembership">
+    <h2
+      class="text-lg font-medium text-purple-700 mb-3"
+      *ngIf="showTitleHeader"
+    >
+      Membership:
+      <ng-content select="[edit-organization-contact-details]"></ng-content>
+    </h2>
+    <div class="mt-2 flex items-center" *ngIf="membership?.membershipStatus">
+      <span class="pi pi-users mr-2"></span>
+      <span class="text-muted-color">
+        {{ membership?.membershipStatus?.name }}
+      </span>
+    </div>
+    <div class="mt-2 flex items-center" *ngIf="membership?.membershipType">
+      <span class="pi pi-credit-card mr-2"></span>
+      <span class="text-muted-color">
+        {{ membership?.membershipType?.name }}
+      </span>
+    </div>
+    <div class="mt-2 flex items-center" *ngIf="membership?.role">
+      <span class="pi pi-user mr-2"></span>
+      <span class="text-muted-color"> Role: {{ membership?.role?.name }} </span>
+    </div>
+    <div class="mt-2 flex items-center" *ngIf="membership?.startDate">
+      <span class="pi pi-calendar-plus mr-2"></span>
+      <span class="text-muted-color">
+        Start Date: {{ membership?.startDate | date : 'MMMM d, y' }}
+      </span>
+    </div>
+    <div class="mt-2 flex items-center" *ngIf="membership?.endDate">
+      <span class="pi pi-calendar-minus mr-2"></span>
+      <span class="text-muted-color">
+        Ebd Date: {{ membership?.endDate | date : 'MMMM d, y' }}
       </span>
     </div>
   </div>

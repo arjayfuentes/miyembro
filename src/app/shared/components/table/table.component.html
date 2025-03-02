@@ -17,10 +17,11 @@
   [loading]="false"
   (onSort)="onSort($event)"
   (onFilter)="onFilter($event)"
+  styleClass="text-sm sm:text-sm md:text-base"
   #dt1
 >
   <ng-template #caption>
-    <div class="flex flex-col md:flex-row gap-2 md:gap-4">
+    <div class="flex flex-col md:flex-row gap-2 md:gap-3 filter-buttons p-0">
       <div class="general-filter-button">
         <ng-container *ngIf="customFilterButton">
           <ng-container *ngTemplateOutlet="customFilterButton"></ng-container>
@@ -33,6 +34,7 @@
           icon="pi pi-filter-slash"
           (click)="clear(dt1)"
           size="small"
+          styleClass="w-[180px]"
         />
         <p-splitbutton
           *ngIf="enableMultiSelectButton && selectedItems.length !== 0"
@@ -41,6 +43,7 @@
           size="small"
           severity="info"
           outlined
+          styleClass="multiple-select-splitbutton-table w-[180px]"
         />
       </div>
 
@@ -49,10 +52,11 @@
   </ng-template>
   <ng-template #header>
     <tr>
-      <th style="width: 0.5% !important">
+      <th style="width: 0.5% !important" class="py-2 sm:py-2 md:py-3">
         <p-tableHeaderCheckbox />
       </th>
       <th
+        class="py-2 sm:py-2 md:py-3"
         *ngFor="let col of table.columns"
         [pSortableColumn]="col.dataField ?? ''"
         [ngStyle]="col.columnWidth ? { width: col.columnWidth } : {}"
@@ -236,10 +240,11 @@
 
   <ng-template #body let-rowData>
     <tr *ngIf="rowData">
-      <td style="width: 0.5% !important">
+      <td style="width: 0.5% !important" class="py-2 sm:py-2 md:py-3">
         <p-tableCheckbox [value]="rowData" />
       </td>
       <td
+        class="py-2 sm:py-2 md:py-3"
         *ngFor="let col of table?.columns"
         [style.text-align]="col.textAlign ? col.textAlign : 'left'"
       >

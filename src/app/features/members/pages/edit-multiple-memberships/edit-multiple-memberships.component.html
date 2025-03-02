@@ -1,10 +1,15 @@
 <div
-  class="flex flex-col items-center justify-center px-4 py-6 space-y-5 w-[80vw] h-[85vh] sm:w-[80vw] sm:w-[60vh] md:w-[75vw] md:h-[85vh] lg:w-[50vw] lg:h-[70vh] xl:w-[50vw] xl:h-[70vh]"
+  class="text-sm sm:text-sm md:text-base flex flex-col items-center px-4 sm:py-1 md:py-6 space-y-2 sm:space-y-1 md:m:space-y-4 w-[80vw] sm:w-[80vw] md:w-[70vw] lg:w-[50vw] xl:w-[50vw] p-0"
 >
   <!-- Member Details -->
   <div class="w-full flex justify-center">
     <div>
-      <p-listbox [options]="memberships" [group]="true" class="w-full md:w-56">
+      <p-listbox
+        [options]="memberships"
+        [group]="true"
+        class="w-full md:w-56"
+        scrollHeight="150px"
+      >
         <ng-template let-group #group>
           <div class="flex items-center">
             <app-member-details [member]="group?.member"></app-member-details>
@@ -13,10 +18,12 @@
       </p-listbox>
     </div>
   </div>
-  <p>You are editing these {{ memberships.length }} member/s</p>
+
+  <p class="text-center">
+    You are editing these {{ memberships.length }} member/s
+  </p>
 
   <!-- Membership Type Dropdown -->
-
   <div class="w-full flex justify-center">
     <app-membership-form
       [membershipForm]="membershipForm"

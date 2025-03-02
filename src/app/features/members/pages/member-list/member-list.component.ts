@@ -30,6 +30,7 @@ import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { EditMultipleMembershipsComponent } from '../edit-multiple-memberships/edit-multiple-memberships.component';
 import { TagModule } from 'primeng/tag';
+import { ViewMemberDetailsComponent } from '../view-member-details/view-member-details.component';
 
 @Component({
   selector: 'app-member-list',
@@ -184,6 +185,17 @@ export class MemberListComponent implements OnInit {
     this.sortOrder = 1;
     this.populateTable(0, this.rowsPerPage, this.sortField, this.sortOrder);
   }
+
+  onViewMemberDetails(row: any) {
+    this.ref = this.dialogService.open(ViewMemberDetailsComponent, {
+      header: 'Member Details',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: { '960px': '75vw', '640px': '90vw' },
+      data: { organizationId: row.organizationId, membership: row, member: row.member },
+      closable: true
+    });
+  }
   
 
   pageChangeTable(event: any) {
@@ -220,6 +232,8 @@ export class MemberListComponent implements OnInit {
     this.membershipStatusService.getApprovedMembershipStatuses().subscribe(
       (res) => {
         this.membershipStatuses = res;
+        this.selectedMembershipStatuses = this.membershipStatuses.filter(status => status.name === 'Active');
+        this.onMembershipStatusChange(null);
       },
       (err: any) => {
         console.log(err);

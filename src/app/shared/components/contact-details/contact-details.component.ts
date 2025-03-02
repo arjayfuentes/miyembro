@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Address } from '../../../core/models/address';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { MembershipResponse } from 'src/app/core/models/membership-response';
 
 @Component({
   selector: 'app-contact-details',
@@ -18,5 +19,8 @@ export class ContactDetailsComponent {
   @Input() showTitleHeader = false;
   @Input() textSize = 'normal';
   @Input() websiteUrl: string | undefined;
+  @Input() showMembership = false;
+  @Input() membership: MembershipResponse | undefined;
+
 
 }

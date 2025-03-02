@@ -1,18 +1,4 @@
-<!-- <p-tabs value="0" [lazy]="true" class="mt-1">
-  <p-tablist>
-    <p-tab value="0">Members</p-tab>
-    <p-tab value="1">Join Requests</p-tab>
-  </p-tablist>
-  <p-tabpanels>
-    <p-tabpanel value="0">
-      <app-member-list></app-member-list>
-    </p-tabpanel>
-    <p-tabpanel value="1">
-      <app-member-join-requests></app-member-join-requests>
-    </p-tabpanel>
-  </p-tabpanels>
-</p-tabs> -->
-<div class="mt-5 border-b">
+<div class="mt-2 sm:mt-2 md:mt-5 border-b">
   <p-selectbutton
     [options]="tabOptions"
     [(ngModel)]="selectedTab"
@@ -22,7 +8,7 @@
   >
     <ng-template #item let-item>
       <i [class]="item.icon"></i>
-      <p>{{ item.label }}</p>
+      <p class="text-sm sm:text-sm md:text-base">{{ item.label }}</p>
     </ng-template>
   </p-selectbutton>
 </div>

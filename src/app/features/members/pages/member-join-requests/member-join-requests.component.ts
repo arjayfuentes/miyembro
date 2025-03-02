@@ -214,6 +214,8 @@ export class MemberJoinRequestsComponent implements OnInit {
     this.membershipStatusService.getJoinReqqestsMembershipStatuses().subscribe(
       (res) => {
         this.joinRequestsMembershipStatuses = res;
+        this.selectedJoinRequestsMembershipStatuses = this.joinRequestsMembershipStatuses.filter(status => status.name === 'Pending');
+        this.onMembershipStatusChange(null);
       },
       (err: any) => {
         console.log(err);
