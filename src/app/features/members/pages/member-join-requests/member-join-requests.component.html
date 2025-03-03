@@ -87,7 +87,8 @@
         size="small"
         [raised]="true"
         [rounded]="true"
-        styleClass="mr-2 mb-2 py-1"
+        styleClass="mr-2 mb-2 py-1 text-xs sm:text-xs md:text-sm
+        "
         *ngIf="row['membershipStatus']['name'] === 'Pending'"
         (onClick)="approveJoinRequest(row)"
       />
@@ -98,7 +99,8 @@
         severity="danger"
         [raised]="true"
         [rounded]="true"
-        styleClass="py-1"
+        styleClass="py-1 text-xs sm:text-xs md:text-sm
+        "
         *ngIf="row['membershipStatus']['name'] === 'Pending'"
         (onClick)="denyJoinRequest(row)"
       />

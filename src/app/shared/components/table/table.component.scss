@@ -6,3 +6,12 @@
         z-index: 9999; 
     }
 }
+
+:host ::ng-deep {
+    .p-datatable-header  {
+        padding: 5px;
+        padding-bottom:0px;
+    }
+}
+
+

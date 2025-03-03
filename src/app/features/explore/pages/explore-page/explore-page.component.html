@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col md:flex-row md:justify-left p-2 gap-4"
+  class="flex flex-col md:flex-row md:justify-left py-2 sm:py-2 md:py-4 gap-2 sm:gap-2 md:gap-4 text-sm sm:text-sm md:text-base"
   style="position: sticky; top: 0; z-index: 10; background: white"
 >
   <!-- Search by name -->
@@ -8,7 +8,7 @@
       [(ngModel)]="name"
       pInputText
       placeholder="Search organization"
-      class="w-full md:w-auto h-10 sm:h-6 md:h-10 p-2 sm:p-1"
+      class="w-full md:w-auto h-9 sm:h-9 md:h-11 text-sm sm:text-sm md:text-base"
     />
   </div>
 
@@ -24,7 +24,7 @@
         placeholder="Filter by country"
         (onChange)="getCities($event)"
         [showClear]="true"
-        class="w-full"
+        class="w-full h-9 sm:h-9 md:h-11 text-sm sm:text-sm md:text-base"
       />
     </div>
     <div class="w-full xs:w-1/2 sm:w-1/2 md:w-56">
@@ -36,7 +36,7 @@
         optionValue="value"
         placeholder="Filter by city"
         [showClear]="true"
-        class="w-full"
+        class="w-full h-9 sm:h-9 md:h-11 text-sm sm:text-sm md:text-base"
       />
     </div>
   </div>

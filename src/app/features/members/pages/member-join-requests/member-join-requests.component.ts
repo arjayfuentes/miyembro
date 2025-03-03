@@ -268,13 +268,13 @@ export class MemberJoinRequestsComponent implements OnInit {
           headerFilterType: 'text',
           sortable: true
         },
-        {
-          dataField: 'member.phoneNumber',
-          dataType: 'string',
-          colTemplateRefName: 'userFullnameColumn',
-          headerText: 'Mobile Number',
-          sortable: true
-        },
+        // {
+        //   dataField: 'member.phoneNumber',
+        //   dataType: 'string',
+        //   colTemplateRefName: 'userFullnameColumn',
+        //   headerText: 'Mobile Number',
+        //   sortable: true
+        // },
         // {
         //   dataField: 'membershipStatus.name',
         //   dataType: 'string',
