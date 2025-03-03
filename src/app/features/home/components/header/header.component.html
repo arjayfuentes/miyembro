@@ -1,11 +1,19 @@
 <section class="bg-gray-50 dark:bg-gray-900 login-background"></section>
 
-<p-menubar [model]="items" styleClass="app-menu-bar">
+<p-menubar
+  [model]="items"
+  styleClass="app-menu-bar text-sm sm:text-sm md:text-base"
+>
   <ng-template #item let-item>
     <ng-container *ngIf="item.route; else urlRef">
       <a [routerLink]="item.route" class="p-menubar-item-link">
-        <span [class]="item.icon"></span>
-        <span class="ml-2">{{ item.label }}</span>
+        <span
+          [class]="item.icon"
+          class="ml-2 text-sm sm:text-sm md:text-base"
+        ></span>
+        <span class="ml-2 text-sm sm:text-sm md:text-base">{{
+          item.label
+        }}</span>
       </a>
     </ng-container>
     <ng-template #urlRef>
@@ -14,26 +22,36 @@
         [href]="item.url"
         class="p-menubar-item-link"
       >
-        <span [class]="item.icon"></span>
-        <span class="ml-2">{{ item.label }}</span>
+        <span
+          [class]="item.icon"
+          class="text-sm sm:text-sm md:text-base"
+        ></span>
+        <span class="ml-2 text-sm sm:text-sm md:text-base">{{
+          item.label
+        }}</span>
       </a>
     </ng-template>
     <ng-template #noLink>
       <div class="p-menubar-item-link">
-        <span [class]="item.icon"></span>
-        <span class="ml-2">{{ item.label }}</span>
+        <span
+          [class]="item.icon"
+          class="text-sm sm:text-sm md:text-base"
+        ></span>
+        <span class="ml-2 text-sm sm:text-sm md:text-base">{{
+          item.label
+        }}</span>
         <span class="pi pi-fw pi-angle-down ml-2"></span>
       </div>
     </ng-template>
   </ng-template>
   <ng-template #end>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 text-xs sm:text-xs md:text-base">
       <div class="flex flex-wrap">
         <div class="p-2">
           <p-button
             label="Create your own Organization"
             severity="help"
-            styleClass="w-full"
+            styleClass="w-fulls"
             icon="pi pi-users"
             [raised]="true"
             variant="text"
