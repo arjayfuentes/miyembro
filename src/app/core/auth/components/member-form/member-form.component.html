@@ -1,6 +1,6 @@
 <app-background>
   <div
-    class="max-w-3xl max-sm:max-w-lg mx-auto min-h-screen flex flex-col items-center justify-center"
+    class="max-w-3xl max-sm:max-w-lg mx-auto min-h-screen flex flex-col items-center justify-center text-sm sm:text-sm md:text-base"
   >
     <h2
       class="text-lg font-medium text-purple-700"
@@ -12,10 +12,13 @@
       <form [formGroup]="memberForm" autocomplete="off">
         <div class="grid gap-5 w-full">
           <div class="p-5 grid place-items-center">
-            <app-avatar formControlName="profilePicUrl"></app-avatar>
+            <app-avatar
+              formControlName="profilePicUrl"
+              avatarSize="medium"
+            ></app-avatar>
           </div>
         </div>
-        <div class="grid sm:grid-cols-2 gap-5">
+        <div class="grid sm:grid-cols-2 gap-2 sm:gap-2 md:gap-5">
           <div
             *ngIf="
               formType === MemberFormType.ADD_MEMBER ||
@@ -26,6 +29,7 @@
               <input
                 pInputText
                 id="firstName"
+                class="text-sm sm:text-sm md:text-base"
                 formControlName="firstName"
                 autocomplete="off"
                 pTooltip="{{
@@ -53,6 +57,7 @@
               <input
                 pInputText
                 id="lastName"
+                class="text-sm sm:text-sm md:text-base"
                 formControlName="lastName"
                 autocomplete="off"
                 pTooltip="{{ f['lastName'].errors | formErrors : 'last name' }}"
@@ -98,6 +103,7 @@
                 showIcon
                 iconDisplay="input"
                 dateFormat="yy-mm-dd"
+                styleClass="text-xs sm:text-xs md:text-base"
                 pTooltip="{{
                   f['birthDate'].errors | formErrors : 'birthDate'
                 }}"
@@ -107,7 +113,7 @@
                 "
                 [styleClass]="
                   f['birthDate'].invalid && f['birthDate'].touched
-                    ? 'border-2 border-red-500 border-error'
+                    ? 'border-2 border-red-500 border-error '
                     : ''
                 "
               />
@@ -119,7 +125,10 @@
         <h2 class="text-lg font-medium text-purple-700 mb-3">
           Address details:
         </h2>
-        <div class="grid sm:grid-cols-2 gap-6" formGroupName="memberAddress">
+        <div
+          class="grid sm:grid-cols-2 gap-2 sm:gap-2 md:gap-5"
+          formGroupName="memberAddress"
+        >
           <div>
             <p-iftalabel class="w-full">
               <p-select
@@ -261,7 +270,7 @@
                 id="postalCode"
                 formControlName="postalCode"
                 type="text"
-                class="w-full"
+                class="w-full text-sm sm:text-sm md:text-base"
                 pTooltip="{{
                   getControlErrors('memberAddress', 'postalCode')
                     | formErrors : 'postalCode'
@@ -287,7 +296,7 @@
                 id="street"
                 formControlName="street"
                 type="text"
-                class="w-full"
+                class="w-full text-sm sm:text-sm md:text-base"
                 pTooltip="{{
                   getControlErrors('memberAddress', 'street')
                     | formErrors : 'street'
@@ -307,7 +316,7 @@
             </p-floatlabel>
           </div>
         </div>
-        <p-divider styleClass="mt-4"></p-divider>
+        <p-divider styleClass="mt-2 sm:mt-2 md:mt-4"></p-divider>
         <!-- For Buttons -->
         <ng-content></ng-content>
       </form>
