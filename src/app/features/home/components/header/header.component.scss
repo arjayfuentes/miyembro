@@ -1,32 +1,13 @@
 .login-background {
-    background-image: url('/assets/login-background-image.jpg');
-    background-size: cover;
-      background-position: center;
-      height: 2vh; /* Full screen */
-    }
-  
-   
-
-// :host ::ng-deep {
-//   .p-card-flat {
-//     .p-card {
-//         border-radius: 0 !important;
-//     }
-//   }
-// }
-
-// :host ::ng-deep {
-//   .p-card {
-//         border-radius: 0 !important;
-//   }
-// }
-
-
+  background-image: url('/assets/login-background-image.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 2vh; /* Full screen */
+}
 
 .p-button .p-button-label {
   padding-left: 1rem; /* Adjust the value to control the indentation */
 }
-
 
 .metallic-blue-gradient {
   background: linear-gradient(
@@ -42,7 +23,20 @@
   width: 100%;
   height: 100%;
 }
+   
+// :host ::ng-deep {
+//   .p-card-flat {
+//     .p-card {
+//         border-radius: 0 !important;
+//     }
+//   }
+// }
 
+// :host ::ng-deep {
+//   .p-card {
+//         border-radius: 0 !important;
+//   }
+// }
 
 // .app-menu-container {
 //   width: 100%;
