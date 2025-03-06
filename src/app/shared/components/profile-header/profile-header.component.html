@@ -15,7 +15,7 @@
       class="absolute top-1/2 transform -translate-y-1/2 flex items-center gap-4 w-full justify-center sm:justify-start sm:right-4 sm:w-auto organization-badge"
     >
       <p
-        class="font-[750] text-4xl sm:text-4xl mix-blend-mode: difference text-white"
+        class="font-[750] text-2xl sm:text-2xl md:text-4xl mix-blend-mode: difference text-white"
         style="mix-blend-mode: difference"
       >
         {{ title }}
@@ -32,7 +32,7 @@
         [isEditable]="isEditAllowed"
         [isRound]="true"
         (ngModelChange)="onLogoChange($event)"
-        styleClass="w-[100px] h-[100px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] lg:w-[150px] lg:h-[150px]"
+        styleClass="w-[85px] h-[85px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] lg:w-[150px] lg:h-[150px]"
       >
       </app-photo-control>
     </div>

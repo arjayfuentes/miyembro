@@ -1,14 +1,12 @@
 <form [formGroup]="membershipForm" autocomplete="off">
-  <div class="space-y-6">
-    <div class="grid sm:grid-cols-2 gap-6 w-full">
+  <div class="space-y-3 sm:space-y-3 md:space-y-6 mb-2 sm:mb-2 md:mb-4">
+    <div class="grid sm:grid-cols-2 gap-3 sm:gap-3 md:gap-6 w-full">
       <div>
         <p-iftalabel class="w-full">
           <p-select
             [options]="membershipTypes"
             formControlName="membershipType"
             optionLabel="name"
-            [filter]="true"
-            filterBy="name"
             [showClear]="true"
             inputId="membershipType"
             placeholder="Select a membership type"
@@ -47,8 +45,6 @@
             [options]="roles"
             formControlName="role"
             optionLabel="name"
-            [filter]="true"
-            filterBy="name"
             [showClear]="true"
             inputId="role"
             placeholder="Select a role"
@@ -84,8 +80,6 @@
             [options]="membershipStatuses"
             formControlName="membershipStatus"
             optionLabel="name"
-            [filter]="true"
-            filterBy="name"
             [showClear]="true"
             inputId="role"
             placeholder="Select a role"
@@ -119,7 +113,7 @@
         </p-iftalabel>
       </div>
     </div>
-    <div class="grid sm:grid-cols-2 gap-6 w-full">
+    <div class="grid sm:grid-cols-2 gap-3 sm:gap-3 md:gap-6 w-full">
       <div>
         <p-floatlabel variant="in">
           <p-datepicker

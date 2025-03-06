@@ -25,7 +25,7 @@ export class CollapsibleHeaderComponent implements OnInit{
   
   scrollSubscription!: Subscription;
   schrunk = false;
-  triggerHeight = 250;
+  triggerHeight = 240;
 
 
   constructor(
