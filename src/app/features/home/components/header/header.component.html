@@ -47,18 +47,9 @@
   <ng-template #end>
     <div class="flex items-center gap-2 text-xs sm:text-xs md:text-base">
       <div class="flex flex-wrap">
-        <div class="p-2">
-          <p-button
-            label="Create your own Organization"
-            severity="help"
-            styleClass="w-fulls"
-            icon="pi pi-users"
-            [raised]="true"
-            variant="text"
-            size="small"
-            (onClick)="goToCreateOrganization()"
-          />
-        </div>
+        <p class="m-0 font-semibold text-base sm:text-base md:text-xl">
+          {{ session?.member?.firstName + ' ' + session?.member?.lastName }}
+        </p>
       </div>
       <p-avatar
         [image]="profilePicUrl"

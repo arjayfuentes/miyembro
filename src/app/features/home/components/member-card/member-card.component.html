@@ -44,6 +44,7 @@
               label="Edit Details"
               styleClass="w-full mt-2"
               severity="secondary"
+              icon="pi pi-pencil"
               (onClick)="editDetails()"
               size="small"
               [raised]="true"
@@ -58,6 +59,17 @@
               styleClass="w-full mt-4"
               [raised]="true"
               (onClick)="onClickLogout()"
+            />
+          </div>
+          <div class="space-y-4 md:space-y-6">
+            <p-button
+              icon="pi pi-users"
+              label="Create your organization"
+              severity="help"
+              size="small"
+              styleClass="w-full mt-4"
+              [raised]="true"
+              (onClick)="goToCreateOrganization()"
             />
           </div>
         </div>

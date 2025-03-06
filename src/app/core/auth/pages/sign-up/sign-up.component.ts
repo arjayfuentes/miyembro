@@ -90,7 +90,7 @@ export class SignUpComponent implements OnInit {
   onClickSignup() {
     const loginFormVal = { ...this.signupForm.value };
     delete loginFormVal.confirmPassword;
-    const memberRequest: MemberRequest = this.signupForm.value;
+    const memberRequest: MemberRequest = loginFormVal;
     this.authenticationService.register(memberRequest).subscribe(
       (res) => {
         this.successfulSignup(res);
@@ -113,7 +113,7 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      phontNumber: [null],
+      phoneNumber: [null],
       profilePicUrl: [null],
       loginType: [LoginType.NORMAL],
       confirmPassword: ['', Validators.required],

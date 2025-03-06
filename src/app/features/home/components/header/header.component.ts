@@ -29,6 +29,7 @@ import {
   } from "@abacritt/angularx-social-login";
 import { MenuService } from 'src/app/core/services/menu.service';
 import { MenuItemResponse } from 'src/app/core/models/menu-item-response';
+import { MemberDetailsComponent } from '../member-details/member-details.component';
 
 @Component({
   selector: 'app-header',
@@ -46,6 +47,7 @@ import { MenuItemResponse } from 'src/app/core/models/menu-item-response';
     InputTextModule,
     Menubar,
     MemberCardComponent,
+    MemberDetailsComponent,
     PopoverModule,
     Ripple,
     RouterModule

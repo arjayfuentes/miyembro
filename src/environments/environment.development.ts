@@ -17,8 +17,8 @@ export const environment = {
         clearHashAfterLogin: true,
         strictDiscoveryDocumentValidation: false,
       },
-    apiUrl: 'http://localhost:8222/api/v1',
-    countryUrl: 'http://localhost:8222/api/v1',
+    apiUrl: 'http://ec2-13-60-17-211.eu-north-1.compute.amazonaws.com:8222/api/v1',
+    countryUrl: 'https://api.countrystatecity.in/v1',
     jiraUrl: 'https://arjayprojects.atlassian.net/browse',
     jiraProfileUrl: 'https://arjayprojects.atlassian.net/jira/people',
     requireHttps : false

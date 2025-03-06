@@ -44,6 +44,7 @@ export class ChooseOrganizationComponent implements OnInit{
       },
       (err: any) => {
         this.loginErrorMessage = err.error.message;
+        console.log(err);
       }
     );
   }
