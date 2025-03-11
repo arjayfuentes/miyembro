@@ -17,23 +17,25 @@ import { MemberRequest } from 'src/app/core/models/member-request';
 import { GoogleRequest } from 'src/app/core/models/google-request';
 import { LoginType } from 'src/app/core/models/login-type.enum';
 import { Member } from 'src/app/core/models/member';
+import { LogoComponent } from "../../../../shared/components/logo/logo.component";
 declare const google: any;
 
 @Component({
   selector: 'app-sign-up',
   imports: [
-    ButtonModule, 
+    ButtonModule,
     CardModule,
     CommonModule,
-    FormErrorsFilterPipe, 
-    FormErrorsPipe, 
-    FormsModule, 
-    IftaLabelModule, 
+    FormErrorsFilterPipe,
+    FormErrorsPipe,
+    FormsModule,
+    IftaLabelModule,
     InputTextModule,
     PasswordModule,
-    ReactiveFormsModule, 
-    TooltipModule
-  ],
+    ReactiveFormsModule,
+    TooltipModule,
+    LogoComponent
+],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })

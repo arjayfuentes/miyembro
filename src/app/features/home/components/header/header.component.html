@@ -4,6 +4,9 @@
   [model]="items"
   styleClass="app-menu-bar text-sm sm:text-sm md:text-base"
 >
+  <ng-template #start>
+    <app-logo logoSize="small"></app-logo>
+  </ng-template>
   <ng-template #item let-item>
     <ng-container *ngIf="item.route; else urlRef">
       <a [routerLink]="item.route" class="p-menubar-item-link">

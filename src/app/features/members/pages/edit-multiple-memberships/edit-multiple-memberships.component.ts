@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -22,6 +22,7 @@ import { SessionService } from 'src/app/core/services/session.service';
 import { UpdateMembershipRequests } from 'src/app/core/models/update-membership-requests';
 import { ListboxModule } from 'primeng/listbox';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-edit-multiple-memberships',
@@ -39,7 +40,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
   templateUrl: './edit-multiple-memberships.component.html',
   styleUrl: './edit-multiple-memberships.component.scss'
 })
-export class EditMultipleMembershipsComponent {
+export class EditMultipleMembershipsComponent implements OnInit, OnDestroy{
 
   memberships: MembershipResponse [] = [];
   membershipForm: FormGroup; 
@@ -47,6 +48,8 @@ export class EditMultipleMembershipsComponent {
   membershipStatuses: MembershipStatusResponse [] = [];
   organizationId: string | null = null;
   roles: Role [] = [];
+
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private alertService: AlertService,
@@ -81,6 +84,11 @@ export class EditMultipleMembershipsComponent {
     this.getMembershipTypes();
     this.getRoles();
     this.getMembershipStatuses();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onCancelEditMemberships() {
@@ -120,69 +128,80 @@ export class EditMultipleMembershipsComponent {
       membershipRequests: membershipRequests
     }
 
-    this.membershipService.updateMembershipsFromOrganization(organizationId, updateMembershipRequests).subscribe(
-      (res) => {
-        this.memberships = res;
-        this.alertService.success(this.router.url, 'Success', "Succesfully updated memberships");
-        this.ref.close({
-          memberships: this.memberships
-        });
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    this.membershipService.updateMembershipsFromOrganization(organizationId, updateMembershipRequests)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.memberships = res;
+          this.alertService.success(this.router.url, 'Success', "Successfully updated memberships");
+          this.ref.close({
+            memberships: this.memberships
+          });
+        },
+        error: (err) => {
+          console.error("Error updating memberships:", err);
+        }
+      });
   }
 
   private deleteMemberships() {
     const organizationId = this.sessionService.organizationId;
     const membershipRequests: MembershipRequest[] = this.memberships.map(m => m as MembershipRequest);
   
-    this.membershipService.deleteMembershipsFromOrganization(organizationId, membershipRequests).subscribe(
-      (res) => {
-        //this.memberships = res;
-        this.alertService.success(this.router.url, 'Success', "Succesfully deleted memberships");
-        this.ref.close({
-          memberships: this.memberships
-        });
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    this.membershipService.deleteMembershipsFromOrganization(organizationId, membershipRequests)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          // this.memberships = res;
+          this.alertService.success(this.router.url, 'Success', "Successfully deleted memberships");
+          this.ref.close({
+            memberships: this.memberships
+          });
+        },
+        error: (err) => {
+          console.error("Error deleting memberships:", err);
+        }
+    });
+
   }
 
   private getMembershipTypes() {
-    this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId).subscribe(
-      (res) => {
-        this.membershipTypes = res;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    this.membershipTypeService.getMembershipTypesByOrganizationId(this.organizationId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.membershipTypes = res;
+        },
+        error: (err) => {
+          console.error("Error fetching membership types:", err);
+        }
+      });
   }
 
   private getRoles() {
-    this.roleService.getVisibleRoles().subscribe(
-      (res) => {
-        this.roles = res;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    this.roleService.getVisibleRoles()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.roles = res;
+        },
+        error: (err) => {
+          console.error("Error fetching roles:", err);
+        }
+      });
   }
 
   private getMembershipStatuses() {
-    this.membershipStatusService.getApprovedMembershipStatuses().subscribe(
-      (res) => {
-        this.membershipStatuses = res;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    this.membershipStatusService.getApprovedMembershipStatuses()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.membershipStatuses = res;
+        },
+        error: (err) => {
+          console.error("Error fetching membership statuses:", err);
+        }
+      });
   }
 
 }

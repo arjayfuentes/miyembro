@@ -30,6 +30,7 @@ import {
 import { MenuService } from 'src/app/core/services/menu.service';
 import { MenuItemResponse } from 'src/app/core/models/menu-item-response';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
+import { LogoComponent } from "../../../../shared/components/logo/logo.component";
 
 @Component({
   selector: 'app-header',
@@ -50,8 +51,9 @@ import { MemberDetailsComponent } from '../member-details/member-details.compone
     MemberDetailsComponent,
     PopoverModule,
     Ripple,
-    RouterModule
-  ],
+    RouterModule,
+    LogoComponent
+],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   providers: [

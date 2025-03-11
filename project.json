@@ -59,6 +59,9 @@
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true
+        },
+        "local": {
+          "fileReplacements": []
         }
       },
       "defaultConfiguration": "production"
@@ -71,6 +74,9 @@
         },
         "development": {
           "buildTarget": "miyembro:build:development"
+        },
+        "local": {
+          "buildTarget": "miyembro:build:local"
         }
       },
       "defaultConfiguration": "development"

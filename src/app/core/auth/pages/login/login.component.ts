@@ -13,11 +13,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { GoogleRequest } from 'src/app/core/models/google-request';
 import { Session } from 'src/app/core/models/session';
+import { LogoComponent } from "../../../../shared/components/logo/logo.component";
 declare const google: any;
 
 @Component({
   selector: 'app-login',
-  imports: [ButtonModule, CardModule, CommonModule, IftaLabelModule, InputTextModule, FormsModule, PasswordModule, ReactiveFormsModule],
+  imports: [ButtonModule, CardModule, CommonModule, IftaLabelModule, InputTextModule, FormsModule, PasswordModule, ReactiveFormsModule, LogoComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
